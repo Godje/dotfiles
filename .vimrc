@@ -141,8 +141,8 @@ inoremap <ESC>[1;5D <Esc>bi
 
 " Turn on spell-checking
 map <F6> :setlocal spell! spelllang=en_us<CR>
-"# vim-commentary
-"
+
+map <F7> :CarbonNowSh<CR>
 " comment out line in normal mode with <leader>/
 nmap <leader>/ gcc
 " " comment out selected block in visual mode with <leader>/

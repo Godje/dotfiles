@@ -120,6 +120,7 @@ export TERM='xterm-256color'
 
 alias nf="neofetch --backend 'w3m' --source 'wallpaper' --size 300px"
 alias ecfg="vim ~/.config/i3/config"
+alias evrc="vim ~/.vimrc"
 alias exres="vim ~/.Xresources"
 alias colors="~/Documents/scripts/colorscheme"
 alias colors="~/Documents/scripts/colorscheme.sh"
