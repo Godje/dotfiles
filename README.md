@@ -1,5 +1,5 @@
 # Dotfiles
-### of Daniel Mayovskiy
+of Daniel Mayovskiy
 
 * * * 
 
@@ -7,7 +7,7 @@ This is a repository where I keep my dotfiles. I have them symlinked on my Linux
 
 My .vimrc has comments so you can copy some of the config for yourself if you want.
 
-**This is my current rice**
+## My current rice
 
 ![My rice](rice.jpg)
 
