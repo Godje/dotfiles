@@ -1,4 +1,3 @@
-shell xdg-open .
 touch [yt][#2] Стильный прелоадер (HTML&CSS) | Крутой UI
 rename cool-ui--menu-button
 touch [yt][#3] Крутая Кнопка Меню CSS&JS | Крутой UI Туториал
@@ -48,3 +47,4 @@ search
 mkdir .config
 search config
 delete
+rename rice.jpg
