@@ -1,4 +1,3 @@
-touch [yt][#2] Стильный прелоадер (HTML&CSS) | Крутой UI
 rename cool-ui--menu-button
 touch [yt][#3] Крутая Кнопка Меню CSS&JS | Крутой UI Туториал
 rename cool-ui--scrolling-progress
@@ -45,6 +44,7 @@ deselect
 q
 search 
 mkdir .config
-search config
 delete
 rename rice.jpg
+search config
+search compton
