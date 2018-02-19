@@ -38,13 +38,13 @@ ren
 bulkrename %t
 search conf
 open_with 
-search vim
 deselect
 q
 search 
 mkdir .config
-delete
 rename rice.jpg
 search config
 search compton
 mkdir wallpapers
+search vim
+delete
