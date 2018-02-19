@@ -1,0 +1,50 @@
+shell xdg-open .
+touch [yt][#2] Стильный прелоадер (HTML&CSS) | Крутой UI
+rename cool-ui--menu-button
+touch [yt][#3] Крутая Кнопка Меню CSS&JS | Крутой UI Туториал
+rename cool-ui--scrolling-progress
+touch [yt][#4] Прогресс Скроллинга страницы | Крутой UI Туториал
+rename cool-ui--tracking-input
+touch [yt][#5] Слежение ввода | Крутой UI Tutorial
+touch [yt][#1] Owl Carousel | Основы | Создание слайдера картинок
+rename owl-carousel-basics
+touch [yt][#2] Делаем полноэкранный слайдер картинок без jQuery | 1000 ПРОСМОТРОВ!
+rename thousand-views-slider
+touch [yt][#2] Owl Carousel | Responsive | Создание слайдера картинок
+touch [yt]Ready-to-go-frontend-kit
+touch [yt][Canva
+search i3
+shell wal -i %s
+rename kek.jpg
+rename
+shell cd ,
+cd  .
+cd .
+search slack
+open_with xdg-open
+touch index.html
+touch main.js
+shell vim
+cd  D
+find 
+touch screencast.sh
+
+shell 
+select %t
+find %t
+select_file %t
+select_file
+select_file %s
+help
+W
+ren
+bulkrename %t
+search conf
+open_with 
+search vim
+deselect
+q
+search 
+mkdir .config
+search config
+delete

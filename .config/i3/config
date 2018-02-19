@@ -1,0 +1,262 @@
+# Defining a buncha variables
+set $term       urxvt
+set $mod        Mod1
+set $sup        Mod4
+
+floating_modifier $mod
+
+font pango:monospace 9
+
+# Start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Rofi config.
+bindsym $mod+shift+Return exec rofi -show run -theme ~/.config/rofi-theme -location 2 -xoffset 0px -yoffset 19px -bw 0 -eh 1.5 -font "Monospace 10" -opacity "50" -lines 4 -line-margin 4 -width 400px -padding 30px -terminal urxvt
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# Worspace IDs
+#
+set $workspace2 "2: Browser"
+set $workspace1 "1: Terminals"
+set $workspace3 "3: Discord"
+set $workspaceSteam "5: Steam"
+set $workspaceOrganize "4: Life"
+set $workspace7 "7: Krita"
+
+# switch to workspace
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspaceOrganize
+bindsym $mod+5 workspace $workspaceSteam
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+2 move container to workspace $workspace2
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspaceOrganize
+bindsym $mod+Shift+5 move container to workspace $workspaceSteam
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# Window Assigns
+assign [class="Firefox"] $workspace2
+assign [class="discord"] $workspace3
+assign [class="Steam"] $workspaceSteam
+assign [class="csgo_linux64"] $workspaceSteam
+assign [class="itch"] $workspaceOrganize
+assign [class="Log"] $workspaceOrganize
+assign [class="URxvt"] $workspace1
+assign [class="Terraria.bin.x86"] $workspaceSteam
+assign [class="csgo_linux64"] $workspaceSteam
+assign [class="Minecraft*"] $workspaceSteam
+assign [class="Log"] $workspaceOrganize
+assign [class="krita"] $workspace7
+
+bindsym $mod+Ctrl+Shift+Right move workspace to output right
+bindsym $mod+Ctrl+Shift+Left move workspace to output left
+
+## Window Settings
+for_window [class="^.*"] border pixel 0
+for_window [class="Qyllium"] floating enable
+for_window [class="Qyllium"] move position 50 50
+for_window [class="Tracker"] floating enable
+new_window none 
+
+# Log Settings
+for_window [class="Log"] floating enable
+for_window [class="Log"] resize set 1025 800
+for_window [class="Log"] move position center
+
+## Dropdown thingamajig
+# Setting the window instance and executing it
+for_window [instance="dropdown"] floating enable
+for_window [instance="dropdown"] resize set 975 600
+for_window [instance="dropdown"] move scratchpad
+for_window [instance="dropdown"] move position center
+exec --no-startup-id "urxvt -name dropdown"
+# Mapping key to toggle it
+bindsym $mod+backslash [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
+
+bindsym $sup+backslash [instance="dropdown"] move scratchpad
+
+## Organize Workspace thingamajig
+# Opening Log
+exec --no-startup-id /home/daniel/.config/itch/apps/Log/Log-linux-x64/Log
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# suspend the system
+bindsym $mod+Alt_R+s exec pm-suspend
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 5 px or 5 ppt
+        bindsym k resize grow height 5 px or 5 ppt
+        bindsym l resize shrink height 5 px or 5 ppt
+        bindsym semicolon resize grow width 5 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Gaps and other cool stuff
+
+gaps inner 15
+gaps outer 5
+
+workspace $workspace2 gaps outer 0
+workspace $workspace2 gaps inner 0
+workspace $workspace7 gaps inner 0
+workspace $workspace7 gaps outer 0
+
+mode "gaps_fix" {
+	bindsym Left gaps inner current minus 1
+	bindsym Right gaps inner current plus 1 
+	bindsym Up gaps outer current plus 1
+	bindsym Down gaps outer current minus 1
+
+	bindsym Escape mode "default"
+	bindsym Return mode "default"
+}
+
+bindsym $mod+g mode "gaps_fix"
+
+bindsym $mod+Shift+x exec ~/.config/i3/lock.sh
+
+## NVIDIA FIX
+# more here https://www.reddit.com/r/archlinux/comments/3ich4y/nvidia_proprietary_driver_performance/cuh96m0/
+
+exec ~/.comptonstart.sh
+
+
+# Wallpaper
+#
+exec_always wal -i "~/Pictures/Wallpapers/wallpaper.jpg"
+exec_always feh --bg-scale ~/Pictures/Wallpapers/wallpaper.jpg
+
+
+# Screenshots
+#
+set $screenshot_file '~/Pictures/Screenshots/%Y-%m-%d_%H-%M-$wx$h.png'
+bindsym Print exec scrot -s --selection-delay 300 $screenshot_file
+bindsym Shift+Print exec scrot --clipboard -s --selection-delay 300 $screenshot_file
+
+# Wacom Settings
+exec xsetwacom set "Wacom Intuos PT S 2 Pen stylus" MapToOutput HEAD-0
+
+
+# Window Settings
+# xrandr Command
+exec_always xrandr --output DVI-D-0 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-0 --off --output DVI-I-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output DVI-I-0 --off --output DP-1 --off --output DP-0 --off
+
+# Pulse Audio Controls
+bindsym $mod+F3 exec --no-startup-id pactl set-sink-volume 0 +2.5% #increase volume
+bindsym $mod+F2 exec --no-startup-id pactl set-sink-volume 0 -2.5% #decrease volume
+
+# Mouse senisitivity
+#
+# exec_always xinput set-prop 11 328 -0.857851
+exec_always ~/Documents/scripts/sensitivity.sh
+mouse_warping none
+# Exec Always
+exec_always wal -c
+exec_always wal -R
+exec_always "xrdb -merge ~/.Xresources"
+
+#Polybar
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+# Keyboard Layouts
+exec_always setxkbmap -layout us,ua,ru
+exec_always setxkbmap -option 'grp:rshift_toggle'
+
+# execs
+#
+exec discord
+exec firefox
+
+exec_always taskkill -a dbus
+exec --no-startup-id "dunst -config ~/.config/dunst/dunstrc"
