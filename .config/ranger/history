@@ -1,4 +1,3 @@
-rename thousand-views-slider
 touch [yt][#2] Owl Carousel | Responsive | Создание слайдера картинок
 touch [yt]Ready-to-go-frontend-kit
 touch [yt][Canva
@@ -48,3 +47,4 @@ search Люб
 search tvore
 shell xdg-open .
 delete
+shell cd .
