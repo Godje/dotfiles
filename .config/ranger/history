@@ -1,34 +1,7 @@
-touch [yt][#2] Owl Carousel | Responsive | Создание слайдера картинок
-touch [yt]Ready-to-go-frontend-kit
-touch [yt][Canva
-search i3
-shell wal -i %s
-rename kek.jpg
-rename
-shell cd ,
-cd  .
-cd .
-search slack
-open_with xdg-open
-touch index.html
-touch main.js
-shell vim
-cd  D
-find 
-touch screencast.sh
-
-shell 
-select %t
-find %t
-select_file %t
-select_file
-select_file %s
 help
 W
 ren
-bulkrename %t
 search conf
-open_with 
 deselect
 q
 search 
@@ -45,6 +18,33 @@ search Biblia
 shell lame --decode %s domonique.wav
 search Люб
 search tvore
-shell xdg-open .
-delete
 shell cd .
+re
+bulkrename %t
+select_files %t
+select_file %t
+bulkrename %s
+shell unzip %s 
+shell %s
+mkdir Gravit
+shell chmod
+shell grav
+open_with %s
+open_with .
+shell ./%s
+shell 
+shell thunar .
+shell tar -xvzf %s
+cd .
+open_with xd
+open_with xdg-open
+shell unzip %s
+shell chmod a+x %s
+shell xdg-open .
+kjh
+open_with 
+cd %s
+shell thunar
+
+find
+delete

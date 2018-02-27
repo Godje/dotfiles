@@ -127,3 +127,4 @@ alias colors="~/Documents/scripts/colorscheme.sh"
 alias vims="vim -S vimsession.vim"
 alias r="ranger"
 
+alias screenkey="/media/daniel/therest/linux/github/software/screenkey-0.9/screenkey"

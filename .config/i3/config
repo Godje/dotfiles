@@ -256,7 +256,9 @@ exec_always setxkbmap -option 'grp:rshift_toggle'
 # execs
 #
 exec discord
-exec firefox
+exec qutebrowser
 
 exec_always taskkill -a dbus
 exec --no-startup-id "dunst -config ~/.config/dunst/dunstrc"
+
+for_window [class="qutebrowser"] move $workspace2
