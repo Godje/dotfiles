@@ -126,7 +126,7 @@ com! VimrcEdit tabedit ~/.vimrc
 
 " "" Markdown binds
 autocmd FileType markdown inoremap <Leader>b **** <++><Esc>F*hi
-autocmd FileType markdown inoremap <Space><Space> <Esc>/<++><CR>caw
+autocmd FileType markdown inoremap <Leader><Space> <Esc>/<++><CR>caw
 autocmd FileType markdown inoremap <Leader>i ** <++><Esc>F*i
 
 " "" Moving lines up and down
