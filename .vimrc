@@ -73,6 +73,8 @@ noremap <silent> <Leader>w :call ToggleWrap()<CR>
 """"""""""""""""""
 " Binds "
 """"""""""""""""""
+" "" General Binds
+inoremap <Home> <Esc>^i
 
 " NERDTree Commands and binds
 map <C-n> :NERDTreeToggle<CR>
@@ -128,12 +130,6 @@ com! VimrcEdit tabedit ~/.vimrc
 autocmd FileType markdown inoremap <Leader>b **** <++><Esc>F*hi
 autocmd FileType markdown inoremap <Leader><Space> <Esc>/<++><CR>caw
 autocmd FileType markdown inoremap <Leader>i ** <++><Esc>F*i
-
-" "" Moving lines up and down
-nnoremap <S-Up> :m-2<CR>
-nnoremap <S-Down> :m+<CR>
-inoremap <S-Up> <Esc>:m-2<CR>
-inoremap <S-Down> <Esc>:m+<CR>
 
 " "" FIX ARROW KEYS
 inoremap <ESC>[1;5C <Esc>ea

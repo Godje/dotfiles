@@ -1,15 +1,9 @@
-deselect
-q
-search 
-mkdir .config
-rename rice.jpg
 search config
 search compton
 mkdir wallpapers
 search vim
 search Библии
 search Библи
-shell lame --decode %s Biblia.wav
 search Biblia
 shell lame --decode %s domonique.wav
 search Люб
@@ -48,3 +42,9 @@ rename VirtualBox VMs
 shell ln
 shell ln -s %s
 shell thunar
+touch poster_notes.md
+rename source-pdfs
+mkdir notes
+touch notes6.md
+shell lame --decode %s Biblia.wav
+shell md-to-pdf %s
