@@ -1,8 +1,3 @@
-search config
-search compton
-mkdir wallpapers
-search vim
-search Библии
 search Библи
 search Biblia
 shell lame --decode %s domonique.wav
@@ -23,7 +18,6 @@ open_with %s
 open_with .
 shell ./%s
 shell 
-shell thunar .
 shell tar -xvzf %s
 cd .
 open_with xd
@@ -35,7 +29,6 @@ open_with
 cd %s
 
 find
-delete
 open_with xdg-open
 rename VirtualBox\ VMs
 rename VirtualBox VMs
@@ -48,3 +41,10 @@ mkdir notes
 touch notes6.md
 shell lame --decode %s Biblia.wav
 shell md-to-pdf %s
+thunar .
+shell thunar .
+shell ffmpeg -i %s
+search yer
+shell ffmpeg -i %s wav_%s
+shell ffmpeg -i %s Yerushalaim_minus.wav
+delete

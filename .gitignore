@@ -26,5 +26,10 @@ Session.vim
 # auto-generated tag files
 tags
 
+# ranger stuff
+.config/ranger/bookmarks
+.config/ranger/history
+
+
 
 # End of https://www.gitignore.io/api/vim,linux
