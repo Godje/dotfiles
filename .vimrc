@@ -1,4 +1,4 @@
-" Mouse
+" mOUSe
 set mouse=a
 
 " Share clipboard outside of vim
@@ -137,6 +137,9 @@ inoremap <ESC>[1;5D <Esc>bi
 
 " Turn on spell-checking
 map <F6> :setlocal spell! spelllang=en_us<CR>
+
+nnoremap <F10> :hi! link Comment Ignore<CR>
+nnoremap <F9> :hi! link Comment Comment<CR>
 
 map <F7> :CarbonNowSh<CR>
 " comment out line in normal mode with <leader>/
