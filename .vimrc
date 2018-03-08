@@ -138,6 +138,7 @@ inoremap <ESC>[1;5D <Esc>bi
 " Turn on spell-checking
 map <F6> :setlocal spell! spelllang=en_us<CR>
 
+" Hiding and showing comments
 nnoremap <F10> :hi! link Comment Ignore<CR>
 nnoremap <F9> :hi! link Comment Comment<CR>
 

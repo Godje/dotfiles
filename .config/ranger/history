@@ -1,5 +1,3 @@
-search Библи
-search Biblia
 shell lame --decode %s domonique.wav
 search Люб
 search tvore
@@ -48,3 +46,5 @@ search yer
 shell ffmpeg -i %s wav_%s
 shell ffmpeg -i %s Yerushalaim_minus.wav
 delete
+mkdir stimuli
+mkdir rpaper
