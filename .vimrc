@@ -156,3 +156,8 @@ let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("e")': ['<c-t>'],
     \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
     \ }
+let g:lightline = {
+			\ 'enable': {
+			\ 'tabline': 0
+			\ }
+			\ }
