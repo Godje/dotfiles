@@ -112,6 +112,7 @@ assign [class="csgo_linux64"] $workspaceSteam
 assign [class="Minecraft*"] $workspaceSteam
 assign [class="Log"] $workspaceOrganize
 assign [class="krita"] $workspace7
+assign [class="Ufraw"] $workspace8
 
 bindsym $mod+Ctrl+Shift+Right move workspace to output right
 bindsym $mod+Ctrl+Shift+Left move workspace to output left

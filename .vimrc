@@ -11,6 +11,9 @@ set noswapfile
 set history=1000
 set undolevels=1000
 
+" Automatically update the file, on it's change
+set autoread
+
 """""""""""""""""""
 " Looks and feels "
 """""""""""""""""""

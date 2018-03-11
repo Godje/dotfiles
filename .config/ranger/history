@@ -1,9 +1,3 @@
-shell lame --decode %s domonique.wav
-search Люб
-search tvore
-shell cd .
-re
-bulkrename %t
 select_files %t
 select_file %t
 bulkrename %s
@@ -23,7 +17,6 @@ shell unzip %s
 shell chmod a+x %s
 shell xdg-open .
 kjh
-open_with 
 cd %s
 
 find
@@ -45,6 +38,13 @@ shell ffmpeg -i %s
 search yer
 shell ffmpeg -i %s wav_%s
 shell ffmpeg -i %s Yerushalaim_minus.wav
-delete
 mkdir stimuli
 mkdir rpaper
+shell vims
+selectfile
+shell rm *.jpg
+search jpg
+delete
+search слеп
+shell ffmpeg -i %s %s.wav
+open_with 
