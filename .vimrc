@@ -118,9 +118,7 @@ endfunction
 " "" Javascript Binds
 autocmd FileType javascript inoremap <Leader>f function (<++>){<++>}<Esc>F(i
 autocmd FileType javascript inoremap <Leader>l console.log()<Esc>i
-autocmd FileType javascript inoremap <Leader>c const
-autocmd FileType javascript inoremap <Leader>d document
-autocmd FileType javascript inoremap <Leader>w window
+autocmd FileType javascript inoremap <Leader>t this.
 autocmd FileType javascript inoremap <Leader><Space> <Esc>/<++><CR>d4li
 
 " "" Formatting JSON
