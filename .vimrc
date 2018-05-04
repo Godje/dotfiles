@@ -1,3 +1,4 @@
+set nocompatible
 " mOUSe
 set mouse=a
 
@@ -47,9 +48,9 @@ au InsertLeave * silent execute "!echo -en \<esc>[2 q"
 " Colors settings
 syntax enable
 set background=dark
+set t_Co=256
 color PaperColor
 colorscheme PaperColor
-set t_Co=256
 
 
 " Transparency thinga majigger
@@ -70,7 +71,7 @@ let mapleader = "\\"
 " \Tab = emmet function
 inoremap <Leader><Tab> <Esc>:call emmet#expandAbbr(3,"")<CR>i
 " \w = toggle wrap
-noremap <silent> <Leader>w :call ToggleWrap()<CR>
+noremap <silent> <Leader>w :call ToggleWrapCustom()<CR>
 
 
 """"""""""""""""""
@@ -82,9 +83,39 @@ inoremap <Home> <Esc>^i
 " NERDTree Commands and binds
 map <C-n> :NERDTreeToggle<CR>
 
+" Russian binds
+"
+map р h
+map о j
+map л k
+map д l
+map Щ O
+map щ o
+map ф a
+map Ф A
+map г u
+map Ж :
+map т n
+map в d
+
+" Word Counting Function
+function! WordCount()
+   let s:old_status = v:statusmsg
+   let position = getpos(".")
+   exe ":silent normal g\<c-g>"
+   let stat = v:statusmsg
+   let s:word_count = 0
+   if stat != '--No lines in buffer--'
+     let s:word_count = str2nr(split(v:statusmsg)[11])
+     let v:statusmsg = s:old_status
+   end
+   call setpos('.', position)
+   return s:word_count 
+endfunction
+
 " Wrap keybin
-" noremap <silent> <Leader>w :call ToggleWrap()<CR>
-function ToggleWrap()
+" noremap <silent> <Leader>w :call ToggleWrapCustom()<CR>
+function! ToggleWrapCustom()
   if &wrap
     echo "Wrap OFF"
     setlocal nowrap
@@ -127,6 +158,8 @@ com! FormatJSON %!python -m json.tool
 " "" Editing VIMRC file
 com! VimrcEdit tabedit ~/.vimrc
 
+" "" Saving the session
+com! MakeSesh mks! vimsession.vim
 " "" Markdown binds
 autocmd FileType markdown inoremap <Leader>b **** <++><Esc>F*hi
 autocmd FileType markdown inoremap <Leader><Space> <Esc>/<++><CR>caw

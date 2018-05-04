@@ -116,7 +116,17 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export TERM='xterm-256color'
+mp3towav(){
+	[[ $# -eq 0 ]] && { echo "mp3wav mp3file"; exit 1; }
+	for i in "$@"
+	do
+		# create .wav file name
+		local out="${i%/*}.wav"
+		[[ -f "$i" ]] && { echo -n "Processing ${i}..."; mpg123 -w "${out}" "$i" &>/dev/null  && echo "done." || echo "failed."; }
+	done	
+}
+
+export TERM=xterm-256color
 
 alias nf="neofetch --backend 'w3m' --source 'wallpaper' --size 300px"
 alias ecfg="vim ~/.config/i3/config"
@@ -126,5 +136,6 @@ alias colors="~/Documents/scripts/colorscheme"
 alias colors="~/Documents/scripts/colorscheme.sh"
 alias vims="vim -S vimsession.vim"
 alias r="ranger"
+alias bsyncdefault="browser-sync --watch"
 
 alias screenkey="/media/daniel/therest/linux/github/software/screenkey-0.9/screenkey"

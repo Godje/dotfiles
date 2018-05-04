@@ -1,50 +1,11 @@
-select_files %t
-select_file %t
-bulkrename %s
-shell unzip %s 
-shell %s
-mkdir Gravit
-shell chmod
-shell grav
-open_with %s
-open_with .
-shell ./%s
-shell 
-shell tar -xvzf %s
-cd .
-open_with xd
-shell unzip %s
-shell chmod a+x %s
-shell xdg-open .
-kjh
-cd %s
-
-find
-open_with xdg-open
-rename VirtualBox\ VMs
-rename VirtualBox VMs
-shell ln
-shell ln -s %s
-shell thunar
-touch poster_notes.md
-rename source-pdfs
-mkdir notes
-touch notes6.md
-shell lame --decode %s Biblia.wav
-shell md-to-pdf %s
-thunar .
-shell thunar .
-shell ffmpeg -i %s
-search yer
-shell ffmpeg -i %s wav_%s
-shell ffmpeg -i %s Yerushalaim_minus.wav
-mkdir stimuli
-mkdir rpaper
-shell vims
-selectfile
-shell rm *.jpg
-search jpg
+rename ranger
+rename .bashrc
+shell wal -i %s
 delete
-search слеп
-shell ffmpeg -i %s %s.wav
 open_with 
+shell tar -xzvf %s
+shell thunar .
+
+2018 Choir
+mkdir 2018 Choir
+touch webpack.config.js
