@@ -107,7 +107,6 @@ bindsym $mod+f fullscreen toggle
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+Shift+h move left
-bindsym $mod+Ctrl+h split h # split in horizontal orientation
 
 bindsym $mod+j focus down
 bindsym $mod+Shift+j move down
@@ -121,7 +120,8 @@ bindsym $mod+Shift+l move right
 
 bindsym $mod+s layout stacking # change container layout (stacking)
 
-bindsym $mod+v split vertical # split in vertical orientation
+# split in vertical orientation
+bindsym $mod+v split vertical 
 
 bindsym $mod+w layout tabbed #change container layout (tabbed) 
 
@@ -156,6 +156,7 @@ bindsym $mod+Shift+P [class="csgo_linux64"] move scratchpad
 ## Organize Workspace thingamajig
 # Opening Log
 exec --no-startup-id /home/daniel/.config/itch/apps/Log/Log-linux-x64/Log
+exec --no-startup-id /home/daniel/.config/itch/apps/Qyllium/Qyllium-linux-x64/Qyllium
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

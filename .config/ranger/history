@@ -1,11 +1,50 @@
-rename ranger
-rename .bashrc
-shell wal -i %s
-delete
+shell conver %s -crop 1920x1080 0.0 cropped_%s
+shell convert %s -crop 1920x1080 0.0 cropped_%s
+mkdir wav
+rename Archive.zip
+mkdir 2018 Choir_
+rename 2018 Family
+rename
+rename 2018 Choir
+open_with krita
+mkdir Documents
+shell touch SSE
+open_with vim
+shell convert %s -crop 1920x1080 1920.0
+shell convert %s -crop 1920x1080 1920.0 cropped_%s
+mkdir tommpabeats
+shell unrar e %s
+shell 7z x %s
+search ne poto
+shell thunar
+open_with vlc
 open_with 
-shell tar -xzvf %s
-shell thunar .
+shell thu
+mkdir romance
+mkdir 1
+bulkrenameV
+bulk
+bulkrename
+CHOIRkk
+j
+mkdir CHOIR
+mkdir VIDEO
+mkdir
+mkdir 
+shell 
+shell thunar .'
+rename sped_up
 
-2018 Choir
-mkdir 2018 Choir
-touch webpack.config.js
+shell ffmpeg -i %s -filter:v "setpts=0.5*PTS" sped_up%s.mp4
+shell ffmpeg -i %s -filter:v "setpts=0.0625*PTS" sped_up%s.mp4
+delete
+shell ffmpeg -i %s -filter:v "setpts=0.0625*PTS" -an sped_up%s.mp4
+shell ffmpeg -i %s -filter:v "setpts=0.5*PTS" -an sped_up%s.mp4
+open_with 2
+open_with ll
+shell ffmpeg -i %s %s.wav
+shell b
+shell thunar .
+Tatova Molytva (z diska)
+mkdir Tatova Molytva (z diska)
+shell bash

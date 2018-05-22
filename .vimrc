@@ -12,6 +12,9 @@ set noswapfile
 set history=1000
 set undolevels=1000
 
+" Fold level
+set foldlevelstart=20
+"
 " Automatically update the file, on it's change
 set autoread
 
@@ -151,6 +154,12 @@ autocmd FileType javascript inoremap <Leader>f function (<++>){<++>}<Esc>F(i
 autocmd FileType javascript inoremap <Leader>l console.log()<Esc>i
 autocmd FileType javascript inoremap <Leader>t this.
 autocmd FileType javascript inoremap <Leader><Space> <Esc>/<++><CR>d4li
+
+" "" Javascript Folding
+augroup javascript_folding
+	au!
+	au FileType javascript setlocal foldmethod=syntax
+augroup END
 
 " "" Formatting JSON
 com! FormatJSON %!python -m json.tool
