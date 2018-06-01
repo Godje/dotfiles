@@ -1,10 +1,7 @@
-shell conver %s -crop 1920x1080 0.0 cropped_%s
-shell convert %s -crop 1920x1080 0.0 cropped_%s
 mkdir wav
 rename Archive.zip
 mkdir 2018 Choir_
 rename 2018 Family
-rename
 rename 2018 Choir
 open_with krita
 mkdir Documents
@@ -16,7 +13,6 @@ mkdir tommpabeats
 shell unrar e %s
 shell 7z x %s
 search ne poto
-shell thunar
 open_with vlc
 open_with 
 shell thu
@@ -31,20 +27,24 @@ mkdir CHOIR
 mkdir VIDEO
 mkdir
 mkdir 
-shell 
 shell thunar .'
 rename sped_up
 
 shell ffmpeg -i %s -filter:v "setpts=0.5*PTS" sped_up%s.mp4
 shell ffmpeg -i %s -filter:v "setpts=0.0625*PTS" sped_up%s.mp4
-delete
 shell ffmpeg -i %s -filter:v "setpts=0.0625*PTS" -an sped_up%s.mp4
 shell ffmpeg -i %s -filter:v "setpts=0.5*PTS" -an sped_up%s.mp4
 open_with 2
 open_with ll
 shell ffmpeg -i %s %s.wav
 shell b
-shell thunar .
 Tatova Molytva (z diska)
 mkdir Tatova Molytva (z diska)
 shell bash
+shell 
+open_with m
+delete
+find Ter
+shell thunar
+rename
+shell thunar .

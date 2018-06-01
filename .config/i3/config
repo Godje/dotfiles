@@ -242,7 +242,8 @@ exec xsetwacom set "Wacom Intuos PT S 2 Pen stylus" MapToOutput HEAD-0
 
 # Window Settings
 # xrandr Command
-exec_always xrandr --output DVI-D-0 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-0 --off --output DVI-I-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output DVI-I-0 --off --output DP-1 --off --output DP-0 --off
+exec_always xrandr --output DP-1 --off --output DVI-I-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output DVI-D-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --off
+
 
 # Pulse Audio Controls
 bindsym $mod+F3 exec --no-startup-id pactl set-sink-volume 0 +2.5% #increase volume
@@ -251,7 +252,7 @@ bindsym $mod+F2 exec --no-startup-id pactl set-sink-volume 0 -2.5% #decrease vol
 # Mouse senisitivity
 #
 # exec_always xinput set-prop 11 328 -0.857851
-exec_always ~/.scripts/sensitivity.sh
+exec_always ~/Documents/scripts/sensitivity.sh
 mouse_warping none
 # Exec Always
 exec_always wal -c
