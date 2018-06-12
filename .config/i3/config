@@ -123,10 +123,10 @@ bindsym $mod+s layout stacking # change container layout (stacking)
 # split in vertical orientation
 bindsym $mod+v split vertical 
 
-bindsym $mod+w layout tabbed #change container layout (tabbed) 
+bindsym $mod+w layout tabbed 
 
-bindsym $mod+space focus mode_toggle # change focus between tiling / floating windows
-bindsym $mod+Shift+space floating toggle # toggle tiling / floating
+bindsym $mod+space focus mode_toggle 
+bindsym $mod+Shift+space floating toggle 
 
 
 
@@ -223,13 +223,6 @@ bindsym $mod+Shift+x exec ~/.config/i3/lock.sh
 
 exec ~/.comptonstart.sh
 
-
-# Wallpaper
-#
-exec_always wal -i "~/Pictures/Wallpapers/wallpaper.jpg"
-exec_always feh --bg-scale ~/Pictures/Wallpapers/wallpaper.jpg
-
-
 # Screenshots
 #
 set $screenshot_file '~/Pictures/Screenshots/%Y-%m-%d_%H-%M-$wx$h.png'
@@ -246,8 +239,8 @@ exec_always xrandr --output DP-1 --off --output DVI-I-1 --mode 1920x1080 --pos 1
 
 
 # Pulse Audio Controls
-bindsym $mod+F3 exec --no-startup-id pactl set-sink-volume 0 +2.5% #increase volume
-bindsym $mod+F2 exec --no-startup-id pactl set-sink-volume 0 -2.5% #decrease volume
+bindsym $mod+F3 exec --no-startup-id pactl set-sink-volume 0 +1.5% #increase volume
+bindsym $mod+F2 exec --no-startup-id pactl set-sink-volume 0 -1.5% #decrease volume
 
 # Mouse senisitivity
 #
@@ -274,5 +267,5 @@ exec qutebrowser
 exec_always taskkill -a dbus
 exec --no-startup-id "dunst -config ~/.config/dunst/dunstrc"
 
-for_window [class="qutebrowser"] move $workspace2
+for_window [class="qutebrowser"] move workspace $workspace2
 

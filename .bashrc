@@ -129,6 +129,7 @@ mp3towav(){
 export TERM=xterm-256color
 
 alias nf="neofetch --backend 'w3m' --source 'wallpaper' --size 300px"
+alias memPID="ps aux | awk '{print $2, $4, $11}' | sort -k2rn | head -n 20"
 alias ecfg="vim ~/.config/i3/config"
 alias evrc="vim ~/.vimrc"
 alias exres="vim ~/.Xresources"

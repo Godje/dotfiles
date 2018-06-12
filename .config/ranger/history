@@ -1,35 +1,8 @@
-mkdir wav
-rename Archive.zip
-mkdir 2018 Choir_
-rename 2018 Family
-rename 2018 Choir
-open_with krita
-mkdir Documents
-shell touch SSE
-open_with vim
-shell convert %s -crop 1920x1080 1920.0
-shell convert %s -crop 1920x1080 1920.0 cropped_%s
-mkdir tommpabeats
-shell unrar e %s
-shell 7z x %s
-search ne poto
-open_with vlc
-open_with 
-shell thu
-mkdir romance
-mkdir 1
-bulkrenameV
-bulk
-bulkrename
-CHOIRkk
-j
-mkdir CHOIR
 mkdir VIDEO
 mkdir
 mkdir 
 shell thunar .'
 rename sped_up
-
 shell ffmpeg -i %s -filter:v "setpts=0.5*PTS" sped_up%s.mp4
 shell ffmpeg -i %s -filter:v "setpts=0.0625*PTS" sped_up%s.mp4
 shell ffmpeg -i %s -filter:v "setpts=0.0625*PTS" -an sped_up%s.mp4
@@ -40,11 +13,38 @@ shell ffmpeg -i %s %s.wav
 shell b
 Tatova Molytva (z diska)
 mkdir Tatova Molytva (z diska)
-shell bash
-shell 
 open_with m
-delete
 find Ter
 shell thunar
 rename
+sh
+rename Momotyuk
+Lol
+mkdir May_album
+find 2036
+find 365
+find 371
+find 
+rename dodat
+rename dodat_1
+deselect
+shell 
+open_with vlc
+find q
+
+rename Zhanna_full
+open_with 
+mkdir ZHANNA_FULL
+rename Найкращий День - Віктор Павлік
+rename 2. Доброго Дня, Ісус - Марина Одольська
+rename Track06.wav
+mkdir Pamyatay mene
+rename %s (z diska)
+shell bash
+mkdir 1
+unmark
+rename DSC_0104r.jpg
+mkdir set2
 shell thunar .
+shell thun
+delete
