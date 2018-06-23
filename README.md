@@ -7,13 +7,10 @@ This is a repository where I keep my dotfiles. I have them symlinked on my Linux
 
 ## My Linux setup basic information
 
-**Distro:** Ubuntu 18.04 64-bit
-
-**WM:** i3-wm || Xubuntu (for CSGO)
-
-**Terminal:** urxvt (rxvt-256unicode)
-
-**Editor:** Vim
+- **Distro:** Ubuntu 18.04 64-bit
+- **WM:** i3-wm || Xubuntu (for CSGO)
+- **Terminal:** urxvt (rxvt-256unicode)
+- **Editor:** Vim
 
 * * *
 
