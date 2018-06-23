@@ -1,37 +1,11 @@
-mkdir VIDEO
-mkdir
-mkdir 
-shell thunar .'
-rename sped_up
-shell ffmpeg -i %s -filter:v "setpts=0.5*PTS" sped_up%s.mp4
-shell ffmpeg -i %s -filter:v "setpts=0.0625*PTS" sped_up%s.mp4
-shell ffmpeg -i %s -filter:v "setpts=0.0625*PTS" -an sped_up%s.mp4
-shell ffmpeg -i %s -filter:v "setpts=0.5*PTS" -an sped_up%s.mp4
-open_with 2
-open_with ll
-shell ffmpeg -i %s %s.wav
-shell b
-Tatova Molytva (z diska)
-mkdir Tatova Molytva (z diska)
-open_with m
-find Ter
-shell thunar
-rename
-sh
-rename Momotyuk
-Lol
-mkdir May_album
 find 2036
 find 365
 find 371
-find 
 rename dodat
 rename dodat_1
 deselect
-shell 
 open_with vlc
 find q
-
 rename Zhanna_full
 open_with 
 mkdir ZHANNA_FULL
@@ -40,11 +14,37 @@ rename 2. Доброго Дня, Ісус - Марина Одольська
 rename Track06.wav
 mkdir Pamyatay mene
 rename %s (z diska)
-shell bash
-mkdir 1
 unmark
 rename DSC_0104r.jpg
 mkdir set2
-shell thunar .
 shell thun
+rename Master.zip
+rename 1
+shell V
+shell 
+open_with 0
+shell wal -i %s
+mkdir json
+shell bu
+rename Track03.wav
+mkdir Chystiyi Svitanki (z diska)
+shell bas
+
+find 
+find теб
+shell rename Ya dolzhna nayti Tebya.wav
+find
+rename Ya dolzhna nayti tebya (-)
+shell thunar .
+shell ffmpeg -i %s %s.wav
+rename Dobrogo Dnya Isus (minus).wav
+shell thunar
+mkdir 1
+mkdir 2
+shell bahs
+shell bash
+v:
+mkdir FLASHDRIVE
 delete
+bulkv
+bulkrename 
