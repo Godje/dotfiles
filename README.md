@@ -19,3 +19,5 @@ This is a repository where I keep my dotfiles. I have them symlinked on my Linux
 ![My rice](rice.jpg)
 
 You can find **polybar** and **neofetch** config in `.config` folder.
+
+Polybar was built with an older version of xcb-proto, because the newer xcb-proto break the build. You have to purge xcb-proto, download and install an older xcb-proto manually. Version 11 worked for me.
