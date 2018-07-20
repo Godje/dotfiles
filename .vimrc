@@ -1,3 +1,4 @@
+norm 1G
 set nocompatible
 " mOUSe
 set mouse=a
@@ -52,8 +53,8 @@ au InsertLeave * silent execute "!echo -en \<esc>[2 q"
 syntax enable
 set background=dark
 set t_Co=256
-color PaperColor
-colorscheme PaperColor
+color monokai
+colorscheme monokai
 
 
 " Transparency thinga majigger
@@ -61,7 +62,6 @@ hi! Normal ctermbg=NONE guibg=NONE
 hi! NonText ctermbg=NONE guibg=NONE
 
 " Indentation and plugin on
-filetype indent on
 filetype plugin indent on
 
 """""""""""""""""""
@@ -150,10 +150,10 @@ function! ToggleWrapCustom()
 endfunction
 
 " "" Javascript Binds
-autocmd FileType javascript inoremap <Leader>f function (<++>){<++>}<Esc>F(i
-autocmd FileType javascript inoremap <Leader>l console.log()<Esc>i
-autocmd FileType javascript inoremap <Leader>t this.
-autocmd FileType javascript inoremap <Leader><Space> <Esc>/<++><CR>d4li
+autocmd FileType javascript.jsx inoremap <Leader>f function (<++>){<++>}<Esc>F(i
+autocmd FileType javascript.jsx inoremap <Leader>l console.log()<Esc>i
+autocmd FileType javascript.jsx inoremap <Leader>t this.
+autocmd FileType javascript.jsx inoremap <Leader><Space> <Esc>/<++><CR>d4li
 
 " "" Javascript Folding
 augroup javascript_folding
