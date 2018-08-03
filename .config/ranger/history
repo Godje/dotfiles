@@ -1,50 +1,19 @@
-find 2036
-find 365
-find 371
-rename dodat
-rename dodat_1
-deselect
-open_with vlc
-find q
-rename Zhanna_full
-open_with 
-mkdir ZHANNA_FULL
-rename Найкращий День - Віктор Павлік
-rename 2. Доброго Дня, Ісус - Марина Одольська
-rename Track06.wav
-mkdir Pamyatay mene
-rename %s (z diska)
-unmark
-rename DSC_0104r.jpg
-mkdir set2
-shell thun
-rename Master.zip
-rename 1
-shell V
+cd /mnt/c/Owner/Users
+cd /mnt/
+undo
+rename projects
+rename .bashrc
+mkdir mithril
+cd /mnt/c/Users/Owner
 shell 
-open_with 0
-shell wal -i %s
-mkdir json
-shell bu
-rename Track03.wav
-mkdir Chystiyi Svitanki (z diska)
-shell bas
+cd 
+find Pi
+search 
+cd /mnt/c/Users/Owner/
 
-find 
-find теб
-shell rename Ya dolzhna nayti Tebya.wav
-find
-rename Ya dolzhna nayti tebya (-)
-shell thunar .
-shell ffmpeg -i %s %s.wav
-rename Dobrogo Dnya Isus (minus).wav
-shell thunar
-mkdir 1
-mkdir 2
-shell bahs
+!touch main.js
+shell touch main.js
+rename styles.scss
+mkdir app
 shell bash
-v:
-mkdir FLASHDRIVE
 delete
-bulkv
-bulkrename 

@@ -127,6 +127,9 @@ mp3towav(){
 }
 
 export TERM=xterm-256color
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
 
 alias nf="neofetch --backend 'w3m' --source 'wallpaper' --size 300px"
 alias memPID="ps aux | awk '{print $2, $4, $11}' | sort -k2rn | head -n 20"
@@ -135,6 +138,7 @@ alias evrc="vim ~/.vimrc"
 alias exres="vim ~/.Xresources"
 alias vims="vim -S vimsession.vim"
 alias r="ranger"
+alias rangre="ranger"
 alias bsyncdefault="browser-sync --watch"
 alias webpackDEV="webpack-dev-server --mode development"
 alias webpackPROD="webpack-dev-server --mode production"
