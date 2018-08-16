@@ -1,50 +1,19 @@
-select_files %t
-select_file %t
-bulkrename %s
-shell unzip %s 
-shell %s
-mkdir Gravit
-shell chmod
-shell grav
-open_with %s
-open_with .
-shell ./%s
+cd /mnt/c/Owner/Users
+cd /mnt/
+undo
+rename projects
+rename .bashrc
+mkdir mithril
+cd /mnt/c/Users/Owner
 shell 
-shell tar -xvzf %s
-cd .
-open_with xd
-shell unzip %s
-shell chmod a+x %s
-shell xdg-open .
-kjh
-cd %s
+cd 
+find Pi
+search 
+cd /mnt/c/Users/Owner/
 
-find
-open_with xdg-open
-rename VirtualBox\ VMs
-rename VirtualBox VMs
-shell ln
-shell ln -s %s
-shell thunar
-touch poster_notes.md
-rename source-pdfs
-mkdir notes
-touch notes6.md
-shell lame --decode %s Biblia.wav
-shell md-to-pdf %s
-thunar .
-shell thunar .
-shell ffmpeg -i %s
-search yer
-shell ffmpeg -i %s wav_%s
-shell ffmpeg -i %s Yerushalaim_minus.wav
-mkdir stimuli
-mkdir rpaper
-shell vims
-selectfile
-shell rm *.jpg
-search jpg
+!touch main.js
+shell touch main.js
+rename styles.scss
+mkdir app
+shell bash
 delete
-search слеп
-shell ffmpeg -i %s %s.wav
-open_with 

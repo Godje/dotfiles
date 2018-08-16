@@ -116,15 +116,31 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export TERM='xterm-256color'
+mp3towav(){
+	[[ $# -eq 0 ]] && { echo "mp3wav mp3file"; exit 1; }
+	for i in "$@"
+	do
+		# create .wav file name
+		local out="${i%/*}.wav"
+		[[ -f "$i" ]] && { echo -n "Processing ${i}..."; mpg123 -w "${out}" "$i" &>/dev/null  && echo "done." || echo "failed."; }
+	done	
+}
+
+export TERM=xterm-256color
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
 
 alias nf="neofetch --backend 'w3m' --source 'wallpaper' --size 300px"
+alias memPID="ps aux | awk '{print $2, $4, $11}' | sort -k2rn | head -n 20"
 alias ecfg="vim ~/.config/i3/config"
 alias evrc="vim ~/.vimrc"
 alias exres="vim ~/.Xresources"
-alias colors="~/Documents/scripts/colorscheme"
-alias colors="~/Documents/scripts/colorscheme.sh"
 alias vims="vim -S vimsession.vim"
 alias r="ranger"
+alias rangre="ranger"
+alias bsyncdefault="browser-sync --watch"
+alias webpackDEV="webpack-dev-server --mode development"
+alias webpackPROD="webpack-dev-server --mode production"
 
 alias screenkey="/media/daniel/therest/linux/github/software/screenkey-0.9/screenkey"

@@ -14,90 +14,17 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # Rofi config.
-bindsym $mod+shift+Return exec rofi -show run -theme ~/.config/rofi-theme -location 2 -xoffset 0px -yoffset 19px -bw 0 -eh 1.5 -font "Monospace 10" -opacity "50" -lines 4 -line-margin 4 -width 400px -padding 30px -terminal urxvt
+bindsym $mod+shift+Return exec rofi -show run -location 2 -xoffset 0px -yoffset 19px -bw 0 -eh 1.5 -font "Monospace 10" -opacity "50" -lines 4 -line-margin 4 -width 400px -padding 30px -terminal urxvt
 
-# change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
-# move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
-# split in horizontal orientation
-bindsym $mod+h split h
-
-# split in vertical orientation
-bindsym $mod+v split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
-
-# Worspace IDs
+## Workspaces and Windows
 #
-set $workspace2 "2: Browser"
 set $workspace1 "1: Terminals"
+set $workspace2 "2: Browser"
 set $workspace3 "3: Discord"
 set $workspaceSteam "5: Steam"
 set $workspaceOrganize "4: Life"
 set $workspace7 "7: Krita"
-
-# switch to workspace
-bindsym $mod+1 workspace $workspace1
-bindsym $mod+2 workspace $workspace2
-bindsym $mod+3 workspace $workspace3
-bindsym $mod+4 workspace $workspaceOrganize
-bindsym $mod+5 workspace $workspaceSteam
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace $workspace7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
-
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $workspace1
-bindsym $mod+Shift+2 move container to workspace $workspace2
-bindsym $mod+Shift+3 move container to workspace $workspace3
-bindsym $mod+Shift+4 move container to workspace $workspaceOrganize
-bindsym $mod+Shift+5 move container to workspace $workspaceSteam
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace $workspace7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+set $workspace8 "8"
 
 # Window Assigns
 assign [class="Firefox"] $workspace2
@@ -114,14 +41,104 @@ assign [class="Log"] $workspaceOrganize
 assign [class="krita"] $workspace7
 assign [class="Ufraw"] $workspace8
 
-bindsym $mod+Ctrl+Shift+Right move workspace to output right
-bindsym $mod+Ctrl+Shift+Left move workspace to output left
-
 ## Window Settings
 for_window [class="^.*"] border pixel 0
 for_window [class="Qyllium"] floating enable
 for_window [class="Qyllium"] move position 50 50
 for_window [class="Tracker"] floating enable
+
+# switch to workspace
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+Shift+1 move container to workspace $workspace1
+
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+Shift+2 move container to workspace $workspace2
+
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+Shift+3 move container to workspace $workspace3
+
+bindsym $mod+4 workspace $workspaceOrganize
+bindsym $mod+Shift+4 move container to workspace $workspaceOrganize
+
+bindsym $mod+5 workspace $workspaceSteam
+bindsym $mod+Shift+5 move container to workspace $workspaceSteam
+
+bindsym $mod+6 workspace 6
+bindsym $mod+Shift+6 move container to workspace 6
+
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+Shift+7 move container to workspace $workspace7
+
+bindsym $mod+8 workspace $workspace8
+bindsym $mod+Shift+8 move container to workspace $workspace8
+
+bindsym $mod+9 workspace 9
+bindsym $mod+Shift+9 move container to workspace 9
+
+bindsym $mod+0 workspace 10
+bindsym $mod+Shift+0 move container to workspace 10
+
+
+# moving focus to the left
+bindsym $mod+Left focus left
+# moving the window to the left
+bindsym $mod+Shift+Left move left
+# moving the workspace to the left screen
+bindsym $mod+Ctrl+Shift+Left move workspace to output left
+
+# moving the focus down
+bindsym $mod+Down focus down
+# moving the window down
+bindsym $mod+Shift+Down move down
+
+# moving the focus up
+bindsym $mod+Up focus up
+# moving the window up
+bindsym $mod+Shift+Up move up
+
+# moving the focus right
+bindsym $mod+Right focus right
+# moving the window right
+bindsym $mod+Shift+Right move right
+# moving the workspace to the right
+bindsym $mod+Ctrl+Shift+Right move workspace to output right
+
+
+
+bindsym $mod+a focus parent # focus the parent container
+
+bindsym $mod+e layout toggle split # change container layout (split)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+bindsym $mod+f fullscreen toggle 
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+Shift+h move left
+
+bindsym $mod+j focus down
+bindsym $mod+Shift+j move down
+
+bindsym $mod+k focus up
+bindsym $mod+Shift+k move up
+
+bindsym $mod+l focus right
+bindsym $mod+Shift+l move right
+
+
+bindsym $mod+s layout stacking # change container layout (stacking)
+
+# split in vertical orientation
+bindsym $mod+v split vertical 
+
+bindsym $mod+w layout tabbed 
+
+bindsym $mod+space focus mode_toggle 
+bindsym $mod+Shift+space floating toggle 
+
+
+
+
 new_window none 
 
 # Log Settings
@@ -141,9 +158,13 @@ bindsym $mod+backslash [instance="dropdown"] scratchpad show; [instance="dropdow
 
 bindsym $sup+backslash [instance="dropdown"] move scratchpad
 
+for_window [class="csgo_linux64"] move scratchpad
+bindsym $mod+Ctrl+P [class="csgo_linux64"] scratchpad show
+bindsym $mod+Shift+P [class="csgo_linux64"] move scratchpad
 ## Organize Workspace thingamajig
 # Opening Log
 exec --no-startup-id /home/daniel/.config/itch/apps/Log/Log-linux-x64/Log
+exec --no-startup-id /home/daniel/.config/itch/apps/Qyllium/Qyllium-linux-x64/Qyllium
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -151,8 +172,6 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # suspend the system
 bindsym $mod+Alt_R+s exec pm-suspend
@@ -212,13 +231,6 @@ bindsym $mod+Shift+x exec ~/.config/i3/lock.sh
 
 exec ~/.comptonstart.sh
 
-
-# Wallpaper
-#
-exec_always wal -i "~/Pictures/Wallpapers/wallpaper.jpg"
-exec_always feh --bg-scale ~/Pictures/Wallpapers/wallpaper.jpg
-
-
 # Screenshots
 #
 set $screenshot_file '~/Pictures/Screenshots/%Y-%m-%d_%H-%M-$wx$h.png'
@@ -231,11 +243,12 @@ exec xsetwacom set "Wacom Intuos PT S 2 Pen stylus" MapToOutput HEAD-0
 
 # Window Settings
 # xrandr Command
-exec_always xrandr --output DVI-D-0 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-0 --off --output DVI-I-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output DVI-I-0 --off --output DP-1 --off --output DP-0 --off
+exec_always xrandr --output DP-1 --off --output DVI-I-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output DVI-D-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --off
+
 
 # Pulse Audio Controls
-bindsym $mod+F3 exec --no-startup-id pactl set-sink-volume 0 +2.5% #increase volume
-bindsym $mod+F2 exec --no-startup-id pactl set-sink-volume 0 -2.5% #decrease volume
+bindsym $mod+F3 exec --no-startup-id pactl set-sink-volume 0 +1.5% #increase volume
+bindsym $mod+F2 exec --no-startup-id pactl set-sink-volume 0 -1.5% #decrease volume
 
 # Mouse senisitivity
 #
@@ -262,4 +275,5 @@ exec qutebrowser
 exec_always taskkill -a dbus
 exec --no-startup-id "dunst -config ~/.config/dunst/dunstrc"
 
-for_window [class="qutebrowser"] move $workspace2
+for_window [class="qutebrowser"] move workspace $workspace2
+
