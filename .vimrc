@@ -1,4 +1,4 @@
-" mOUSe
+" Mouse
 set mouse=a
 
 " Share clipboard outside of vim
