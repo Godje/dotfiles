@@ -265,7 +265,7 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 # Keyboard Layouts
 exec_always setxkbmap -layout us,ua,ru
-exec_always setxkbmap -option 'grp:rshift_toggle'
+exec_always setxkbmap -option 'grp:rshift_toggle,ctrl:nocaps'
 
 # execs
 #

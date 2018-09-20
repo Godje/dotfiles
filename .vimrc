@@ -1,10 +1,8 @@
-<<<<<<< HEAD
 " Mouse
 =======
 norm 1G
 set nocompatible
 " mOUSe
->>>>>>> refs/remotes/origin/master
 set mouse=a
 
 " Share clipboard outside of vim
@@ -86,6 +84,8 @@ noremap <silent> <Leader>w :call ToggleWrapCustom()<CR>
 """"""""""""""""""
 " "" General Binds
 inoremap <Home> <Esc>^i
+nnoremap x "_d1l
+vnoremap x "_d
 
 " NERDTree Commands and binds
 map <C-n> :NERDTreeToggle<CR>
@@ -154,10 +154,10 @@ function! ToggleWrapCustom()
 endfunction
 
 " "" Javascript Binds
-autocmd FileType javascript.jsx inoremap <Leader>f function (<++>){<++>}<Esc>F(i
-autocmd FileType javascript.jsx inoremap <Leader>l console.log()<Esc>i
-autocmd FileType javascript.jsx inoremap <Leader>t this.
-autocmd FileType javascript.jsx inoremap <Leader><Space> <Esc>/<++><CR>d4li
+autocmd FileType javascript inoremap <Leader>f function (<++>){<++>}<Esc>F(i
+autocmd FileType javascript inoremap <Leader>l console.log()<Esc>i
+autocmd FileType javascript inoremap <Leader>t this.
+autocmd FileType javascript inoremap <Leader><Space> <Esc>/<++><CR>v3l"_di
 
 " "" Javascript Folding
 augroup javascript_folding
