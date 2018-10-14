@@ -173,7 +173,7 @@ com! VimrcEdit tabedit ~/.vimrc
 com! MakeSesh mks! vimsession.vim
 " "" Markdown binds
 autocmd FileType markdown inoremap <Leader>b **** <++><Esc>F*hi
-autocmd FileType markdown inoremap <Leader><Space> <Esc>/<++><CR>caw
+autocmd FileType markdown inoremap <Leader><Space> <Esc>/<++><CR>v3l"_di
 autocmd FileType markdown inoremap <Leader>i ** <++><Esc>F*i
 
 " "" FIX ARROW KEYS
