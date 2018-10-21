@@ -1,5 +1,3 @@
-qq
-open_with 7z
 kkk
 cd /media/daniel/therest/bibleblocks/
 search portal
@@ -43,8 +41,10 @@ shell sudo k3b
 bulkrename 
 find Sha
 rename Sharikov Family Band - Gospodi, Vselennuyu (minus).mp3
-delete
 find Shk
 find Shar
 shell bash
+delete
+open_with 
+refresh
 shell thunar .

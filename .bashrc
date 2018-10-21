@@ -142,6 +142,7 @@ alias rangre="ranger" #just because I always make mistakes
 alias bsyncdefault="browser-sync --watch"
 alias minecraft="java -jar ~/Downloads/Minecraft.jar"
 alias mcss="~/Documents/scripts/mcss.sh"
+alias gulp-dev="~/Documents/scripts/gulp-dev.sh"
 
 alias screenkey="/media/daniel/therest/linux/github/software/screenkey-0.9/screenkey"
 
