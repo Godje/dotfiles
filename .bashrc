@@ -137,10 +137,14 @@ alias ecfg="vim ~/.config/i3/config"
 alias evrc="vim ~/.vimrc"
 alias exres="vim ~/.Xresources"
 alias vims="vim -S vimsession.vim"
-alias r="ranger"
-alias rangre="ranger"
+alias r="ranger" 
+alias rangre="ranger" #just because I always make mistakes
 alias bsyncdefault="browser-sync --watch"
-alias webpackDEV="webpack-dev-server --mode development"
-alias webpackPROD="webpack-dev-server --mode production"
+alias minecraft="java -jar ~/Downloads/Minecraft.jar"
+alias mcss="~/Documents/scripts/mcss.sh"
+alias gulp-dev="~/Documents/scripts/gulp-dev.sh"
 
 alias screenkey="/media/daniel/therest/linux/github/software/screenkey-0.9/screenkey"
+
+export NVM_DIR="/home/daniel/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
