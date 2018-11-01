@@ -1,5 +1,4 @@
 " Mouse
-=======
 norm 1G
 set nocompatible
 " mOUSe
