@@ -125,6 +125,9 @@ mp3towav(){
 		[[ -f "$i" ]] && { echo -n "Processing ${i}..."; mpg123 -w "${out}" "$i" &>/dev/null  && echo "done." || echo "failed."; }
 	done	
 }
+tattach(){
+	tmux attach -t $1
+}
 
 export TERM=xterm-256color
 export GOPATH=$HOME/go
