@@ -128,6 +128,9 @@ mp3towav(){
 tattach(){
 	tmux attach -t $1
 }
+videodnxhd(){
+	ffmpeg -i $1 -c:v dnxhd -vf "scale=1920:1080,fps=25/1,format=yuv422p10" -b:v $2 -c:a pcm_s16le $3
+}
 
 export TERM=xterm-256color
 export GOPATH=$HOME/go

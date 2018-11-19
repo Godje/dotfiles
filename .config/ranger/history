@@ -1,17 +1,3 @@
-shell bul
-shell sudo k
-shell kid3
-shell sudo k3b
-find Sha
-rename Sharikov Family Band - Gospodi, Vselennuyu (minus).mp3
-find Shk
-find Shar
-refresh
-open_with g
-shell thunar . %s
-shell convert -i %s -resize 2000x output.jpg
-find output.
-find oupuk
 open_with kkk
 deletek
 shell convert %s -resize 2600x 2930.jpg
@@ -42,9 +28,23 @@ rename authors
 rename anime
 mkdir SC LOAD 4
 open_with 
-shell thunar .
 shell mkdir 
 mkdir snares
+rename song.svg
+shell ufraw %s
 shell thunar 
-delete
+search nebo
+search небо
+search make
+mkdir davicni
 shell bash
+search Resolve
+search resolve
+search test
+rename shape-of-you.jpg
+shell thunar .
+convert %s -crop 0x0++600
+shell convert %s -crop 0x0++600 output.jpg
+deletekkkk
+delete
+

@@ -5,10 +5,10 @@
 # It runs gulp, vim, and ranger in three separate panes
 # Script later runs commands and renames each window to the name I prefer or to the name I tell it to.
 
-
 # basic vars
 CWD=$(pwd)
-SESSION_NAME="dev-env"
+DIRECTORY_NAME=${PWD##*/}
+SESSION_NAME="dev-env-${DIRECTORY_NAME:0:2}"
 
 # setup
 GULP_INFO=("gulp" "npm run start")
