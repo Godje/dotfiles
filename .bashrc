@@ -132,6 +132,18 @@ videodnxhd(){
 	ffmpeg -i $1 -c:v dnxhd -vf "scale=1920:1080,fps=25/1,format=yuv422p10" -b:v $2 -c:a pcm_s16le $3
 }
 
+commit(){
+	if [[ "$1" == "sepuku" ]]; then
+		logout
+	fi
+	if [[ "$1" == "sudoku" ]]; then
+		sudo systemctl suspend
+	fi
+	if [[ "$1" == "lifent" ]]; then
+		sudo shutdown -P now
+	fi
+}
+
 export TERM=xterm-256color
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
