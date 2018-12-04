@@ -16,9 +16,12 @@ set undolevels=1000
 
 " Fold level
 set foldlevelstart=20
-"
+
 " Automatically update the file, on it's change
 set autoread
+
+" Split will be on the right and bottom, if I :split
+set splitbelow splitright
 
 """""""""""""""""""
 " Looks and feels "
