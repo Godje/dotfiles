@@ -145,6 +145,9 @@ commit(){
 	if [[ "$1" == "lifent" ]]; then
 		sudo shutdown -P now
 	fi
+	if [[ "$1" == "tensei" ]]; then
+		sudo shutdown -r now
+	fi
 }
 
 export TERM=xterm-256color
