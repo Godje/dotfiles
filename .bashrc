@@ -150,6 +150,14 @@ commit(){
 	fi
 }
 
+encryptedit(){
+	filename=$(basename $1 .gpg)
+	gpg -d --quiet $1 | cat >> $filename 
+	vim $filename 
+	gpg -c $filename 
+	rm $filename
+}
+
 export TERM=xterm-256color
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
