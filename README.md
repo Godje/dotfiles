@@ -7,14 +7,19 @@ This is a repository where I keep my dotfiles. I have them symlinked on my Linux
 
 ## My Linux setup basic information
 
-- **Distro:** Ubuntu 18.04 64-bit
-- **WM:** i3-wm || Xubuntu (for CSGO)
+- **Distro:** Ubuntu 18.10 64-bit
+- **WM:** i3-wm
 - **Terminal:** urxvt (rxvt-256unicode)
 - **Editor:** Vim
 
 * * *
 
 ## My current rice
+
+Deleted the bloat, like Rofi or Polybar. Using default i3blocks (might change it).
+Borders instead of shadows on focused windows. Also connected i3wm colors to `pywal`.
+
+[My rice](newrice.jpg)
 
 * * *
 
