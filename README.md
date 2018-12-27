@@ -16,7 +16,11 @@ This is a repository where I keep my dotfiles. I have them symlinked on my Linux
 
 ## My current rice
 
-![My rice](rice.jpg)
+* * *
+
+### My old rice (Jan 2018)
+
+ ![My rice](oldrice.jpg)
 
 You can find **polybar** and **neofetch** config in `.config` folder.
 

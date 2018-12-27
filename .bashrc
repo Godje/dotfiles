@@ -116,6 +116,17 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Import colorscheme from 'wal' asynchronously
+# &   # Run the process in the background.
+# ( ) # Hide shell job control messages.
+(cat ~/.cache/wal/sequences &)
+
+# Alternative (blocks terminal for 0-3ms)
+cat ~/.cache/wal/sequences
+
+# To add support for TTYs this line can be optionally added.
+source ~/.cache/wal/colors-tty.sh
+
 mp3towav(){
 	[[ $# -eq 0 ]] && { echo "mp3wav mp3file"; exit 1; }
 	for i in "$@"
@@ -161,25 +172,25 @@ encryptedit(){
 	rm $filename
 }
 
-export TERM=xterm-256color
+export TERM=rxvt-unicode
+export EDITOR="vim"
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts/
 
-
-alias nf="neofetch --backend 'w3m' --source 'wallpaper' --size 300px"
+alias nf="neofetch --w3m --source wallpaper --size 280"
 alias memPID="ps aux | awk '{print $2, $4, $11}' | sort -k2rn | head -n 20"
 alias ecfg="vim ~/.config/i3/config"
 alias evrc="vim ~/.vimrc"
 alias exres="vim ~/.Xresources"
 alias vims="vim -S vimsession.vim"
 alias r="ranger" 
+alias vi="vim"
 alias rangre="ranger" #just because I always make mistakes
-alias bsyncdefault="browser-sync --watch"
 alias minecraft="java -jar ~/Downloads/Minecraft.jar"
-alias mcss="~/Documents/scripts/mcss.sh"
-alias gulp-dev="~/Documents/scripts/gulp-dev.sh"
 
-alias screenkey="/media/daniel/therest/linux/github/software/screenkey-0.9/screenkey"
+alias screenkey="/mnt/daniel/therest/linux/github/software/screenkey-0.9/screenkey"
 
 export NVM_DIR="/home/daniel/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH-}:/usr/lib32:/usr/lib32/fglrx"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

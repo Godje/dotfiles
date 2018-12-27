@@ -1,214 +1,151 @@
-# Defining a buncha variables
-set $term       urxvt
-set $mod        Mod1
-set $sup        Mod4
+## ========
+## Default Variables
+## ========
+
+set $TERMINAL urxvt
+set $sup Mod4
+set $mod Mod1
+
+font pango:monospace 8
 
 floating_modifier $mod
 
-font pango:monospace 9
-
-# Start a terminal
+# start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
-# Kill focused window
+# kill focused window
 bindsym $mod+Shift+q kill
 
-# Rofi config.
-bindsym $mod+shift+Return exec rofi -show run -location 2 -xoffset 0px -yoffset 19px -bw 0 -eh 1.5 -font "Monospace 10" -opacity "50" -lines 4 -line-margin 4 -width 400px -padding 30px -terminal urxvt
+bindsym $mod+Shift+Return exec dmenu_run
 
-## Workspaces and Windows
-#
-set $workspace1 "1: Terminals"
-set $workspace2 "2: Browser"
-set $workspace3 "3: Discord"
-set $workspaceSteam "5: Steam"
-set $workspaceOrganize "4: Life"
-set $workspace7 "7: Krita"
-set $workspace8 "8"
-
-# Window Assigns
-assign [class="Firefox"] $workspace2
-assign [class="discord"] $workspace3
-assign [class="Steam"] $workspaceSteam
-assign [class="csgo_linux64"] $workspaceSteam
-assign [class="itch"] $workspaceOrganize
-assign [class="Log"] $workspaceOrganize
-assign [class="URxvt"] $workspace1
-assign [class="Terraria.bin.x86"] $workspaceSteam
-assign [class="csgo_linux64"] $workspaceSteam
-assign [class="Minecraft*"] $workspaceSteam
-assign [class="Log"] $workspaceOrganize
-assign [class="krita"] $workspace7
-assign [class="Ufraw"] $workspace8
-
-## Window Settings
-for_window [class="^.*"] border pixel 0
-for_window [class="Qyllium"] floating enable
-for_window [class="Qyllium"] move position 50 50
-for_window [class="Tracker"] floating enable
-
-# switch to workspace
-bindsym $mod+1 workspace $workspace1
-bindsym $mod+Shift+1 move container to workspace $workspace1
-
-bindsym $mod+2 workspace $workspace2
-bindsym $mod+Shift+2 move container to workspace $workspace2
-
-bindsym $mod+3 workspace $workspace3
-bindsym $mod+Shift+3 move container to workspace $workspace3
-
-bindsym $mod+4 workspace $workspaceOrganize
-bindsym $mod+Shift+4 move container to workspace $workspaceOrganize
-
-bindsym $mod+5 workspace $workspaceSteam
-bindsym $mod+Shift+5 move container to workspace $workspaceSteam
-
-bindsym $mod+6 workspace 6
-bindsym $mod+Shift+6 move container to workspace 6
-
-bindsym $mod+7 workspace $workspace7
-bindsym $mod+Shift+7 move container to workspace $workspace7
-
-bindsym $mod+8 workspace $workspace8
-bindsym $mod+Shift+8 move container to workspace $workspace8
-
-bindsym $mod+9 workspace 9
-bindsym $mod+Shift+9 move container to workspace 9
-
-bindsym $mod+0 workspace 10
-bindsym $mod+Shift+0 move container to workspace 10
-
-
-# moving focus to the left
-bindsym $mod+Left focus left
-# moving the window to the left
-bindsym $mod+Shift+Left move left
-# moving the workspace to the left screen
-bindsym $mod+Ctrl+Shift+Left move workspace to output left
-
-# moving the focus down
-bindsym $mod+Down focus down
-# moving the window down
-bindsym $mod+Shift+Down move down
-
-# moving the focus up
-bindsym $mod+Up focus up
-# moving the window up
-bindsym $mod+Shift+Up move up
-
-# moving the focus right
-bindsym $mod+Right focus right
-# moving the window right
-bindsym $mod+Shift+Right move right
-# moving the workspace to the right
-bindsym $mod+Ctrl+Shift+Right move workspace to output right
-
-
-
-bindsym $mod+a focus parent # focus the parent container
-
-bindsym $mod+e layout toggle split # change container layout (split)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
-bindsym $mod+f fullscreen toggle 
+## ========
+## Window Controls
+## ========
 
 # change focus
 bindsym $mod+h focus left
-bindsym $mod+Shift+h move left
-
 bindsym $mod+j focus down
-bindsym $mod+Shift+j move down
-
 bindsym $mod+k focus up
-bindsym $mod+Shift+k move up
-
 bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
 
-bindsym $mod+s layout stacking # change container layout (stacking)
+# split modes
+bindsym $mod+s split h
+bindsym $mod+v split v
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
 
-# split in vertical orientation
-bindsym $mod+v split vertical 
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
 
-bindsym $mod+w layout tabbed 
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
 
-bindsym $mod+space focus mode_toggle 
-bindsym $mod+Shift+space floating toggle 
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
 
+# focus the parent container
+bindsym $mod+a focus parent
 
-new_window none 
+# focus the child container
+#bindsym $mod+d focus child
 
-# Log Settings
-for_window [class="Log"] floating enable
-for_window [class="Log"] resize set 1025 800
-for_window [class="Log"] move position center
+## ========
+## WORKSPACE SETTINGS
+## ========
 
-## Dropdown terminal
-# Setting the window instance and executing it
+# naming workspaces
+set $ws1 "I"
+set $ws2 "II"
+set $ws3 "III"
+set $ws4 "IV"
+set $ws5 "V"
+set $ws6 "VI"
+set $ws7 "VII"
+set $ws8 "VIII"
+set $ws9 "IX"
+set $ws10 "X"
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Ctrl+Shift+Left move workspace to output left
+bindsym $mod+Ctrl+Shift+Right move workspace to output right
+
+# window assignments
+assign [class="steam"] $ws5
+assign [class="Firefox"] $ws2
+assign [class="qutebrowser"] $ws2
+assign [class="csgo_linux64"] $ws5
+assign [class="URxvt"] $ws1
+assign [class="Krita"] $ws7
+
+# window settings
+for_window [class="^.*"] border pixel 3
+for_window [class="csgo_linux64"] border pixel 0
+
+## i3 Configuration Files
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# leave i3
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+## Dropdown Terminal
+# setting the window instance and executing it
 for_window [instance="dropdown"] floating enable
 for_window [instance="dropdown"] resize set 975 600
 for_window [instance="dropdown"] move scratchpad
 for_window [instance="dropdown"] move position center
 exec --no-startup-id "urxvt -name dropdown"
-# Mapping key to toggle it
+
+# mapping key to toggle it
 bindsym $mod+backslash [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
 
-bindsym $sup+backslash [instance="dropdown"] move scratchpad
+## ========
+## Modes
+## ========
 
-for_window [class="csgo_linux64"] move scratchpad
-bindsym $mod+Ctrl+P [class="csgo_linux64"] scratchpad show
-bindsym $mod+Shift+P [class="csgo_linux64"] move scratchpad
-## Organize Workspace thingamajig
-# Opening Log
-exec --no-startup-id /home/daniel/.config/itch/apps/Log/Log-linux-x64/Log
-exec --no-startup-id /home/daniel/.config/itch/apps/Qyllium/Qyllium-linux-x64/Qyllium
-
-# reload the configuration file
-bindsym $mod+Shift+c reload
-
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-
-
-# suspend the system
-bindsym $mod+Alt_R+s exec pm-suspend
-
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym semicolon resize grow width 5 px or 5 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 5 px or 5 ppt
-        bindsym Down resize grow height 5 px or 5 ppt
-        bindsym Up resize shrink height 5 px or 5 ppt
-        bindsym Right resize grow width 5 px or 5 ppt
-
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
+bindsym $mod+g mode "gaps_fix"
 bindsym $mod+r mode "resize"
-
-# Gaps and other cool stuff
-
-gaps inner 15
-gaps outer 5
-
-workspace $workspace2 gaps outer 0
-workspace $workspace2 gaps inner 0
-workspace $workspace7 gaps inner 0
-workspace $workspace7 gaps outer 0
 
 mode "gaps_fix" {
 	bindsym Left gaps inner current minus 1
@@ -220,58 +157,63 @@ mode "gaps_fix" {
 	bindsym Return mode "default"
 }
 
-bindsym $mod+g mode "gaps_fix"
+mode "resize" {
+	bindsym h resize shrink width 10 px or 10 ppt
+	bindsym j resize grow height 10 px or 10 ppt
+	bindsym k resize shrink height 10 px or 10 ppt
+	bindsym l resize grow width 10 px or 10 ppt
+	
+	# same bindings, but for the arrow keys
+	bindsym Left resize shrink width 10 px or 10 ppt
+	bindsym Down resize grow height 10 px or 10 ppt
+	bindsym Up resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow width 10 px or 10 ppt
+	
+	# back to normal: Enter or Escape or $mod+r
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym $mod+r mode "default"
+}
+
+bar {
+	position top
+	status_command i3blocks
+}
+
+## ========
+## Wal/Pywal settigns
+## ========
+set_from_resource $fg i3wm.color1
+set_from_resource $bg i3wm.color7
+
+client.focused	$fb $bg	$fg	$bg	$bg
+client.unfocused	$bb $bg	$fg	$bg	$bg
+
+## ========
+## Other binds
+## ========
 
 bindsym $mod+Shift+x exec ~/.config/i3/lock.sh
-
-## NVIDIA FIX
-# more here https://www.reddit.com/r/archlinux/comments/3ich4y/nvidia_proprietary_driver_performance/cuh96m0/
-
-exec ~/.comptonstart.sh
-
-# Screenshots
-#
-set $screenshot_file '~/Pictures/Screenshots/%Y-%m-%d_%H-%M-$wx$h.png'
-bindsym Print exec scrot -s --selection-delay 300 $screenshot_file
-bindsym Shift+Print exec scrot --clipboard -s --selection-delay 300 $screenshot_file
-
-# Wacom Settings
-exec xsetwacom set "Wacom Intuos PT S 2 Pen stylus" MapToOutput HEAD-0
-
-
-# Window Settings
-# xrandr Command
-exec_always xrandr --output DP-1 --off --output DVI-I-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output DVI-D-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --off
-
-
-# Pulse Audio Controls
 bindsym $mod+F3 exec --no-startup-id pactl set-sink-volume 0 +1.5% #increase volume
 bindsym $mod+F2 exec --no-startup-id pactl set-sink-volume 0 -1.5% #decrease volume
 
-# Mouse senisitivity
-#
-# exec_always xinput set-prop 11 328 -0.857851
-exec_always ~/Documents/scripts/sensitivity.sh
-mouse_warping none
-# Exec Always
-exec_always wal -c
-exec_always wal -R
+# gaps settings
+gaps inner 20
+gaps outer 10
+
+
+## ========
+## Boot executions
+## ========
+
+# commands
 exec_always "xrdb -merge ~/.Xresources"
-
-#Polybar
-exec_always --no-startup-id ~/.config/polybar/launch.sh
-
-# Keyboard Layouts
+exec_always "wal -R"
 exec_always setxkbmap -layout us,ua,ru
 exec_always setxkbmap -option 'grp:rshift_toggle,ctrl:nocaps'
 
-# execs
-#
-exec discord
-exec qutebrowser
-
-exec_always taskkill -a dbus
-exec --no-startup-id "dunst -config ~/.config/dunst/dunstrc"
-
-for_window [class="qutebrowser"] move workspace $workspace2
-
+# scripts
+exec "~/.comptonstart.sh"
+exec_always "~/.screenlayout/default.sh"
+exec_always "~/Documents/scripts/sensitivity.sh"
+exec_always "~/Documents/scripts/tablet.sh"

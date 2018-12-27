@@ -13,6 +13,7 @@ set noswapfile
 " Make commands and undo history bigger
 set history=1000
 set undolevels=1000
+set encoding=UTF-8
 
 " Fold level
 set foldlevelstart=20
@@ -87,6 +88,7 @@ noremap <silent> <Leader>w :call ToggleWrapCustom()<CR>
 " "" General Binds
 inoremap <Home> <Esc>^i
 nnoremap x "_d1l
+nnoremap X "_D
 vnoremap x "_d
 
 " NERDTree Commands and binds
