@@ -19,7 +19,7 @@ This is a repository where I keep my dotfiles. I have them symlinked on my Linux
 Deleted the bloat, like Rofi or Polybar. Using default i3blocks (might change it).
 Borders instead of shadows on focused windows. Also connected i3wm colors to `pywal`.
 
-[My rice](newrice.jpg)
+ ![My rice](newrice.jpg)
 
 * * *
 
