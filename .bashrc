@@ -136,6 +136,8 @@ mp3towav(){
 		[[ -f "$i" ]] && { echo -n "Processing ${i}..."; mpg123 -w "${out}" "$i" &>/dev/null  && echo "done." || echo "failed."; }
 	done	
 }
+
+# TMUX shortcuts
 tattach(){
 	tmux attach -t $1
 }
@@ -145,10 +147,13 @@ tlist(){
 tnew(){
 	tmux new-session -t $1
 }
+
+# Converting videos for DaVinci Resolve
 videodnxhd(){
 	ffmpeg -i $1 -c:v dnxhd -vf "scale=1920:1080,fps=25/1,format=yuv422p10" -b:v $2 -c:a pcm_s16le $3
 }
 
+# a meme
 commit(){
 	if [[ "$1" == "sepuku" ]]; then
 		logout
@@ -163,7 +168,9 @@ commit(){
 		sudo shutdown -r now
 	fi
 }
+complete -W "sudoku sepuku lifent tensei" commit
 
+# editing encrypted gpg file
 encryptedit(){
 	filename=$(basename $1 .gpg)
 	gpg -d --quiet $1 | cat >> $filename 
@@ -172,23 +179,31 @@ encryptedit(){
 	rm $filename
 }
 
-export TERM=rxvt-unicode
+# Other
+mdpdf (){
+	markdown-pdf -s ~/Documents/scripts/github.css $1
+}
+
+export TERM=rxvt-unicode-256color
 export EDITOR="vim"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts/
 
-alias nf="neofetch --w3m --source wallpaper --size 280"
+alias nf="neofetch --w3m --source wallpaper --size 300"
 alias memPID="ps aux | awk '{print $2, $4, $11}' | sort -k2rn | head -n 20"
 alias ecfg="vim ~/.config/i3/config"
+alias ebash="vim ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias exres="vim ~/.Xresources"
 alias vims="vim -S vimsession.vim"
+alias ls="ls --color=never"
 alias r="ranger" 
 alias vi="vim"
 alias rangre="ranger" #just because I always make mistakes
 alias minecraft="java -jar ~/Downloads/Minecraft.jar"
 
-alias screenkey="/mnt/daniel/therest/linux/github/software/screenkey-0.9/screenkey"
+alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
+alias telegram="/media/daniel/therest/linux/installed_software/Telegram &"
 
 export NVM_DIR="/home/daniel/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

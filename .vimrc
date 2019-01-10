@@ -96,18 +96,7 @@ map <C-n> :NERDTreeToggle<CR>
 
 " Russian binds
 "
-map р h
-map о j
-map л k
-map д l
-map Щ O
-map щ o
-map ф a
-map Ф A
-map г u
-map Ж :
-map т n
-map в d
+set langmap=рh,оj,лk,дl,ЩO,щo,фa,ФA,гu,Ж:,тn,вd,сc,шi,мv,МV,цw,ЦW,уe,УE,иb,ИB,ґ\\,иb,нy,НY,зp,ЗP,чx,вd,ВD
 
 " Word Counting Function
 function! WordCount()

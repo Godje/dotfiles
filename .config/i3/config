@@ -135,7 +135,7 @@ for_window [instance="dropdown"] floating enable
 for_window [instance="dropdown"] resize set 975 600
 for_window [instance="dropdown"] move scratchpad
 for_window [instance="dropdown"] move position center
-exec --no-startup-id "urxvt -name dropdown"
+exec --no-startup-id "urxvt -name dropdown -t tmux"
 
 # mapping key to toggle it
 bindsym $mod+backslash [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
