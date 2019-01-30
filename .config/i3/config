@@ -49,7 +49,7 @@ bindsym $mod+Shift+Right move right
 # split modes
 bindsym $mod+s split h
 bindsym $mod+v split v
-bindsym $mod+w layout tabbed
+bindsym $mod+Shift+W layout tabbed
 bindsym $mod+e layout toggle split
 
 # enter fullscreen mode for the focused container
@@ -72,18 +72,22 @@ bindsym $mod+a focus parent
 ## ========
 
 # naming workspaces
-set $ws1 "I"
-set $ws2 "II"
-set $ws3 "III"
-set $ws4 "IV"
-set $ws5 "V"
-set $ws6 "VI"
-set $ws7 "VII"
-set $ws8 "VIII"
-set $ws9 "IX"
-set $ws10 "X"
+set $wsq " QQ "
+set $wsw " WW "
+set $ws1 "  I  "
+set $ws2 "  II  "
+set $ws3 " III "
+set $ws4 "  IV  "
+set $ws5 "  V  "
+set $ws6 "  VI  "
+set $ws7 " VII "
+set $ws8 " VIII "
+set $ws9 "  IX  "
+set $ws10 "  X  "
 
 # switch to workspace
+bindsym $mod+q workspace $wsq
+bindsym $mod+w workspace $wsw
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -110,10 +114,11 @@ bindsym $mod+Ctrl+Shift+Left move workspace to output left
 bindsym $mod+Ctrl+Shift+Right move workspace to output right
 
 # window assignments
-assign [class="steam"] $ws5
+assign [class="Steam"] $ws5
 assign [class="Firefox"] $ws2
 assign [class="qutebrowser"] $ws2
 assign [class="csgo_linux64"] $ws5
+assign [class="Terraria*"] $ws5
 assign [class="URxvt"] $ws1
 assign [class="Krita"] $ws7
 
@@ -132,14 +137,14 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 ## Dropdown Terminal
 # setting the window instance and executing it
 for_window [instance="dropdown"] floating enable
-for_window [instance="dropdown"] resize set 975 600
+for_window [instance="dropdown"] resize set 625 400
 for_window [instance="dropdown"] move scratchpad
 for_window [instance="dropdown"] move position center
 exec --no-startup-id "urxvt -name dropdown"
 
 # mapping key to toggle it
 bindsym $mod+backslash [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
-
+# bindsym $mod+backslash exec --no-startup-id "open_dropdown" 
 ## ========
 ## Modes
 ## ========

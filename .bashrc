@@ -188,6 +188,7 @@ export TERM=rxvt-unicode-256color
 export EDITOR="vim"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts/
+export DROPDOWN_OPEN="false"
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias memPID="ps aux | awk '{print $2, $4, $11}' | sort -k2rn | head -n 20"
@@ -203,7 +204,7 @@ alias rangre="ranger" #just because I always make mistakes
 alias minecraft="java -jar ~/Downloads/Minecraft.jar"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
-alias telegram="/media/daniel/therest/linux/installed_software/Telegram &"
+alias telegram="/media/daniel/therest/linux/installed_software/Telegram/Telegram &"
 
 export NVM_DIR="/home/daniel/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

@@ -10,6 +10,7 @@ tmux new-session -d -s $SESSION_NAME -x "$2" -y "$(($1 - 1))"
 
 tmux new-window -t $SESSION_NAME:1 -n "server"
 tmux new-window -t $SESSION_NAME:2 -n "client"
+tmux new-window -t $SESSION_NAME:3 -n "notes"
 
 tmux select-window -t $SESSION_NAME:1
 tmux send-keys "cd /media/daniel/therest/rc/ && ./start.sh" C-m
@@ -18,6 +19,10 @@ tmux rename-window -t $SESSION_NAME:1 "server"
 tmux select-window -t $SESSION_NAME:2
 tmux send-keys "java -jar ~/Downloads/Minecraft.jar" C-m
 tmux rename-window -t $SESSION_NAME:2 "client"
+
+tmux select-window -t $SESSION_NAME:3
+tmux send-keys "cd /media/daniel/therest/rc/ && vim notes.md" C-m
+tmux rename-window -t $SESSION_NAME:3 "notes"
 
 tmux kill-window -t 0
 tmux attach -t $SESSION_NAME

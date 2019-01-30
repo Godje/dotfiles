@@ -1,2 +1,2 @@
 #!/bin/bash
-xsetwacom set "Wacom Intuos PT S 2 Pen stylus" MapToOutput HEAD-1
+xsetwacom set "Wacom Intuos PT S 2 Pen stylus" MapToOutput HEAD-0

@@ -188,6 +188,11 @@ nmap <leader>/ gcc
 " " comment out selected block in visual mode with <leader>/
 vmap <leader>/ gc
 
+" "" Limelight toggle
+nmap <Leader>l :Limelight!! 0.7<CR>
+" "" Goyo toggle
+nmap <Leader>g :Goyo<CR>
+
 " Execution of Pathogen
 execute pathogen#infect()
 
@@ -201,3 +206,6 @@ let g:lightline = {
 			\ 'tabline': 0
 			\ }
 			\ }
+let g:goyo_width = 90
+let g:goyo_height = 100
+
