@@ -211,6 +211,10 @@ gaps outer 10
 ## Boot executions
 ## ========
 
+# software
+exec --no-startup-id "discord"
+exec --no-startup-id "steam"
+exec --no-startup-id "mpd"
 # commands
 exec_always "xrdb -merge ~/.Xresources"
 exec_always "wal -R"
