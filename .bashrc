@@ -192,11 +192,9 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts:/home/daniel/.nimb
 export DROPDOWN_OPEN="false"
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
-alias memPID="ps aux | awk '{print $2, $4, $11}' | sort -k2rn | head -n 20"
 alias ecfg="vim ~/.config/i3/config"
 alias ebash="vim ~/.bashrc"
 alias evrc="vim ~/.vimrc"
-alias exres="vim ~/.Xresources"
 alias vims="vim -S vimsession.vim"
 alias r="ranger" 
 alias vi="vim"
@@ -210,5 +208,3 @@ export NVM_DIR="/home/daniel/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH-}:/usr/lib32:/usr/lib32/fglrx"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-export IDIDIT_FILE=~/.ididit_log
