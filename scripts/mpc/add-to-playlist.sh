@@ -1,10 +1,11 @@
 #!/bin/bash
 
-track="$(mpc current)"
-tname=$( echo $track | sed 's/.*\// /' ) #Just the basename
+track="$(mpc current -f %file%)" # full track name
+tname=$( echo $track | sed 's/.*\// /' ) # just the basename
 playlist=$( mpc lsplaylists | dmenu -l 9 -p "Add $tname to playlist:"  )
+plexists=$( mpc lsplaylists | grep -F $playlist -c )
 
-if [[ $playlist != "" ]]; then
+if [[ $playlist != "" ]] && [[ $plexists > 0 ]]; then
 	pwdpl=~/.mpd/playlists/$playlist.m3u
 	isthere=$( grep -F "$track" $pwdpl -c )
 
@@ -19,4 +20,13 @@ if [[ $playlist != "" ]]; then
 			sed -i "$isthere$dchar" $pwdpl
 		fi
 	fi
+else
+	confirmnew=$( echo -e "yes\nno" | dmenu -p "Create new playlist? " )
+	if [ $confirmnew == 'yes' ]; then
+		touch ~/.mpd/playlists/$playlist.m3u
+		echo $track >> ~/.mpd/playlists/$playlist.m3u
+		notify-send --urgency=low --expire-time=2350 "Playlist $playlist created" "with $tname as it's first track"
+	fi
 fi
+
+mpc update

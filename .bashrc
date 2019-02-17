@@ -160,6 +160,7 @@ commit(){
 	fi
 	if [[ "$1" == "sudoku" ]]; then
 		sudo systemctl suspend
+		~/.config/i3/lock.sh
 	fi
 	if [[ "$1" == "lifent" ]]; then
 		sudo shutdown -P now
@@ -187,7 +188,7 @@ mdpdf (){
 export TERM=rxvt-unicode-256color
 export EDITOR="vim"
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts/
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts:/home/daniel/.nimble/bin
 export DROPDOWN_OPEN="false"
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
@@ -197,7 +198,6 @@ alias ebash="vim ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias exres="vim ~/.Xresources"
 alias vims="vim -S vimsession.vim"
-alias ls="ls --color=never"
 alias r="ranger" 
 alias vi="vim"
 alias rangre="ranger" #just because I always make mistakes

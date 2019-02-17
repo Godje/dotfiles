@@ -6,7 +6,7 @@ set $TERMINAL urxvt
 set $sup Mod4
 set $mod Mod1
 
-font pango:monospace 8
+font pango:monospace 9
 
 floating_modifier $mod
 
@@ -49,7 +49,7 @@ bindsym $mod+Shift+Right move right
 # split modes
 bindsym $mod+s split h
 bindsym $mod+v split v
-bindsym $mod+Shift+W layout tabbed
+bindsym $mod+Shift+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # enter fullscreen mode for the focused container
@@ -72,8 +72,6 @@ bindsym $mod+a focus parent
 ## ========
 
 # naming workspaces
-set $wsq " QQ "
-set $wsw " WW "
 set $ws1 "  I  "
 set $ws2 "  II  "
 set $ws3 " III "
@@ -86,8 +84,6 @@ set $ws9 "  IX  "
 set $ws10 "  X  "
 
 # switch to workspace
-bindsym $mod+q workspace $wsq
-bindsym $mod+w workspace $wsw
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -121,6 +117,8 @@ assign [class="csgo_linux64"] $ws5
 assign [class="Terraria*"] $ws5
 assign [class="URxvt"] $ws1
 assign [class="Krita"] $ws7
+assign [class="Minecraft*"] $ws5
+assign [class="discord"] $ws3
 
 # window settings
 for_window [class="^.*"] border pixel 3
@@ -182,6 +180,7 @@ mode "resize" {
 
 bar {
 	position top
+	font pango:monospace 8
 	status_command i3blocks
 }
 
@@ -199,8 +198,6 @@ client.unfocused	$bb $bg	$fg	$bg	$bg
 ## ========
 
 bindsym $mod+Shift+x exec ~/.config/i3/lock.sh
-bindsym $mod+F3 exec --no-startup-id pactl set-sink-volume 0 +1.5% #increase volume
-bindsym $mod+F2 exec --no-startup-id pactl set-sink-volume 0 -1.5% #decrease volume
 
 # gaps settings
 gaps inner 20
@@ -217,7 +214,8 @@ bindsym $sup+Shift+f exec "~/Documents/scripts/mpc/add-to-playlist.sh"
 # software
 exec --no-startup-id "discord"
 exec --no-startup-id "steam"
-exec --no-startup-id "mpd"
+exec --no-startup-id "mpd ~/.mpd/.mpdconf"
+
 # commands
 exec_always "xrdb -merge ~/.Xresources"
 exec_always "wal -R"
