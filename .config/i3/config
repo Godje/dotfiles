@@ -219,8 +219,6 @@ exec --no-startup-id "mpd ~/.mpd/.mpdconf"
 # commands
 exec_always "xrdb -merge ~/.Xresources"
 exec_always "wal -R"
-exec_always setxkbmap -layout us,ua,ru
-exec_always setxkbmap -option 'grp:rshift_toggle,ctrl:nocaps'
 
 # scripts
 exec "~/.comptonstart.sh"

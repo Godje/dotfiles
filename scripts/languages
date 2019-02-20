@@ -1,4 +1,4 @@
 #!/bin/bash
 
 setxkbmap -layout us,ua,ru
-setxkbmap -option 'grp:rshift_toggle,ctrl:nocaps'
+setxkbmap -option 'grp:rctrl_toggle,ctrl:nocaps'
