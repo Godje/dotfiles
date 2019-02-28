@@ -21,7 +21,7 @@ playlist=$( mpc lsplaylists | dmenu -l 9 -p "Add $tname to playlist:"  ) # getti
 plexists=$( mpc lsplaylists | grep -F $playlist -c ) # checking if the playlist exists
 
 if [[ $playlist != "" ]] && [[ $plexists > 0 ]]; then
-	pwdpl=$playlistDirectory/$playlist.m3u
+	pwdpl=$plDirectory/$playlist.m3u
 	isthere=$( grep -F "$track" $pwdpl -c ) # checking to see if the file is already in the playlist.
 
 	if [[ $isthere == 0 ]]; then
