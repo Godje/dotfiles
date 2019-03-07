@@ -49,6 +49,7 @@ bindsym $mod+Shift+Right move right
 # split modes
 bindsym $mod+s split h
 bindsym $mod+v split v
+bindsym $mod+Shift+s layout stacked
 bindsym $mod+Shift+w layout tabbed
 bindsym $mod+e layout toggle split
 
