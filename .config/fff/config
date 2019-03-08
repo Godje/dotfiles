@@ -37,14 +37,13 @@ export FFF_CD_ON_EXIT=1
 # Trash Directory
 # Default: '${XDG_DATA_HOME}/fff/trash'
 #          If not using XDG, '${XDG_DATA_HOME}/fff/trash' is used.
-export FFF_TRASH="~/.local/share/fff/trash"
+export FFF_TRASH="/home/daniel/.local/share/fff/trash"
 
 # Trash Command
-# Default: 'mv'
-#          Define a custom program to use to trash files.
-#          The program will be passed the list of selected files
-#          and directories.
-export FFF_TRASH_CMD="mv"
+# MV script that I modified for myself will take over. The variable
+# has to not exist for the conditional statement to resort to the
+# script defined in the source file
+# export FFF_TRASH_CMD="mv"
 
 # Favourites (Bookmarks) (keys 1-9) (dir or file)
 export FFF_FAV1=~/github/
