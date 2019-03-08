@@ -40,9 +40,9 @@
 [submodule ".vim/bundle/vim-surround"]
 	path = .vim/bundle/vim-surround
 	url = https://github.com/tpope/vim-surround
-[submodule ".vim/bundle/fff.vim"]
-	path = .vim/bundle/fff.vim
-	url = https://github.com/dylanaraps/fff.vim
+; [submodule ".vim/bundle/fff.vim"]
+; 	path = .vim/bundle/fff.vim
+; 	url = https://github.com/dylanaraps/fff.vim
 [submodule ".vim/bundle/goyo.vim"]
 	path = .vim/bundle/goyo.vim
 	url = https://github.com/junegunn/goyo.vim

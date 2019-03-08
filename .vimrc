@@ -175,8 +175,9 @@ vnoremap x "_d
 " "" Toggle wrapping
 noremap <silent> <Leader>w :call ToggleWrapCustom()<CR>
 
-" "" NERDTree Commands and binds
+" "" NERDTree Toggle
 map <C-n> :NERDTreeToggle<CR>
+
 " "" Turn on spell-checking
 map <F6> :setlocal spell! spelllang=en_us<CR>
 
