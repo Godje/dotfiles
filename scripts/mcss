@@ -17,7 +17,7 @@ tmux send-keys "cd /media/daniel/therest/rc/ && ./start.sh" C-m
 tmux rename-window -t $SESSION_NAME:1 "server"
 
 tmux select-window -t $SESSION_NAME:2
-tmux send-keys "java -jar ~/Downloads/Minecraft.jar" C-m
+tmux send-keys "~/Downloads/minecraft-launcher/minecraft-launcher" C-m
 tmux rename-window -t $SESSION_NAME:2 "client"
 
 tmux select-window -t $SESSION_NAME:3
