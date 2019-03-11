@@ -24,7 +24,26 @@ function installSoftware(){
 		steam	\
 		arandr	\
 		feh	\
-		neofetch
+		neofetch	\
+		gdebi	\
+		gparted	\
+		krita	\
+		qutebrowser	\
+		scrot	\
+		i3lock	\
+		ncmpcpp	\
+		mpd	\
+		mpc	\
+		openjdk-8-jre	\
+		vlc
+
+
+	# Installing WPS manually lol. Good thing they got a link
+	currDir=$(pwd)
+	mkdir -p ~/Documents/temp/ && cd ~/Documents/temp
+	curl -O http://kdl.cc.ksosoft.com/wps-community/download/6757/wps-office_10.1.0.6757_amd64.deb
+	apt install ./wps-office_10.1.0.6757_amd64.deb 
+	cd $currDir
 
 	# wal
 	pip3 install pywal
