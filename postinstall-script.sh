@@ -36,7 +36,8 @@ function installSoftware(){
 		mpc	\
 		openjdk-8-jre	\
 		vlc	\
-		mupdf
+		mupdf	\
+		dunst
 
 
 	# Installing WPS manually lol. Good thing they got a link
@@ -56,6 +57,10 @@ function installSoftware(){
 	add-apt-repository ppa:graphics-drivers
 	apt update
 	apt install nvidia-390
+
+	echo "$PRE"
+	echo "$PRE Don't forget to set dunst as default notification manager (manual labor)"
+	echo "$PRE"
 }
 
 function createSymlinks(){

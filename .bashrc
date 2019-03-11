@@ -209,7 +209,7 @@ alias vims="vim -S vimsession.vim"
 alias r="ranger" 
 alias vi="vim"
 alias rangre="ranger" #just because I always make mistakes
-alias minecraft="java -jar ~/Downloads/Minecraft.jar"
+alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 alias telegram="/media/daniel/therest/linux/installed_software/Telegram/Telegram &"

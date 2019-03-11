@@ -150,6 +150,7 @@ bindsym $mod+backslash [instance="dropdown"] scratchpad show; [instance="dropdow
 
 bindsym $mod+g mode "gaps_fix"
 bindsym $mod+r mode "resize"
+bindsym $mod+m mode "music"
 
 mode "gaps_fix" {
 	bindsym Left gaps inner current minus 1
@@ -177,6 +178,15 @@ mode "resize" {
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 	bindsym $mod+r mode "default"
+}
+
+mode "music" {
+	bindsym Shift+period exec "mpc next"
+	bindsym Shift+comma exec "mpc prev"
+	bindsym p exec "mpc toggle"
+
+	bindsym Escape mode "default"
+	bindsym Return mode "default"
 }
 
 bar {
