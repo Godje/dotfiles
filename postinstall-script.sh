@@ -35,7 +35,8 @@ function installSoftware(){
 		mpd	\
 		mpc	\
 		openjdk-8-jre	\
-		vlc
+		vlc	\
+		mupdf
 
 
 	# Installing WPS manually lol. Good thing they got a link
