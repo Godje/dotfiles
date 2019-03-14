@@ -31,3 +31,4 @@ tags
 # mpd not config files (playlists and so on)
 .config/mpd/*
 !.config/mpd/mpd.conf
+.config/ncmpcpp/error.log

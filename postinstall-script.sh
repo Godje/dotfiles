@@ -37,7 +37,8 @@ function installSoftware(){
 		openjdk-8-jre	\
 		vlc	\
 		mupdf	\
-		dunst
+		dunst	\
+		net-tools
 
 
 	# Installing WPS manually lol. Good thing they got a link
