@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Starts from super user mode, 
+# -c for config file reference
+sudo nginx -c ~/.config/nginx/nginx.conf
