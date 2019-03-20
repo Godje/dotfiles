@@ -38,7 +38,8 @@ function installSoftware(){
 		vlc	\
 		mupdf	\
 		dunst	\
-		net-tools
+		net-tools	\
+		deluge
 
 
 	# Installing WPS manually lol. Good thing they got a link

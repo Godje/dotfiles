@@ -1,0 +1,4 @@
+#!/bin/bash
+
+notify-send "Starting minecraft"
+~/Downloads/minecraft-launcher/minecraft-launcher

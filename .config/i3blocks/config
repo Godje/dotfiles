@@ -3,7 +3,7 @@ separator_block_width=15
 markup=none
 
 [mpc]
-command=mpc -f "[[%artist% - %title%]|[%file%]"
+command=mpc -f "[%artist% - %title%]|[%file%]"
 color=#E17055
 interval=3
 separator=true

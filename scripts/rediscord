@@ -1,0 +1,22 @@
+#!/bin/bash
+# This is just a restarting script for Discord, because Discord on Ubuntu has been trashy recently. 
+# Like very bad
+# For some reason you have to kill Discord twice to kill it completely. 
+
+thereDiscord=$( ps aux | grep 'discord' -c )
+one=1
+
+echo $thereDiscord
+
+if [ "$thereDiscord" -gt "$one" ]; then
+	notify-send "Re-starting Discord"
+	pkill Discord
+	sleep 1
+	pkill Discord
+	discord &
+else
+	notify-send "Starting Discord"
+	discord &
+fi
+
+
