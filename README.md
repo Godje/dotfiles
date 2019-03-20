@@ -34,3 +34,4 @@ Polybar was built with an older version of xcb-proto, because the newer xcb-prot
 ## some comments
 
 `_vimrc` is for Windows. `.vimrc` is for Unix
+There's a branch called `macrc`. It's a branch of dotfiles that I use on the MacOS system at my church. There's a bunch of scripts and aliases that are changed to fit on MacOS, and the tasks I am doing on that system. There's literally no other use of that outside of Mac, so I am not including separate file changes on the master branch.
