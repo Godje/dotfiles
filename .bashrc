@@ -196,7 +196,6 @@ if [[ -a ~/.config/fff/config ]]; then
 	source ~/.config/fff/config
 fi
 
-export TERM=rxvt-unicode-256color
 export EDITOR="vim"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts:/home/daniel/.nimble/bin
@@ -214,7 +213,7 @@ alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 alias telegram="/media/daniel/therest/linux/installed_software/Telegram/Telegram &"
 
-export NVM_DIR="/home/daniel/.nvm"
+
+export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-export LD_LIBRARY_PATH="${LD_LIBRARY_PATH-}:/usr/lib32:/usr/lib32/fglrx"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
