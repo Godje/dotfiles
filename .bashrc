@@ -197,8 +197,7 @@ if [[ -a ~/.config/fff/config ]]; then
 fi
 
 export EDITOR="vim"
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts:/home/daniel/.nimble/bin
+export PATH=$PATH:~/Documents/github/scripts:/var/root/Library/Python/3.7/bin/
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
