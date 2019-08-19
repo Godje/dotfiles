@@ -116,27 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Import colorscheme from 'wal' asynchronously
-# &   # Run the process in the background.
-# ( ) # Hide shell job control messages.
-(cat ~/.cache/wal/sequences &)
-
-# Alternative (blocks terminal for 0-3ms)
-cat ~/.cache/wal/sequences
-
-# To add support for TTYs this line can be optionally added.
-source ~/.cache/wal/colors-tty.sh
-
-mp3towav(){
-	[[ $# -eq 0 ]] && { echo "mp3wav mp3file"; exit 1; }
-	for i in "$@"
-	do
-		# create .wav file name
-		local out="${i%/*}.wav"
-		[[ -f "$i" ]] && { echo -n "Processing ${i}..."; mpg123 -w "${out}" "$i" &>/dev/null  && echo "done." || echo "failed."; }
-	done	
-}
-
 # TMUX shortcuts
 tattach(){
 	tmux attach -t $1
@@ -148,70 +127,27 @@ tnew(){
 	tmux new-session -t $1
 }
 
-# Converting videos for DaVinci Resolve
-videodnxhd(){
-	ffmpeg -i $1 -c:v dnxhd -vf "scale=1920:1080,fps=25/1,format=yuv422p10" -b:v $2 -c:a pcm_s16le $3
-}
-
-# a meme
-commit(){
-	if [[ "$1" == "sepuku" ]]; then
-		logout
-	fi
-	if [[ "$1" == "sudoku" ]]; then
-		sudo systemctl suspend
-		~/.config/i3/lock.sh
-	fi
-	if [[ "$1" == "lifent" ]]; then
-		sudo shutdown -P now
-	fi
-	if [[ "$1" == "tensei" ]]; then
-		sudo shutdown -r now
-	fi
-}
-complete -W "sudoku sepuku lifent tensei" commit
-
-# editing encrypted gpg file
-encryptedit(){
-	filename=$(basename $1 .gpg)
-	gpg -d --quiet $1 | cat >> $filename 
-	vim $filename 
-	gpg -c $filename 
-	rm $filename
-}
-
-# Other
-mdpdf (){
-	markdown-pdf -s ~/Documents/scripts/github.css $1
-}
-
 # fff cd on exit
 f() {
 	fff "$@"
 	cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
 }
 
-# Running an FFF config if it exists
-if [[ -a ~/.config/fff/config ]]; then
-	source ~/.config/fff/config
-fi
+# CD into Code/Sites folders
+site(){
+	cd "~/Code/Sites/${$1}"
+}
 
 export EDITOR="vim"
-export PATH=$PATH:~/Documents/github/scripts:/var/root/Library/Python/3.7/bin/
+export PATH=$PATH:~/Documents/scripts:/var/root/Library/Python/3.7/bin/
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
-alias ecfg="vim ~/.config/i3/config"
 alias ebash="vim ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias r="ranger" 
 alias vi="vim"
 alias rangre="ranger" #just because I always make mistakes
-alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
-
-alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
-alias telegram="/media/daniel/therest/linux/installed_software/Telegram/Telegram &"
-
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
