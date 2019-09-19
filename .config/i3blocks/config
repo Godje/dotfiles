@@ -17,17 +17,17 @@ instance=Master
 interval=5
 signal=10
 
-# Memory usage
-[memory]
-label=MEM
-separator=false
-interval=30
+# # Memory usage
+# [memory]
+# label=MEM
+# separator=false
+# interval=30
 
-[memory]
-label=SWAP
-instance=swap
-separator=false
-interval=30
+# [memory]
+# label=SWAP
+# instance=swap
+# separator=false
+# interval=30
 
 #battery
 [battery]
@@ -40,12 +40,12 @@ label=HOME
 #instance=/mnt/data
 interval=60
 
-# Network interface monitoring
-[iface]
-#instance=wlan0
-color=#00FF00
-interval=10
-separator=false
+# # Network interface monitoring
+# [iface]
+# #instance=wlan0
+# color=#00FF00
+# interval=10
+# separator=false
 
 [wifi]
 #instance=wlp3s0

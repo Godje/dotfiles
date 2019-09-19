@@ -182,7 +182,14 @@ encryptedit(){
 
 # Other
 mdpdf (){
-	markdown-pdf -s ~/Documents/scripts/github.css $1
+	targetfile="/tmp/mdcss.css";
+	importstring="@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap&subset=cyrillic');"
+	# downloading css
+	curl https://gist.githubusercontent.com/tuzz/3331384/raw/fc0160dd7ea0b4a861533c4d6c232f56291796a3/github.css | sed 's/Helvetica/Roboto/' > $targetfile;
+	# importing fonts
+	echo "$importstring" >> $targetfile;
+
+	md-to-pdf --stylesheet $targetfile $1
 }
 
 # fff cd on exit
