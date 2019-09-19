@@ -122,7 +122,7 @@ assign [class="Minecraft*"] $ws5
 assign [class="discord"] $ws3
 
 # window settings
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 0
 for_window [class="csgo_linux64"] border pixel 0
 
 ## i3 Configuration Files
@@ -225,7 +225,7 @@ bindsym $sup+Shift+f exec "~/Documents/scripts/mpc/add-to-playlist.sh"
 # software
 exec --no-startup-id "discord"
 exec --no-startup-id "steam"
-exec --no-startup-id "mpd ~/.mpd/.mpdconf"
+exec --no-startup-id "mpd ~/.config/mpd/mpd.conf"
 
 # commands
 exec_always "xrdb -merge ~/.Xresources"

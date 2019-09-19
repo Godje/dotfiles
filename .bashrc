@@ -190,6 +190,9 @@ f() {
 	fff "$@"
 	cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
 }
+site(){
+	cd ~/Code/Sites/"$1"
+}
 
 # Running an FFF config if it exists
 if [[ -a ~/.config/fff/config ]]; then
@@ -199,7 +202,7 @@ fi
 export TERM=rxvt-unicode-256color
 export EDITOR="vim"
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts:/home/daniel/.nimble/bin
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts:/home/daniel/.nimble/bin:~/Documents/devscripts
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
@@ -212,9 +215,8 @@ alias rangre="ranger" #just because I always make mistakes
 alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
-alias telegram="/media/daniel/therest/linux/installed_software/Telegram/Telegram &"
 
-export NVM_DIR="/home/daniel/.nvm"
+export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-export LD_LIBRARY_PATH="${LD_LIBRARY_PATH-}:/usr/lib32:/usr/lib32/fglrx"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="$PATH:/opt/mssql-tools/bin"
