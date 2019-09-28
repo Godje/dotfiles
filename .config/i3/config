@@ -222,11 +222,6 @@ bindsym $sup+Shift+f exec "~/Documents/scripts/mpc/add-to-playlist.sh"
 ## Boot executions
 ## ========
 
-# software
-exec --no-startup-id "discord"
-exec --no-startup-id "steam"
-exec --no-startup-id "mpd ~/.mpd/.mpdconf"
-
 # commands
 exec_always "xrdb -merge ~/.Xresources"
 exec_always "wal -R"
@@ -237,3 +232,8 @@ exec_always "~/Documents/scripts/languages"
 exec_always "~/.screenlayout/default.sh"
 exec_always "~/Documents/scripts/sensitivity"
 exec_always "~/Documents/scripts/tablet"
+#
+# software
+exec --no-startup-id "rediscord"
+exec --no-startup-id "steam"
+exec --no-startup-id "mpd ~/.config/mpd/mpd.conf"

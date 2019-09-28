@@ -1,2 +1,9 @@
 #!/bin/bash
-xsetwacom set "Wacom Intuos PT S 2 Pen stylus" MapToOutput HEAD-1
+screen=$( echo -e 'left\nright' | dmenu )
+if [[ $screen == "right" ]]; then
+	xsetwacom set "Wacom Intuos PT S 2 Pen stylus" MapToOutput HEAD-1
+elif [[ $screen == "left" ]]; then
+	xsetwacom set "Wacom Intuos PT S 2 Pen stylus" MapToOutput HEAD-0
+else
+	notify-send "default screen was assigned at boot"
+fi

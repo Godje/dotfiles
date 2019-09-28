@@ -180,11 +180,6 @@ encryptedit(){
 	rm $filename
 }
 
-# Other
-mdpdf (){
-	markdown-pdf -s ~/Documents/scripts/github.css $1
-}
-
 # fff cd on exit
 f() {
 	fff "$@"
@@ -208,6 +203,7 @@ alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias r="ranger" 
 alias vi="vim"
+alias la="ls --color=no"
 alias rangre="ranger" #just because I always make mistakes
 alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
 

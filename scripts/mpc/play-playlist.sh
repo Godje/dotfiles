@@ -14,7 +14,9 @@
 playlist=$( mpc lsplaylists | dmenu -l 9 -p "Play playlist: " )
 
 if [[ "$playlist" != "" ]]; then
-	mpc crop
+	mpd stop
+	mpc clear
 	mpc load $playlist > /dev/null
+	mpc play
 	notify-send --urgency=low --expire-time=2000 "Playlist loaded" "Playlist: $playlist"
 fi

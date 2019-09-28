@@ -10,7 +10,7 @@ separator=true
 # Volume indicator
 #
 [volume]
-command=""mpc volume | sed 's/volume: /♪: /'
+command=""mpc volume | sed 's/volume:/♪: /'
 color=#FFEAA7
 instance=Master
 #instance=PCM
