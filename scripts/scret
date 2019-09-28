@@ -1,0 +1,4 @@
+#!/bin/bash
+
+scrot -s -d 1 -e "mv $f ~/Pictures/screenshots/$f"
+

@@ -8,6 +8,7 @@ function installSoftware(){
 
 	apt install -y	\
 		vim \
+		ranger \
 		vim-gtk	\
 		python3	\
 		python3-pip	\
@@ -79,7 +80,7 @@ function createSymlinks(){
 
 	while true; do
 		read -p "$PRE Please type a directory to your repository: " repdirectory
-		if [[ -d $repdirectory ]]; then
+		if [ -d "$repdirectory" ]; then
 			echo "$PRE Located directory"
 			echo "$PRE Linking files"
 
@@ -88,6 +89,8 @@ function createSymlinks(){
 			csym $repdirectory/.vim ~/.vim
 			csym $repdirectory/.vimrc ~/.vimrc
 			csym $repdirectory/.comptonstart.sh ~/.comptonstart.sh
+			csym $repdirectory/scripts ~/Documents/scripts
+			csym $repdirectory/devscripts ~/Documents/devscripts
 
 			for conf in $repdirectory/.config/*
 			do
@@ -97,8 +100,10 @@ function createSymlinks(){
 
 			echo "$PRE Sourcing the .bashrc"
 			source ~/.bashrc
-echo "$PRE Mergin .Xresources"
+			echo "$PRE Merging .Xresources"
 			xrdb -merge ~/.Xresources
+		else
+			echo "$PRE yeet"
 		fi
 		break;
 	done
@@ -142,7 +147,7 @@ else
 
 	# Prompt for repositories
 	while true; do
-		read -p "$PRE Have you clones your repository yet? [y/n] " repois
+		read -p "$PRE Have you cloned your repository yet? [y/n] " repois
 		case $repois in
 			[Yy]*	) createSymlinks; break;;
 			[Nn]*	) cloneRepository; break;;
