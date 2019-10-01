@@ -197,8 +197,24 @@ f() {
 	fff "$@"
 	cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
 }
+
 site(){
 	cd ~/Code/Sites/"$1"
+}
+
+function ccheck(){
+	if [[ $PWD == *"rust-projects"* ]]; then
+		cargo check;
+		return;
+	fi
+	command ccheck;
+}
+function crun(){
+	if [[ $PWD == *"rust-projects"* ]]; then
+		cargo run;
+		return;
+	fi
+	command crun;
 }
 
 # Running an FFF config if it exists

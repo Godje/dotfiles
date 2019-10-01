@@ -1,3 +1,13 @@
+#  _ _____                       
+# (_)___ /  __ _  __ _ _ __  ___ 
+# | | |_ \ / _` |/ _` | '_ \/ __|
+# | |___) | (_| | (_| | |_) \__ \
+# |_|____/ \__, |\__,_| .__/|___/ . config
+#          |___/      |_|        
+#
+#  # Daniel Mayovskiy's i3wm configuartion
+#  # I messed around enough. This one is a keeper for some long time now
+#
 ## ========
 ## Default Variables
 ## ========
@@ -144,6 +154,13 @@ exec --no-startup-id "urxvt -name dropdown"
 # mapping key to toggle it
 bindsym $mod+backslash [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
 # bindsym $mod+backslash exec --no-startup-id "open_dropdown" 
+
+## Screen brightness controls
+# increase screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20; 
+# decrease screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20; 
+
 ## ========
 ## Modes
 ## ========

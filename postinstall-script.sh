@@ -40,14 +40,24 @@ function installSoftware(){
 		mupdf	\
 		dunst	\
 		net-tools	\
-		deluge
+		deluge \
+		xclip
 
+	# Installing Rust
+	curl https://sh.rustup.rs -sSf | sh
+
+	# Manually installing Bat (replacement for cat)
+	currDir=$(pwd)
+	mkdir -p ~/Downloads/temp/ && cd ~/Downloads/temp
+	dl_url=$(curl -s https://api.github.com/repos/sharkdp/bat/releases/latest | grep browser_download_url | cut -d '"' -f 4 | grep amd64);
+	curl -O $dl_url
+	apt install --yes ./bat*amd64*
 
 	# Installing WPS manually lol. Good thing they got a link
 	currDir=$(pwd)
-	mkdir -p ~/Documents/temp/ && cd ~/Documents/temp
+	mkdir -p ~/Downloads/temp/ && cd ~/Downloads/temp
 	curl -O http://kdl.cc.ksosoft.com/wps-community/download/6757/wps-office_10.1.0.6757_amd64.deb
-	apt install ./wps-office_10.1.0.6757_amd64.deb 
+	apt install --yes ./wps-office_10.1.0.6757_amd64.deb 
 	cd $currDir
 
 	# wal
