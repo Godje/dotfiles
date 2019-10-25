@@ -222,7 +222,7 @@ if [[ -a ~/.config/fff/config ]]; then
 	source ~/.config/fff/config
 fi
 
-export TERM=rxvt-unicode-256color
+export TERM=xterm-256color
 export EDITOR="vim"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts:/home/daniel/.nimble/bin:~/Documents/devscripts

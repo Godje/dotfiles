@@ -27,6 +27,7 @@ tags
 # ranger stuff
 .config/ranger/bookmarks
 .config/ranger/history
+.config/ranger/tagged
 
 # mpd not config files (playlists and so on)
 .config/mpd/*
