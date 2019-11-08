@@ -40,6 +40,9 @@
 [submodule ".vim/bundle/vim-surround"]
 	path = .vim/bundle/vim-surround
 	url = https://github.com/tpope/vim-surround
+[submodule ".vim/bundle/vim-vue"]
+	path = .vim/bundle/vim-vue
+	url = https://github.com/posva/vim-vue
 ; [submodule ".vim/bundle/fff.vim"]
 ; 	path = .vim/bundle/fff.vim
 ; 	url = https://github.com/dylanaraps/fff.vim

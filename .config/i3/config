@@ -201,6 +201,8 @@ mode "music" {
 	bindsym Shift+period exec "mpc next"
 	bindsym Shift+comma exec "mpc prev"
 	bindsym p exec "mpc toggle"
+	bindsym 0 exec "mpc volume +1"
+	bindsym 9 exec "mpc volume -1"
 
 	bindsym Escape mode "default"
 	bindsym Return mode "default"
