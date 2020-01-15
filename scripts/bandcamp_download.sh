@@ -4,6 +4,10 @@
 # https://stackoverflow.com/a/246128
 # DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )";
 
+# Script's arguments:
+# $0 - the actual file
+# $1 - the URL
+
 DIR=$(dirname "$0")
 urls=$("$DIR/pytools/bandscrape.py" $1);
 ehit=$?
@@ -16,17 +20,16 @@ fi
 for url in $urls
 do
 	album_title=${url##*/}
-	mkdir $album_title;
-	cd $album_title;
-	echo ""
-	echo "=========="
+	echo "";
+	echo "==========";
 	echo "Downloading $album_title";
-	echo "=========="
-	youtube-dl -f bestaudio $url;
-	echo "=========="
-	echo "Downloaded $album_title";
-	echo "=========="
-	echo ""
-
+	echo "==========";
+	mkdir $album_title && \
+	cd $album_title && \
+	youtube-dl -f bestaudio $url && \
 	cd ../;
+	echo "==========";
+	echo "Downloaded $album_title";
+	echo "==========";
+	echo "";
 done
