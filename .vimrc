@@ -30,7 +30,8 @@ set undolevels=1000
 set encoding=UTF-8
 
 " "" Fold level
-" set foldlevelstart=20
+set foldlevelstart=20
+set foldmethod=syntax
 
 " "" Automatically update the file, on it's change
 set autoread
