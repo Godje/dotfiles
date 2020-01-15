@@ -1,5 +1,12 @@
 #!/usr/bin/python
 
+# Author - Daniel Mayovskiy (Godje) <comepot.4anell@gmail.com>
+# Description - Delivers URLs of all albums on a bandcamp account using the
+# URL of the bandcamp account of an artist.
+
+# required - BeautifulSoup4
+# installation - pip3 install BeautifulSoup4
+
 import urllib;
 import sys;
 from bs4 import BeautifulSoup;
