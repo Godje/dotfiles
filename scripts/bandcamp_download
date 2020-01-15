@@ -9,7 +9,7 @@
 # $1 - the URL
 
 DIR=$(dirname "$0")
-urls=$("$DIR/pytools/bandscrape.py" $1);
+urls=$(python "$DIR/pytools/bandscrape.py" $1);
 ehit=$?
 
 if [ $ehit -ne 0 ]; then
