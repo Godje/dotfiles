@@ -41,7 +41,8 @@ function installSoftware(){
 		dunst	\
 		net-tools	\
 		deluge \
-		xclip
+		xclip \
+		nvidia-settings
 
 	# Installing Rust
 	curl https://sh.rustup.rs -sSf | sh
@@ -62,9 +63,11 @@ function installSoftware(){
 
 	# wal
 	pip3 install pywal
+	pip3 install BeautifulSoup4
 
-	# Switching to URxvt
-	update-alternatives --config x-terminal-emulator
+	# Switching default terminal to URxvt
+	rxvtLocation=$(which urxvt);
+	update-alternatives --set x-terminal-emulator $rxvtLocation
 
 	# NVIDIA drivers
 	add-apt-repository ppa:graphics-drivers
