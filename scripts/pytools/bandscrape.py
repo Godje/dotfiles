@@ -8,6 +8,7 @@
 # installation - pip3 install BeautifulSoup4
 
 import urllib;
+import urlparse;
 import sys;
 from bs4 import BeautifulSoup;
 
@@ -26,6 +27,8 @@ if( len( sys.argv ) == 1):
 	exit();
 
 url = sys.argv[1];
+split_url = urlparse.urlsplit(url);
+url_base = split_url.scheme + "://" + split_url.netloc;
 page = urllib.urlopen(url).read();
 
 soup = BeautifulSoup(page, 'html.parser');
@@ -35,7 +38,7 @@ try:
 	albumElements = group.find_all('li');
 	albumUrls = [];
 	for album in albumElements:
-		albumUrls.append( url + album.a["href"] );
+		albumUrls.append( url_base + album.a["href"] );
 	for url in albumUrls:
 		print url;
 except:
