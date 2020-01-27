@@ -1,5 +1,16 @@
 #!/usr/bin/python
 
+# Author: 
+# Danyil Maiovskyi (Godje) <comepot.4anell@gmail.com>
+
+# Usage:
+# - matteframe <imgfile> <coefficient> <color>
+
+# default coefficient is 12. So if you want to have a different color of the background 
+# you'd have to type in the coefficient 12 and then color in "quotes".
+# Not the best way to do things, but it that's how it works for now.  Maybe one day I
+# will move this to a different repository so that it can be installed via pip
+
 import os;
 from sys import argv;
 from fractions import *;
