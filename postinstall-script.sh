@@ -7,8 +7,8 @@ function installSoftware(){
 	apt update && apt upgrade -y
 
 	apt install -y	\
-		vim \
-		ranger \
+		vim	\
+		ranger	\
 		vim-gtk	\
 		python3	\
 		python3-pip	\
@@ -40,9 +40,10 @@ function installSoftware(){
 		mupdf	\
 		dunst	\
 		net-tools	\
-		deluge \
-		xclip \
-		nvidia-settings
+		deluge	\
+		xclip	\
+		nvidia-settings	\
+		thunar
 
 	# Installing Rust
 	curl https://sh.rustup.rs -sSf | sh
