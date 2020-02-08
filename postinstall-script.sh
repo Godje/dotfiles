@@ -64,7 +64,10 @@ function installSoftware(){
 
 	# wal
 	pip3 install pywal
+	# bs4
 	pip3 install BeautifulSoup4
+	# tmuxp
+	pip install tmuxp
 
 	# Switching default terminal to URxvt
 	rxvtLocation=$(which urxvt);
