@@ -236,7 +236,8 @@ com! VimrcEdit tabedit ~/.vimrc
 " "" Saving the session
 com! MakeSesh mks! vimsession.vim
 
-
+" "" 
+autocmd FileType yaml setlocal et ts=2
 
 " "" FIX ARROW KEYS
 inoremap <ESC>[1;5C <Esc>ea

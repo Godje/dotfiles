@@ -209,7 +209,7 @@ fi
 export TERM=rxvt-unicode-256color
 export EDITOR="vim"
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts:/home/daniel/.nimble/bin:~/Documents/devscripts
+export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts:/home/daniel/.nimble/bin:~/Documents/devscripts:/home/daniel/.local/bin"
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
