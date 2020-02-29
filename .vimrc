@@ -30,7 +30,8 @@ set undolevels=1000
 set encoding=UTF-8
 
 " "" Fold level
-" set foldlevelstart=20
+set foldlevelstart=20
+set foldmethod=syntax
 
 " "" Automatically update the file, on it's change
 set autoread
@@ -46,9 +47,10 @@ set splitbelow splitright
 set tabstop=2
 set softtabstop=0 noexpandtab
 set shiftwidth=2
+set ts=2
 
 " "" Environment settings
-set number " Show the line numbers
+set relativenumber " Show the line numbers
 set ruler
 set showcmd " Show the last command
 set wildmenu " I don't know
@@ -217,6 +219,8 @@ autocmd FileType markdown inoremap <Leader>b **** <++><Esc>F*hi
 autocmd FileType markdown inoremap <Leader><Space> <Esc>/<++><CR>v3l"_di
 autocmd FileType markdown inoremap <Leader>i ** <++><Esc>F*i
 
+" "" Python fix
+autocmd FileType python setlocal noet tabstop=4
 " "" Javascript Folding
 augroup javascript_folding
 	au!

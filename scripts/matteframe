@@ -1,0 +1,64 @@
+#!/usr/bin/python
+
+# Author: 
+# Danyil Maiovskyi (Godje) <comepot.4anell@gmail.com>
+
+# Usage:
+# - matteframe <imgfile> <coefficient> <color>
+
+# default coefficient is 12. So if you want to have a different color of the background 
+# you'd have to type in the coefficient 12 and then color in "quotes".
+# Not the best way to do things, but it that's how it works for now.  Maybe one day I
+# will move this to a different repository so that it can be installed via pip
+
+import os;
+from sys import argv;
+from fractions import *;
+
+args = argv;
+
+def fullpath(filestr):
+	return os.getcwd() + "/" + filestr;
+
+def filetitle(filestr):
+	return os.path.splitext(os.path.basename(fullpath(filestr)))[0];
+
+def dimensions(imgfile):
+	import subprocess;
+
+	filepath = fullpath(imgfile);
+	command = "identify -verbose '{filepath}' | grep Geometry".format(filepath = filepath);
+	output = subprocess.check_output(command, shell=True); 
+	return output.split()[1].split('+', 1)[0].split('x', 1);
+
+def printhelp():
+	print "Help";
+	
+def main():
+	if(len(args) < 1):
+		printhelp();
+		return;
+
+	coefficient = 12;
+	color = "white";
+
+	if(len(args) == 3):
+		coefficient=float(args[2]);
+	if(len(args) == 4):
+		color=args[3];
+
+	thefile = args[1];
+	xy = dimensions( thefile );
+	futuresize = float(max(xy)) * ( 1.00 + coefficient/100.00 );
+	strsize = str(int(round(futuresize)));
+	command = "convert -size {strsize}x{strsize} canvas:transparent -alpha Off -fill \"{color}\" -draw 'color 0,0 reset' -gravity center '{insertfile}' -composite {filetitle}_matte.jpg";
+	formattedcommand = command.format(
+		strsize = strsize,
+		color = color,
+		insertfile = fullpath( thefile ),
+		filetitle = filetitle( thefile ) );
+	print formattedcommand;
+	os.system( formattedcommand );
+	return;
+	
+main();
