@@ -42,7 +42,7 @@ function installSoftware(){
 		net-tools	\
 		deluge	\
 		xclip	\
-		nvidia-settings	\
+		# nvidia-settings	\
 		thunar
 
 	# Installing Rust
@@ -74,9 +74,9 @@ function installSoftware(){
 	update-alternatives --set x-terminal-emulator $rxvtLocation
 
 	# NVIDIA drivers
-	add-apt-repository ppa:graphics-drivers
-	apt update
-	apt install nvidia-390
+	# add-apt-repository ppa:graphics-drivers
+	# apt update
+	# apt install nvidia-390
 
 	echo "$PRE"
 	echo "$PRE Don't forget to set dunst as default notification manager (manual labor)"

@@ -237,6 +237,7 @@ alias vi="vim"
 alias la="ls --color=no"
 alias rangre="ranger" #just because I always make mistakes
 alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
+alias ftb="java -jar ~/Downloads/FTB_Launcher.jar";
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 
