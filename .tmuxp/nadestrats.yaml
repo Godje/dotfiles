@@ -1,0 +1,29 @@
+session_name: nades
+start_directory: /home/daniel/github/nadestrats
+windows:
+- layout: 7e0b,307x81,0,0{153x81,0,0,5,153x81,154,0,7}
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command:
+    - cd /home/daniel/github/nadestrats/client
+    - npm run dev
+  - shell_command:
+    - cd /home/daniel/github/nadestrats/server
+    - npm run dev
+  window_name: npm
+- focus: 'true'
+  layout: fa20,307x81,0,0{174x81,0,0,9,132x81,175,0[132x40,175,0,14,132x40,175,41,19]}
+  options: {}
+  panes:
+  - shell_command:
+    - cd /home/daniel/github/nadestrats/client/src
+    - vims
+  - shell_command:
+    - cd /home/daniel/github/nadestrats/server
+    - vims
+  - focus: 'true'
+    shell_command:
+    - cd /home/daniel/github/nadestrats
+    - clear && figlet shell
+  window_name: bash

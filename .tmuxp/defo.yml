@@ -1,17 +1,15 @@
 session_name: defo
 windows:
-- window_name: dev
-  layout: tiled
-  shell_command_before:
-    - cd ~/Code/Sites/monitor && source ~/.bashrc
-  panes:
-    - shell_command:
+  - window_name: dev
+    layout: tiled
+    shell_command_before:
+      - cd ~/Code/Sites/monitor && source ~/.bashrc
+    panes:
+      - shell_command:
         - npm run watch
-    - shell_command:
-        - php artisan horizon:terminate
-        - clear && figlet horizon && php artisan horizon
-    - shell_command:
-        - clear && figlet mysql
-        - mysql -u dude -p monitor
-    - shell_command:
+      - shell_command:
+        - clear && figlet websockets && php artisan websockets:serve
+      - shell_command:
+        - clear && figlet worker && php artisan queue:work local
+      - shell_command:
         - clear && figlet -k fourth pane

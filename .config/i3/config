@@ -252,7 +252,7 @@ exec_always "wal -R"
 
 # scripts
 exec_always "~/Documents/scripts/languages"
-exec_always "~/.screenlayout/default2.sh"
+exec_always "~/.screenlayout/default.sh"
 exec_always "~/Documents/scripts/sensitivity"
 # exec_always "~/Documents/scripts/tablet"
 #
