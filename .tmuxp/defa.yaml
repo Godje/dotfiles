@@ -13,6 +13,7 @@ windows:
   - clear && figlet shell
   start_directory: /home/daniel/Code/Sites/monitor
   window_name: dev
-- focus: 'false'
-  panes:
+
+- panes:
     - site monitor && clear && figlet shell
+  start_directory: /home/daniel/Code/Sites/monitor
