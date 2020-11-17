@@ -225,11 +225,13 @@ fi
 export TERM=xterm-256color
 export EDITOR="vim"
 export GOPATH=$HOME/go
+export DOTFILES="$HOME/Documents/dotfiles"
 export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts:/home/daniel/.nimble/bin:~/Documents/devscripts:/home/daniel/.local/bin:/home/daniel/.config/composer/vendor/bin"
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
 alias ebash="vim ~/.bashrc"
+alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias r="ranger" 
@@ -239,6 +241,9 @@ alias rangre="ranger" #just because I always make mistakes
 alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
 alias ftb="java -jar ~/Downloads/FTB_Launcher.jar";
 alias bc="bc ~/.config/bc/.bcrc -l";
+alias cdqmk="cd ~/qmk_firmware/keyboards/lily58/keymaps/Godje/";
+alias cddot="cd $DOTFILES";
+alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 

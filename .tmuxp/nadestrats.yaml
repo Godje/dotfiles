@@ -11,6 +11,7 @@ windows:
   - shell_command:
     - cd /home/daniel/github/nadestrats/server
     - npm run dev
+  start_directory: /home/daniel/github/nadestrats
   window_name: npm
 - focus: 'true'
   layout: fa20,307x81,0,0{174x81,0,0,9,132x81,175,0[132x40,175,0,14,132x40,175,41,19]}
@@ -26,4 +27,5 @@ windows:
     shell_command:
     - cd /home/daniel/github/nadestrats
     - clear && figlet shell
+  start_directory: /home/daniel/github/nadestrats
   window_name: bash

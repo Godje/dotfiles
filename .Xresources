@@ -40,7 +40,7 @@ URxvt.scrollBar: false
 URxvt.pointerBlank: true
 ! URxvt.depth: 32
 URxvt.borderless: true
-URxvt.internalBorder: 20
+URxvt.internalBorder: 10
 ! URxvt.background: [90]#111111
 ! URxvt.borderColor: [90]#111111
 URxvt.cursorColor: magenta 
