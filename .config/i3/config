@@ -134,7 +134,7 @@ assign [class="Minecraft*"] $ws5
 assign [class="discord"] $ws3
 
 # window settings
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 2
 for_window [class="csgo_linux64"] border pixel 0
 
 ## i3 Configuration Files
@@ -222,8 +222,8 @@ bar {
 set_from_resource $fg i3wm.color1
 set_from_resource $bg i3wm.color7
 
-client.focused $fb $bg	$fg	$bg	$bg
-client.unfocused $bg $bg	$fg	$bg	$bg
+# client.focused $fb $bg	$fg	$bg	$bg
+# client.unfocused $bg $bg	$fg	$bg	$bg
 
 ## ========
 ## Other binds
@@ -253,9 +253,9 @@ exec_always "xrdb -merge ~/.Xresources"
 exec_always "wal -R"
 
 # scripts
-exec_always "~/Documents/scripts/languages"
+exec_always "~/git/dotfiles/scripts/languages"
 exec_always "~/.screenlayout/default.sh"
-exec_always "~/Documents/scripts/sensitivity"
+exec_always "~/git/dotfiles/scripts/sensitivity"
 # exec_always "~/Documents/scripts/tablet"
 #
 # software

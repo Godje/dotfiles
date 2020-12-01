@@ -24,19 +24,17 @@ displayBanner(){
 
 displayOptions(){
 	echo "Actions"
-	echo "   1 - link the dotfiles"
+	echo "   1 - link the dotfiles (this thing literally never works)"
 	echo "   2 - install the software"
 	echo "   3 - install i3 and i3-gaps"
 	echo "   4 - install python libraries"
+	echo "   5 - install youtube-dl"
 }
 
 say(){
 	echo -e $PRE "$1"
 }
 
-displayOptions
-
-read -p "Select one option: " selected
 
 # Option Functions
 
@@ -113,7 +111,8 @@ installSoftware(){
 		net-tools	\
 		deluge	\
 		xclip	\
-		thunar
+		thunar \
+		mpv
 
 	# Switching default terminal to URxvt
 	rxvtLocation=$(which urxvt);
@@ -133,7 +132,8 @@ installI3(){
 		libstartup-notification0-dev libxcb-randr0-dev \
 		libev-dev libxcb-cursor-dev libxcb-xinerama0-dev \
 		libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev \
-		autoconf libxcb-xrm0 libxcb-xrm-dev automake libxcb-shape0-dev;
+		autoconf libxcb-xrm0 libxcb-xrm-dev automake libxcb-shape0-dev \
+		meson ninja-build
 
 	tempfolder=$(mktemp -d)
 	localfolder=$(pwd)
@@ -144,13 +144,10 @@ installI3(){
 	git clone https://www.github.com/Airblader/i3 i3-gaps
 	cd i3-gaps
 
-	autoreconf --force --install
-	rm -rf build/
-	mkdir -p build && cd build/
-
-	../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
-	make
-	sudo make install
+	mkdir -p build && cd build
+	meson ..
+	ninja
+	sudo meson install
 
 	cd $localfolder
 }
@@ -159,4 +156,31 @@ installPython(){
 	pip3 install pywal
 	pip3 install BeautifulSoup4
 	pip3 install tmuxp
+	pip3 install wpm
 }
+
+installYoutubeDL(){ 
+	# official instructions on the website.
+	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+	sudo chmod a+rx /usr/local/bin/youtube-dl
+	# this installs python2 for this thing to work.
+	sudo apt install python
+}
+
+# Displaying the options and executing the right function
+displayOptions
+
+read -p "Select one option: " selected
+
+case $selected in
+	1) linkFiles
+		;;
+	2) installSoftware
+		;;
+	3) installI3
+		;;
+	4) installPython
+		;;
+	5) installYoutubeDL
+		;;
+esac
