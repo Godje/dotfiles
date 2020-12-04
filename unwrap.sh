@@ -20,6 +20,7 @@ PRE=">"
 
 displayBanner(){
 	echo "Godje's Dotfile unwrapping script";
+	echo "don't forget to set the \$DOTFILES variable"
 }
 
 displayOptions(){
@@ -29,6 +30,7 @@ displayOptions(){
 	echo "   3 - install i3 and i3-gaps"
 	echo "   4 - install python libraries"
 	echo "   5 - install youtube-dl"
+	echo "   6 - install Vim Submodules"
 }
 
 say(){
@@ -167,6 +169,13 @@ installYoutubeDL(){
 	sudo apt install python
 }
 
+installVimSubmodules(){
+	cd $DOTFILES;
+
+	git submodule init;
+	git submodule update;
+}
+
 # Displaying the options and executing the right function
 displayOptions
 
@@ -182,5 +191,7 @@ case $selected in
 	4) installPython
 		;;
 	5) installYoutubeDL
+		;;
+	6) installVimSubmodules
 		;;
 esac
