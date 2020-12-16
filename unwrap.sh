@@ -114,11 +114,18 @@ installSoftware(){
 		deluge	\
 		xclip	\
 		thunar \
-		mpv
+		mpv \
+		sxiv
 
 	# Switching default terminal to URxvt
 	rxvtLocation=$(which urxvt);
 	sudo update-alternatives --set x-terminal-emulator $rxvtLocation
+
+	# Removing the "socket taken" issue
+	sudo service mpd stop
+	sudo systemctl disable mpd.service
+	sudo systemctl disable mpd.socket
+	sudo systemctl stop mpd.socket
 }
 
 # Installing i3-gaps manually

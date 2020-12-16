@@ -128,7 +128,6 @@ assign [class="Firefox"] $ws2
 assign [class="qutebrowser"] $ws2
 assign [class="csgo_linux64"] $ws5
 assign [class="Terraria*"] $ws5
-assign [class="URxvt"] $ws1
 assign [class="Krita"] $ws7
 assign [class="Minecraft*"] $ws5
 assign [class="discord"] $ws3
@@ -136,6 +135,7 @@ assign [class="discord"] $ws3
 # window settings
 for_window [class="^.*"] border pixel 2
 for_window [class="csgo_linux64"] border pixel 0
+for_window [class="java.*"] border pixel 0
 
 ## i3 Configuration Files
 # reload the configuration file

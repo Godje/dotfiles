@@ -240,9 +240,9 @@ alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias r="ranger" 
-alias vi="vim"
+alias n="ncmpcpp"
 alias la="ls --color=no"
-alias rangre="ranger" #just because I always make mistakes
+alias rangre="ranger" #just because I always mistype
 alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
 alias ftb="java -jar ~/Downloads/FTB_Launcher.jar";
 alias bc="bc ~/.config/bc/.bcrc -l";
