@@ -29,7 +29,7 @@
 #define USE_SERIAL_PD2
 
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 200
+#define TAPPING_TERM 140
 
 #undef RGBLED_NUM
 #define RGBLED_NUM 10

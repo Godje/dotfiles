@@ -135,7 +135,7 @@ assign [class="discord"] $ws3
 # window settings
 for_window [class="^.*"] border pixel 2
 for_window [class="csgo_linux64"] border pixel 0
-for_window [class="java.*"] border pixel 0
+for_window [class="Minecraft*"] border pixel 0
 
 ## i3 Configuration Files
 # reload the configuration file
