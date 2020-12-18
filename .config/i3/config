@@ -236,8 +236,8 @@ gaps inner 20
 gaps outer 10
 
 # MPC controls
-bindsym $sup+Shift+p exec "~/Documents/scripts/mpc/play-playlist.sh"
-bindsym $sup+Shift+f exec "~/Documents/scripts/mpc/add-to-playlist.sh"
+bindsym $sup+Shift+p exec "~/.local/share/bin/scripts/mpc/play-playlist.sh"
+bindsym $sup+Shift+f exec "~/.local/share/bin/scripts/mpc/add-to-playlist.sh"
 
 ## ========
 ## Boot executions

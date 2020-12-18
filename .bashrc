@@ -221,17 +221,12 @@ function ffind(){
 	find / -name "$1" 2>/dev/null
 }
 
-# Running an FFF config if it exists
-if [[ -a ~/.config/fff/config ]]; then
-	source ~/.config/fff/config
-fi
-
 export TERM=xterm-256color
 export EDITOR="vim"
 export GOPATH=$HOME/go
 export DOTFILES="$HOME/git/dotfiles"
 export SCHOOLDIR="$HOME/Documents/school"
-export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:$DOTFILES/scripts:/home/daniel/.nimble/bin:$DOTFILES/devscripts:/home/daniel/.local/bin:/home/daniel/.config/composer/vendor/bin"
+export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.config/composer/vendor/bin"
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
