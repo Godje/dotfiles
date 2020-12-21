@@ -226,7 +226,7 @@ export EDITOR="vim"
 export GOPATH=$HOME/go
 export DOTFILES="$HOME/git/dotfiles"
 export SCHOOLDIR="$HOME/Documents/school"
-export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.config/composer/vendor/bin"
+export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/.config/composer/vendor/bin"
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
