@@ -240,7 +240,8 @@ com! VimrcEdit tabedit ~/.vimrc
 " "" Saving the session
 com! MakeSesh mks! vimsession.vim
 
-
+" "" 
+autocmd FileType yaml setlocal et ts=2
 
 " "" FIX ARROW KEYS
 inoremap <ESC>[1;5C <Esc>ea
@@ -255,6 +256,9 @@ let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("e")': ['<c-t>'],
     \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
     \ }
+
+let g:ctrlp_custom_ignore = 'node_modules'
+
 let g:lightline = {
 			\ 'enable': {
 			\ 'tabline': 0

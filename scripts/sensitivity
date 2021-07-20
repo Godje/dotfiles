@@ -1,4 +1,4 @@
-if [ "$SEARCH" = "Razer DeathAdder Chroma" ]; then 
+if [ "$SEARCH" = "Razer DeathAdder Elite" ]; then 
 	exit 1
 fi
 
@@ -11,8 +11,8 @@ ids=$(xinput --list | awk -v search="$SEARCH" \
 
 for i in $ids
 do
-	xinput set-prop $i 'libinput Accel Speed' -0.8
-	xinput set-prop $i 'libinput Accel Speed Default' -0.8
-	xinput set-prop $i 407 -0.8
-	xinput set-prop $i 408 -0.8
+	xinput set-prop $i 'libinput Accel Speed' -0.6
+	xinput set-prop $i 'libinput Accel Speed Default' -0.6
+	xinput set-prop $i 407 -0.6
+	xinput set-prop $i 408 -0.6
 done

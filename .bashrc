@@ -217,29 +217,39 @@ function crun(){
 	command crun;
 }
 
-# Running an FFF config if it exists
-if [[ -a ~/.config/fff/config ]]; then
-	source ~/.config/fff/config
-fi
+function ffind(){
+	find / -name "$1" 2>/dev/null
+}
 
 export TERM=xterm-256color
 export EDITOR="vim"
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:~/Documents/scripts:/home/daniel/.nimble/bin:~/Documents/devscripts
+export DOTFILES="$HOME/git/dotfiles"
+export SCHOOLDIR="$HOME/Documents/school"
+export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/.config/composer/vendor/bin"
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
 alias ebash="vim ~/.bashrc"
+alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias r="ranger" 
-alias vi="vim"
-alias rangre="ranger" #just because I always make mistakes
+alias n="ncmpcpp"
+alias la="ls --color=no"
+alias rangre="ranger" #just because I always mistype
 alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
+alias ftb="java -jar ~/Downloads/FTB_Launcher.jar";
+alias bc="bc ~/.config/bc/.bcrc -l";
+alias cdqmk="cd ~/qmk_firmware/keyboards/lily58/keymaps/Godje/";
+alias cddot="cd $DOTFILES";
+alias cdschool="cd $SCHOOLDIR";
+alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
+
+export PATH="$PATH:/opt/mssql-tools/bin"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH="$PATH:/opt/mssql-tools/bin"

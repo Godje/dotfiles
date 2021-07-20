@@ -119,6 +119,8 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Ctrl+Shift+Left move workspace to output left
 bindsym $mod+Ctrl+Shift+Right move workspace to output right
+bindsym $mod+Ctrl+Shift+h move workspace to output left
+bindsym $mod+Ctrl+Shift+l move workspace to output right
 
 # window assignments
 assign [class="Steam"] $ws5
@@ -126,14 +128,14 @@ assign [class="Firefox"] $ws2
 assign [class="qutebrowser"] $ws2
 assign [class="csgo_linux64"] $ws5
 assign [class="Terraria*"] $ws5
-assign [class="URxvt"] $ws1
 assign [class="Krita"] $ws7
 assign [class="Minecraft*"] $ws5
 assign [class="discord"] $ws3
 
 # window settings
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 2
 for_window [class="csgo_linux64"] border pixel 0
+for_window [class="Minecraft*"] border pixel 0
 
 ## i3 Configuration Files
 # reload the configuration file
@@ -220,8 +222,8 @@ bar {
 set_from_resource $fg i3wm.color1
 set_from_resource $bg i3wm.color7
 
-client.focused	$fb $bg	$fg	$bg	$bg
-client.unfocused	$bb $bg	$fg	$bg	$bg
+# client.focused $fb $bg	$fg	$bg	$bg
+# client.unfocused $bg $bg	$fg	$bg	$bg
 
 ## ========
 ## Other binds
@@ -234,8 +236,8 @@ gaps inner 20
 gaps outer 10
 
 # MPC controls
-bindsym $sup+Shift+p exec "~/Documents/scripts/mpc/play-playlist.sh"
-bindsym $sup+Shift+f exec "~/Documents/scripts/mpc/add-to-playlist.sh"
+bindsym $sup+Shift+p exec "~/.local/bin/scripts/mpc/play-playlist.sh"
+bindsym $sup+Shift+f exec "~/.local/bin/scripts/mpc/add-to-playlist.sh"
 
 ## ========
 ## Boot executions
@@ -251,8 +253,7 @@ exec_always "xrdb -merge ~/.Xresources"
 exec_always "wal -R"
 
 # scripts
-exec "~/.comptonstart.sh"
-exec_always "~/Documents/scripts/languages"
+exec_always "~/git/dotfiles/scripts/languages"
 exec_always "~/.screenlayout/default.sh"
-exec_always "~/Documents/scripts/sensitivity"
-exec_always "~/Documents/scripts/tablet"
+exec_always "~/git/dotfiles/scripts/sensitivity"
+# exec_always "~/Documents/scripts/tablet"

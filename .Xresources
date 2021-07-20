@@ -40,18 +40,15 @@ URxvt.scrollBar: false
 URxvt.pointerBlank: true
 ! URxvt.depth: 32
 URxvt.borderless: true
-URxvt.internalBorder: 20
+URxvt.internalBorder: 10
 ! URxvt.background: [90]#111111
 ! URxvt.borderColor: [90]#111111
 URxvt.cursorColor: magenta 
 URxvt.cursorBlink: true
 
-URxvt.perl-ext-common: resize-font
+URxvt.perl-ext-common: font-size
 
-! Fixing the arrow keys
-URxvt.keysym.Control-t: perl:tabbedex:new_tab
-URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
-URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
+URxvt.keysym.C-equal: font-size:reset
 
 URxvt.keysym.Control-Up:   \033[1;5A
 URxvt.keysym.Control-Down:    \033[1;5B
