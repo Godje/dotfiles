@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# mfb - matteframe shell script
+# A script to create a matte frame around a picture that will convert the picture to a 1:1 aspect ratio by adding a padding of a certain color (default: white) around it
+
+# This is a rewrite of the python version of this script. It is better to have no dependencies on the script, that to hope that everyone wanting to use this script has Python2 installed.
+
+# Usage:
+# - matteframe <imgfile> <coefficient> <color>
+
+
+# Checking if the ImageMagick is installed on the computer
+command -v convert > /dev/null;
+! [ $? -eq 0 ] && echo "Imagemagick is not installed";
+
+# Defining functions
+testFileExists () {
+	! [ -a "$1" ] && ( echo "File not found"; exit 1 );
+}
+
+testForNumber () {
+	# https://stackoverflow.com/a/3951175
+	if ! [ "$1" -eq "$1" ] 2>/dev/null; then
+		echo '"'"$1"'"' is not a valid coefficient number.
+		exit 1;
+	fi
+}
+
+# defining default variables
+coefficient=12
+color='white'
+
+[ -n "$1" ] && testFileExists "$1";
+[ -n "$2" ] && testForNumber "$2"
