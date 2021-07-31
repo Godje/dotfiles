@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# Script to create a markdown file with the a date in the name and in the file,
+# and then open it.
+# DIARIES_DIRECTORY folder must be defined.
+
+function funcs(){
+	case $1 in
+		'-list') listDiaries ;;
+		'-delete') deleteDiary "$2" ;;
+	esac
+}
+
+function listDiaries(){
+	ls "$DIARIES_DIRECTORY";
+}
+function deleteDiary(){
+	read -p "Deleting diary $1 [y/n]: " confirmation
+	if ! [ -z $confirmation ] || [ "$confirmation" = 'y' ]; then
+		echo "Confirmed."
+		! [ -z "$1" ] && rm -rf "$DIARIES_DIRECTORY/$1"
+	else
+		echo "Cancelled";
+	fi
+}
+
+FIRST_CHAR="$(printf '%s' "$1" | cut -c1)"
+if [ "$FIRST_CHAR" = '-' ]; then
+	funcs "$1" "$2";
+else
+	DIARY="$1";
+	! [ -d "$DIARIES_DIRECTORY/$DIARY" ] && ( echo "Diary doesn't exist. Creating a folder" && mkdir -p "$DIARIES_DIRECTORY/$1"; sleep 1 );
+	
+	DATE=$(date +"%a-%B-%d-%Y")
+	FILENAME="$DIARIES_DIRECTORY/$DIARY/$DATE.md"
+	
+	! [ -a $FILENAME ] && ( echo "# $DATE" >> $FILENAME; );
+	[ -a $FILENAME ] && ( vim $FILENAME; );
+fi
+
