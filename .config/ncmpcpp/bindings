@@ -617,3 +617,11 @@ def_key "x"
   delete_playlist_items
 def_key "P"
   show_playlist
+
+
+#seeking and stuff
+def_key "d"
+  seek_forward
+
+def_key "c"
+  seek_backward

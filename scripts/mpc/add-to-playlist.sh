@@ -14,7 +14,7 @@
 # Specifics:
 # Do not put the last dash in the playlists directory in $plDirectory
 
-plDirectory=~/.config/mpd/playlists
+plDirectory=~/Music/playlists
 track="$(mpc current -f %file%)" # full track name
 tname=$( echo $track | sed 's/.*\// /' ) # just the basename
 playlist=$( mpc lsplaylists | dmenu -l 9 -p "Add $tname to playlist:"  ) # getting the name of the playlist
