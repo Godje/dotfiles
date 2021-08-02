@@ -137,6 +137,16 @@ mp3towav(){
 	done	
 }
 
+
+# EXPORTS
+
+export TERM=xterm-256color
+export EDITOR="vim"
+export GOPATH=$HOME/go
+export DOTFILES="$HOME/git/dotfiles"
+export SCHOOLDIR="$HOME/Documents/school"
+export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/.config/composer/vendor/bin"
+
 # TMUX shortcuts
 tattach(){
 	tmux attach -t $1
@@ -201,6 +211,7 @@ f() {
 site(){
 	cd ~/Code/Sites/"$1"
 }
+complete -W $(ls ~/Code/Sites | tr "$IFS" ' ') site
 
 function ccheck(){
 	if [[ $PWD == *"rust-projects"* ]]; then
@@ -209,6 +220,7 @@ function ccheck(){
 	fi
 	command ccheck;
 }
+
 function crun(){
 	if [[ $PWD == *"rust-projects"* ]]; then
 		cargo run;
@@ -221,12 +233,39 @@ function ffind(){
 	find / -name "$1" 2>/dev/null
 }
 
-export TERM=xterm-256color
-export EDITOR="vim"
-export GOPATH=$HOME/go
-export DOTFILES="$HOME/git/dotfiles"
-export SCHOOLDIR="$HOME/Documents/school"
-export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/.config/composer/vendor/bin"
+function smpd(){
+	mpd ~/.config/mpd/mpd.conf
+}
+
+function buildCRBN(){
+	WEST_LOCATION="/home/daniel/git/others/zmk/app"
+	CFG_LOCATION="/home/daniel/git/crbn-keymap/config/"
+	TMP_UF2=$(mktemp)
+
+	cd $WEST_LOCATION
+	west build -p -b nice_nano -- -DSHIELD=crbn -DZMK_CONFIG=$CFG_LOCATION
+}
+
+function flashCRBN(){
+	WEST_LOCATION="/home/daniel/git/others/zmk/app"
+	CFG_LOCATION="/home/daniel/git/crbn-keymap/config/"
+	TMP_UF2=$(mktemp)
+
+	cd $WEST_LOCATION
+	west build -p -b nice_nano -- -DSHIELD=crbn -DZMK_CONFIG=$CFG_LOCATION
+	cp /home/daniel/git/others/zmk/app/build/zephyr/zmk.uf2 /media/daniel/NICENANO/
+}
+
+function flashMUNLeft(){
+	qmk flash -kb rgbkb/mun -km Godje -bl dfu-util-split-left
+}
+function flashMUNRight(){
+	qmk flash -kb rgbkb/mun -km Godje -bl dfu-util-split-right
+}
+
+function restartWorkers() {
+	sudo supervisorctl restart all;
+}
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
@@ -240,7 +279,6 @@ alias la="ls --color=no"
 alias rangre="ranger" #just because I always mistype
 alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
 alias ftb="java -jar ~/Downloads/FTB_Launcher.jar";
-alias bc="bc ~/.config/bc/.bcrc -l";
 alias cdqmk="cd ~/qmk_firmware/keyboards/lily58/keymaps/Godje/";
 alias cddot="cd $DOTFILES";
 alias cdschool="cd $SCHOOLDIR";
