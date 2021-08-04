@@ -4,17 +4,17 @@
 # and then open it.
 # DIARIES_DIRECTORY folder must be defined.
 
-function funcs(){
+funcs(){
 	case $1 in
 		'-list') listDiaries ;;
 		'-delete') deleteDiary "$2" ;;
 	esac
 }
 
-function listDiaries(){
+listDiaries(){
 	ls "$DIARIES_DIRECTORY";
 }
-function deleteDiary(){
+deleteDiary(){
 	read -p "Deleting diary $1 [y/n]: " confirmation
 	if ! [ -z $confirmation ] || [ "$confirmation" = 'y' ]; then
 		echo "Confirmed."
@@ -34,7 +34,7 @@ else
 	DATE=$(date +"%a-%B-%d-%Y")
 	FILENAME="$DIARIES_DIRECTORY/$DIARY/$DATE.md"
 	
-	! [ -a $FILENAME ] && ( echo "# $DATE" >> $FILENAME; );
-	[ -a $FILENAME ] && ( vim $FILENAME; );
+	! [ -f $FILENAME ] && ( echo "# $DATE" >> $FILENAME; );
+	[ -f $FILENAME ] && ( vim $FILENAME; );
 fi
 
