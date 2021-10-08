@@ -14,6 +14,7 @@ funcs(){
 listDiaries(){
 	ls "$DIARIES_DIRECTORY";
 }
+
 deleteDiary(){
 	read -p "Deleting diary $1 [y/n]: " confirmation
 	if ! [ -z $confirmation ] || [ "$confirmation" = 'y' ]; then
@@ -31,10 +32,11 @@ else
 	DIARY="$1";
 	! [ -d "$DIARIES_DIRECTORY/$DIARY" ] && ( echo "Diary doesn't exist. Creating a folder" && mkdir -p "$DIARIES_DIRECTORY/$1"; sleep 1 );
 	
-	DATE=$(date +"%a-%B-%d-%Y")
+	DATE=$(date +"%Y-%m-%d-%a")
+	HUMAN_DATE=$(date +"%a-%B-%d-%Y")
 	FILENAME="$DIARIES_DIRECTORY/$DIARY/$DATE.md"
-	
-	! [ -f $FILENAME ] && ( echo "# $DATE" >> $FILENAME; );
+
+	! [ -f $FILENAME ] && ( echo "# $HUMAN_DATE" >> $FILENAME; );
 	[ -f $FILENAME ] && ( vim $FILENAME; );
 fi
 

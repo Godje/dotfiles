@@ -283,9 +283,11 @@ alias cdqmk="cd ~/qmk_firmware/keyboards/lily58/keymaps/Godje/";
 alias cddot="cd $DOTFILES";
 alias cdschool="cd $SCHOOLDIR";
 alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
+alias getGitToken="xclip -selection c < ~/token"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 
+export DIARIES_DIRECTORY="/home/daniel/Documents/diaries/";
 export PATH="$PATH:/opt/mssql-tools/bin"
 
 export NVM_DIR="$HOME/.nvm"
