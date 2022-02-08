@@ -31,6 +31,7 @@ displayOptions(){
 	echo "   4 - install python libraries"
 	echo "   5 - install youtube-dl"
 	echo "   6 - install Vim Submodules"
+	echo "   7 - install NVM"
 }
 
 say(){
@@ -83,6 +84,7 @@ installSoftware(){
 	sudo apt install -y	\
 		vim	\
 		ranger	\
+		imagemagick	\
 		vim-gtk	\
 		python3	\
 		python3-pip	\
@@ -161,6 +163,7 @@ installI3(){
 	cd $localfolder
 }
 
+
 installPython(){
 	pip3 install pywal
 	pip3 install BeautifulSoup4
@@ -183,6 +186,11 @@ installVimSubmodules(){
 	git submodule update;
 }
 
+installNVM(){
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+	wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+}
+
 # Displaying the options and executing the right function
 displayOptions
 
@@ -200,5 +208,7 @@ case $selected in
 	5) installYoutubeDL
 		;;
 	6) installVimSubmodules
+		;;
+	7) installNVM
 		;;
 esac
