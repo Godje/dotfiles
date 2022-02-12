@@ -284,6 +284,7 @@ alias cddot="cd $DOTFILES";
 alias cdschool="cd $SCHOOLDIR";
 alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
 alias getGitToken="xclip -selection c < ~/token"
+alias getTwo="printf 2 | xclip -selection c"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 
