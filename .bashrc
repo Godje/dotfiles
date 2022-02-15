@@ -207,7 +207,7 @@ f() {
 }
 
 site(){
-	cd ~/Code/Sites/"$1"
+	cd ~/Code/Sites/"$1"*
 }
 complete -W $(ls ~/Code/Sites | tr "$IFS" ' ') site
 
@@ -263,6 +263,16 @@ function flashMUNRight(){
 
 function restartWorkers() {
 	sudo supervisorctl restart all;
+}
+
+function gcheck() {
+	if [ $(git branch --show-current | grep "$1" -c) -gt 0 ]; then
+		echo "This branch already selected";
+	elif [ $(git branch --list | grep "$1" -c) -eq 0 ]; then
+		echo "The branch doesn't exist";
+	else
+		git checkout $(git branch --list | grep "$1")
+	fi
 }
 
 alias nf="neofetch --w3m --source wallpaper --size 300"
