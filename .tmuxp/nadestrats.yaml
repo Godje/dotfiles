@@ -1,31 +1,27 @@
-session_name: nades
-start_directory: /home/daniel/git/nadestrats
+session_name: 'nadestrats'
 windows:
-- layout: 7e0b,307x81,0,0{153x81,0,0,5,153x81,154,0,7}
+- layout: 2b16,309x82,0,0{154x82,0,0,0,154x82,155,0,1}
   options: {}
   panes:
+  - shell_command:
+    - cd /home/daniel/git/nadestrats/client
+    - npm run serve
   - focus: 'true'
     shell_command:
-    - cd /home/daniel/git/nadestrats/client
-    - npm run dev
-  - shell_command:
     - cd /home/daniel/git/nadestrats/server
-    - npm run dev
+    - npm run start
   start_directory: /home/daniel/git/nadestrats
   window_name: npm
 - focus: 'true'
-  layout: fa20,307x81,0,0{174x81,0,0,9,132x81,175,0[132x40,175,0,14,132x40,175,41,19]}
+  layout: 2b19,309x82,0,0{154x82,0,0,2,154x82,155,0,3}
   options: {}
   panes:
   - shell_command:
-    - cd /home/daniel/git/nadestrats/client/src
-    - vims
-  - shell_command:
     - cd /home/daniel/git/nadestrats/server
-    - vims
+    - clear && figlet server
   - focus: 'true'
     shell_command:
-    - cd /home/daniel/git/nadestrats
-    - clear && figlet shell
+    - cd /home/daniel/git/nadestrats/client
+    - clear && figlet client
   start_directory: /home/daniel/git/nadestrats
   window_name: bash

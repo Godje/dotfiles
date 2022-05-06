@@ -6,6 +6,7 @@
 
 funcs(){
 	case $1 in
+		'-yesterday') openDiary 'yesterday' ;;
 		'-list') listDiaries ;;
 		'-delete') deleteDiary "$2" ;;
 	esac
@@ -23,6 +24,19 @@ deleteDiary(){
 	else
 		echo "Cancelled";
 	fi
+}
+
+openDiary(){
+	if [ "$1" = 'yesterday' ]; then
+		DATE=$(date --date='yesterday' +"%Y-%m-%d-%a")
+	else
+		DATE=$(date +"%Y-%m-%d-%a")
+	fi
+	HUMAN_DATE=$(date +"%a-%B-%d-%Y")
+	FILENAME="$DIARIES_DIRECTORY/$DIARY/$DATE.md"
+
+	! [ -f $FILENAME ] && ( echo "# $HUMAN_DATE" >> $FILENAME; );
+	[ -f $FILENAME ] && ( vim $FILENAME; );
 }
 
 FIRST_CHAR="$(printf '%s' "$1" | cut -c1)"
