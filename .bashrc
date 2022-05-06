@@ -142,10 +142,8 @@ mp3towav(){
 
 export TERM=xterm-256color
 export EDITOR="vim"
-export GOPATH=$HOME/go
 export DOTFILES="$HOME/git/dotfiles"
-export SCHOOLDIR="$HOME/Documents/school"
-export PATH="$PATH:$GOROOT/bin:$GOPATH/bin:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/.config/composer/vendor/bin"
+export PATH="$PATH:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/.config/composer/vendor/bin"
 
 # TMUX shortcuts
 tattach(){
@@ -209,7 +207,7 @@ f() {
 }
 
 site(){
-	cd ~/Code/Sites/"$1"
+	cd ~/Code/Sites/"$1"*
 }
 complete -W $(ls ~/Code/Sites | tr "$IFS" ' ') site
 
@@ -267,6 +265,16 @@ function restartWorkers() {
 	sudo supervisorctl restart all;
 }
 
+function gcheck() {
+	if [ $(git branch --show-current | grep "$1" -c) -gt 0 ]; then
+		echo "This branch already selected";
+	elif [ $(git branch --list | grep "$1" -c) -eq 0 ]; then
+		echo "The branch doesn't exist";
+	else
+		git checkout $(git branch --list | grep "$1")
+	fi
+}
+
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
 alias ebash="vim ~/.bashrc"
@@ -283,8 +291,8 @@ alias cdqmk="cd ~/qmk_firmware/keyboards/lily58/keymaps/Godje/";
 alias cddot="cd $DOTFILES";
 alias cdschool="cd $SCHOOLDIR";
 alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
-alias getGitToken="xclip -selection c < ~/token"
-alias getTwo="printf 2 | xclip -selection c"
+alias getGitToken="xclip -selection c < ~/git.token"
+alias getTwo="printf '2' | xclip -selection c"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 

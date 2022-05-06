@@ -1,0 +1,15 @@
+session_name: 'defa'
+windows:
+- panes:
+  - focus: 'true'
+    shell_command: npm run start
+  start_directory: /home/daniel/Code/Sites/brahmastra
+  window_name: npm
+- focus: 'true'
+  layout: main-vertical
+  panes:
+  - focus: 'true'
+    shell_command: diary
+  - shell_command: clear && figlet shell
+  start_directory: /home/daniel/Code/Sites/brahmastra
+  window_name: bash
