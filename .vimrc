@@ -51,6 +51,7 @@ set ts=2
 
 " "" Environment settings
 set relativenumber " Show the line numbers
+set number
 set ruler
 set showcmd " Show the last command
 set wildmenu " I don't know

@@ -275,6 +275,27 @@ function gcheck() {
 	fi
 }
 
+# function designed for my school C++ data structures class
+function gppt() {
+	clear && figlet "output" && g++ -std=c++14 "$1" -o a.out
+
+	if [ $? -gt 0 ]; then
+		e_filename="error_output.txt"
+		figlet "error";
+		g++ test.cpp -o a.out 2> $e_filename
+		echo "Error length:" $(wc -l $e_filename);
+		rm $e_filename;
+	else
+		./a.out
+	fi
+}
+
+# MIT from https://stackoverflow.com/a/58598185/5410502
+# capture the output of a command so it can be retrieved with ret
+cap () { tee /tmp/capture.out; }
+# return the output of the most recent command that was captured by cap
+ret () { cat /tmp/capture.out; }
+
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
 alias ebash="vim ~/.bashrc"
@@ -292,7 +313,7 @@ alias cddot="cd $DOTFILES";
 alias cdschool="cd $SCHOOLDIR";
 alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
 alias getGitToken="xclip -selection c < ~/git.token"
-alias getTwo="printf '2' | xclip -selection c"
+alias primtoclip="xclip -selection primary -o | xclip -selection clipboard"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 
