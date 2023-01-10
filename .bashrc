@@ -2,6 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -83,9 +84,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
-
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
 alias ll='ls -alF'
@@ -277,6 +275,13 @@ function gcheck() {
 
 # function designed for my school C++ data structures class
 function gppt() {
+	if [ $# -eq 0 ]; then
+		clear && figlet "output" && g++ -std=c++14 *.cpp -o a.out;
+		./a.out 1> result.txt 2> /dev/null;
+		figlet "result" && ./a.out
+		return;
+	fi
+
 	clear && figlet "output" && g++ -std=c++14 "$1" -o a.out
 
 	if [ $? -gt 0 ]; then
@@ -296,6 +301,14 @@ cap () { tee /tmp/capture.out; }
 # return the output of the most recent command that was captured by cap
 ret () { cat /tmp/capture.out; }
 
+# VI keymap
+set -o vi
+bind -m vi-insert "\C-l":clear-screen
+
+# Sourcing some variables
+source ~/.bashvars
+
+# Aliases (might move to .bash_aliases in the future)
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
 alias ebash="vim ~/.bashrc"
@@ -310,7 +323,7 @@ alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
 alias ftb="java -jar ~/Downloads/FTB_Launcher.jar";
 alias cdqmk="cd ~/qmk_firmware/keyboards/lily58/keymaps/Godje/";
 alias cddot="cd $DOTFILES";
-alias cdschool="cd $SCHOOLDIR";
+alias cdschool="cd \"$SCHOOLDIR\"";
 alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
 alias getGitToken="xclip -selection c < ~/git.token"
 alias primtoclip="xclip -selection primary -o | xclip -selection clipboard"
@@ -323,3 +336,4 @@ export PATH="$PATH:/opt/mssql-tools/bin"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+

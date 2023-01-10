@@ -55,3 +55,6 @@
 [submodule ".vim/bundle/rust.vim"]
 	path = .vim/bundle/rust.vim
 	url = https://github.com/rust-lang/rust.vim
+[submodule ".vim/bundle/vim-fidget"]
+	path = .vim/bundle/vim-fidget
+	url = https://github.com/mohitleo9/vim-fidget
