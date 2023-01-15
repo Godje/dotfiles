@@ -35,3 +35,5 @@ tags
 .config/mpd/*
 !.config/mpd/mpd.conf
 .config/ncmpcpp/error.log
+
+.vim/bundle/vim-fidget/*
