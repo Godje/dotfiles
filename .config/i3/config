@@ -123,7 +123,7 @@ bindsym $mod+Ctrl+Shift+h move workspace to left
 bindsym $mod+Ctrl+Shift+l move workspace to right
 
 # window assignments
-assign [class="Steam"] $ws5
+assign [class="steam"] $ws5
 assign [class="Firefox"] $ws2
 assign [class="qutebrowser"] $ws2
 assign [class="csgo_linux64"] $ws5
