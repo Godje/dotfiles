@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# A shell script that will pretty much do the same thing that Log by Josh
+# Avanier is doing. He never published his CLI client, so I'll just make my own,
+# with the same idea of having one big text file, CSV style, that will just do
+# the job.
+
+# Format of a BUSY entry goes like this:
+# ID Activity Project Description Start_Date End_Date
+
+if [ ! -z $BUSYFILE ]; then
+	echo "No Busy file found";
+fi
+
+errorExit(){
+	invalidActionMessage="Unknown action: $2
+
+the following actions are valid:
+	create, delete, print"
+
+	echo -e "$invalidActionMessage";
+	exit 1;
+}
+
+function timestamp(){
+	date +"%F %T"
+}
+
+funcs(){
+	case "$1" in
+		'create') createEntry ;;
+		'delete') deleteEntry "${@:2}" ;;
+		'print') printEntries ;;
+	esac
+}
+
+function createEntry(){
+	echo "create entry"
+}
+
+function deleteEntry(){
+	# param $1 - id
+	echo "deleteEntry "$@""
+}
+
+function printEntries(){
+	echo "printEntries"
+}
+
+# check if the first argument is a valid action
+case "$1" in
+	create|delete|print) valid=1;;
+	*) valid=0;;
+esac
+((valid)) && echo "valid" || errorExit "invalidAction" "$1"
+
+funcs "$1" "${@:2}"
+
+# this works for arguments that can have a string with spaces
+# for x in "${@:3}"
+# do
+# 	echo "$x"
+# done
+
+# TODO:
+# - help message
+# - primary functionality
