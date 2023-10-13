@@ -19,11 +19,13 @@ errorExit(){
 the following actions are valid:
 	create, delete, print, start, end"
 
-	startedWithoutFinishing="Can not start another action when you haven't finished the last one."
+	startedWithoutFinishing="Can not start another action when you haven't finished the last one.";
+	finishedWithoutStarting="Can not end an action when you haven't started one";
 
 	case "$1" in
 		'invalidAction') echo -e "$invalidActionMessage";;
 		'startedWithoutFinishing') echo -e "$startedWithoutFinishing";;
+		'finishedWithoutStarting') echo -e "$finishedWithoutStarting";;
 	esac
 	exit 1;
 }
@@ -45,7 +47,7 @@ funcs(){
 }
 
 function startEntry(){
-	checkLastActionDone;
+	[ $(isLastActionDone) = "no" ] && errorExit "startedWithoutFinishing";
 
 	echo -e "Activity:\t"
 	read action
@@ -67,7 +69,14 @@ function createEntry(){
 }
 # Finishes last entry. Aka puts an "END" timestamp on it
 function endEntry(){
+	[ ! $(isLastActionDone) = "no" ] && errorExit "finishedWithoutStarting";
+
 	endTime=$(timestamp);
+	while IFS="," read -r entryId startTime emptyEndTime activity project details 
+	do
+		sed -i "/^$entryId,/d" $BUSYFILE;
+		echo $entryId,$startTime,$endTime,"$activity","$project","$details" >> $BUSYFILE
+	done < <(printEntries 1)
 }
 
 function deleteEntry(){
@@ -92,9 +101,10 @@ function getNewEntryId(){
 	echo $newId;
 }
 
-function checkLastActionDone(){
+function isLastActionDone(){
+	[ "$fileEmpty" -eq 0 ] && echo "yes"; return
 	endDateField=$(tail -n 1 < $BUSYFILE | cut -d, -f 3);
-	[ $(echo $endDateField | wc -w) -eq 0 ] && errorExit "startedWithoutFinishing";
+	[ $(echo $endDateField | wc -w) -eq 0 ] && echo "no" || echo "yes";
 }
 
 # check if the first argument is a valid action
