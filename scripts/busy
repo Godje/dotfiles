@@ -17,7 +17,7 @@ errorExit(){
 	invalidActionMessage="Unknown action: $2
 
 the following actions are valid:
-	create, delete, print, start, end"
+	help, create, delete, print, start, end"
 
 	startedWithoutFinishing="Can not start another action when you haven't finished the last one.";
 	finishedWithoutStarting="Can not end an action when you haven't started one";
@@ -34,7 +34,7 @@ function timestamp(){
 	date +"%Y-%m-%dT%H:%M:%S";
 }
 
-funcs(){
+actions(){
 	# passing arguments through to the action functions
 	# since start and end are interactive, they don't need any arguments
 	case "$1" in
@@ -43,6 +43,7 @@ funcs(){
 		'print') printEntries "${@:2}";;
 		'start') startEntry ;;
 		'end') endEntry ;;
+		'help') printHelp ;;
 	esac
 }
 
@@ -59,6 +60,7 @@ function startEntry(){
 	createEntry "$action" "$project" "$description"
 }
 
+# Creates an entry. Also exists in case someone wants to make an alias
 function createEntry(){
 	# param $1 - activity
 	# param $2 - project
@@ -79,18 +81,10 @@ function endEntry(){
 	done < <(printEntries 1)
 }
 
+# TODO: implement this
 function deleteEntry(){
 	# param $1 - id
 	echo "deleteEntry "$@""
-}
-
-function printEntries(){
-	# param $1 - count
-	if [ -z $1 ];
-	then lineCount=10
-	else lineCount=$1;
-	fi;
-	tail -n $lineCount < $BUSYFILE
 }
 
 function getNewEntryId(){
@@ -102,19 +96,59 @@ function getNewEntryId(){
 }
 
 function isLastActionDone(){
-	[ "$fileEmpty" -eq 0 ] && echo "yes"; return
+	[ "$fileEmpty" -eq 0 ] && echo "yes" && return
 	endDateField=$(tail -n 1 < $BUSYFILE | cut -d, -f 3);
 	[ $(echo $endDateField | wc -w) -eq 0 ] && echo "no" || echo "yes";
 }
 
+function printEntries(){
+	# param $1 - count
+	if [ -z $1 ];
+	then lineCount=10
+	else lineCount=$1;
+	fi;
+	tail -n $lineCount < $BUSYFILE
+}
+function printHelp(){
+	# The following text is not tabbed, but spaced. So automatic tabbing might
+	# mess it up
+	helpText="Usage: busy [action] [arguments]
+
+Actions:
+  start
+    Launches an interactive menu for the \"busy create\" command
+
+  create
+    Creates a busy entry in the \$BUSYFILE
+    Usage: start <activity> <project> <details>
+
+    activity - activity that could be common across many projects (Ex. Research, Debug)
+    project - Project name
+    details - Details about current session
+
+  end
+    Ends an entry
+
+  print
+    Prints last <number> (default: 10) entries out
+
+    Usage: print <number>
+
+  help      Displays this text
+";
+
+	echo -e "$helpText";
+}
+
+
 # check if the first argument is a valid action
 case "$1" in
-	create|delete|print|start|end) valid=1;;
+	create|delete|print|start|end|help) valid=1;;
 	*) valid=0;;
 esac
 ((valid==0)) && errorExit "invalidAction" "$1"
 
-funcs "$1" "${@:2}"
+actions "$1" "${@:2}"
 
 # this works for arguments that can have a string with spaces
 # for x in "${@:3}"
