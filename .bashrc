@@ -330,6 +330,7 @@ alias primtoclip="xclip -selection primary -o | xclip -selection clipboard"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 
+export BUSYFILE="/home/daniel/busy.csv"
 export PHASEOUT="https://gist.githubusercontent.com/Godje/e2278ca4816d45e1111e7f9df6ce17ab/raw/1c7a0bfa3f9bfa566e46a0af5f51125423a40a4e/po1.txt";
 export DIARIES_DIRECTORY="/home/daniel/Documents/diaries/";
 export PATH="$PATH:/opt/mssql-tools/bin"

@@ -6,36 +6,68 @@
 # the job.
 
 # Format of a BUSY entry goes like this:
-# ID Activity Project Description Start_Date End_Date
+# ID Start_Date End_Date Activity Project Description
 
-if [ ! -z $BUSYFILE ]; then
-	echo "No Busy file found";
+if [ ! -f "$BUSYFILE" ]; then
+	echo 'No $BUSYFILE created'
 fi
+fileEmpty=$(wc -w < $BUSYFILE); # 0 if no words
 
 errorExit(){
 	invalidActionMessage="Unknown action: $2
 
 the following actions are valid:
-	create, delete, print"
+	create, delete, print, start, end"
 
-	echo -e "$invalidActionMessage";
+	startedWithoutFinishing="Can not start another action when you haven't finished the last one."
+
+	case "$1" in
+		'invalidAction') echo -e "$invalidActionMessage";;
+		'startedWithoutFinishing') echo -e "$startedWithoutFinishing";;
+	esac
 	exit 1;
 }
 
 function timestamp(){
-	date +"%F %T"
+	date +"%Y-%m-%dT%H:%M:%S";
 }
 
 funcs(){
+	# passing arguments through to the action functions
+	# since start and end are interactive, they don't need any arguments
 	case "$1" in
-		'create') createEntry ;;
-		'delete') deleteEntry "${@:2}" ;;
-		'print') printEntries ;;
+		'create') createEntry "${@:2}";;
+		'delete') deleteEntry "${@:2}";;
+		'print') printEntries "${@:2}";;
+		'start') startEntry ;;
+		'end') endEntry ;;
 	esac
 }
 
+function startEntry(){
+	checkLastActionDone;
+
+	echo -e "Activity:\t"
+	read action
+	echo "Project:"
+	read project
+	echo "Description:"
+	read description
+
+	createEntry "$action" "$project" "$description"
+}
+
 function createEntry(){
-	echo "create entry"
+	# param $1 - activity
+	# param $2 - project
+	# param $3 - details
+	startTime=$(timestamp);
+	entryId=$(getNewEntryId);
+	echo $entryId,$startTime,,"$1","$2","$3" >> $BUSYFILE
+}
+# Finishes last entry. Aka puts an "END" timestamp on it
+function endEntry(){
+	endTime=$(timestamp);
 }
 
 function deleteEntry(){
@@ -44,15 +76,33 @@ function deleteEntry(){
 }
 
 function printEntries(){
-	echo "printEntries"
+	# param $1 - count
+	if [ -z $1 ];
+	then lineCount=10
+	else lineCount=$1;
+	fi;
+	tail -n $lineCount < $BUSYFILE
+}
+
+function getNewEntryId(){
+	lastId=$(tail -n 1 < $BUSYFILE | cut -d, -f 1);
+	# if file is empty
+	[ "$fileEmpty" -eq 0 ] && lastId=0;
+	((newId=$lastId+1))
+	echo $newId;
+}
+
+function checkLastActionDone(){
+	endDateField=$(tail -n 1 < $BUSYFILE | cut -d, -f 3);
+	[ $(echo $endDateField | wc -w) -eq 0 ] && errorExit "startedWithoutFinishing";
 }
 
 # check if the first argument is a valid action
 case "$1" in
-	create|delete|print) valid=1;;
+	create|delete|print|start|end) valid=1;;
 	*) valid=0;;
 esac
-((valid)) && echo "valid" || errorExit "invalidAction" "$1"
+((valid==0)) && errorExit "invalidAction" "$1"
 
 funcs "$1" "${@:2}"
 
