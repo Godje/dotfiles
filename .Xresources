@@ -34,7 +34,7 @@
 *.color15:      #ffffff
 
 
-URxvt.font: xft:Monospace:size=9
+URxvt.font: xft:Monospace:size=16
 URxvt.lineSpace: 1
 URxvt.scrollBar: false
 URxvt.pointerBlank: true

@@ -73,16 +73,16 @@ au InsertLeave * silent execute "!echo -en \<esc>[2 q"
 
 " "" Colors settings
 syntax enable
-set background=dark
-hi Normal guibg=NONE ctermbg=NONE
+" set background=dark
+" hi Normal guibg=NONE ctermbg=NONE
 set t_Co=256
 color monokai
 colorscheme monokai
 
 
 " "" Transparency thinga majigger
-hi! Normal ctermbg=NONE guibg=NONE
-hi! NonText ctermbg=NONE guibg=NONE
+" hi! Normal ctermbg=NONE guibg=NONE
+" hi! NonText ctermbg=NONE guibg=NONE
 
 " "" Indentation and plugin on
 filetype plugin indent on

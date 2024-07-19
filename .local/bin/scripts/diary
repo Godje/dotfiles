@@ -36,7 +36,7 @@ openDiary(){
 	FILENAME="$DIARIES_DIRECTORY/$DIARY/$DATE.md"
 
 	! [ -f $FILENAME ] && ( echo "# $HUMAN_DATE" >> $FILENAME; );
-	[ -f $FILENAME ] && ( vim $FILENAME; );
+	[ -f $FILENAME ] && ( $EDITOR $FILENAME; );
 }
 
 FIRST_CHAR="$(printf '%s' "$1" | cut -c1)"
@@ -51,6 +51,6 @@ else
 	FILENAME="$DIARIES_DIRECTORY/$DIARY/$DATE.md"
 
 	! [ -f $FILENAME ] && ( echo "# $HUMAN_DATE" >> $FILENAME; );
-	[ -f $FILENAME ] && ( vim $FILENAME; );
+	[ -f $FILENAME ] && ( $EDITOR $FILENAME; );
 fi
 

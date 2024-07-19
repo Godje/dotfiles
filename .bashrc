@@ -136,12 +136,6 @@ mp3towav(){
 }
 
 
-# EXPORTS
-
-export TERM=xterm-256color
-export EDITOR="vim"
-export DOTFILES="$HOME/git/dotfiles"
-export PATH="$PATH:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/.config/composer/vendor/bin"
 
 # TMUX shortcuts
 tattach(){
@@ -229,9 +223,6 @@ function ffind(){
 	find / -name "$1" 2>/dev/null
 }
 
-function smpd(){
-	mpd ~/.config/mpd/mpd.conf
-}
 
 function buildCRBN(){
 	WEST_LOCATION="/home/daniel/git/others/zmk/app"
@@ -263,6 +254,22 @@ function restartWorkers() {
 	sudo supervisorctl restart all;
 }
 
+function discordInstall(){
+	sudo apt install $( find ~/Downloads/discord_deb/ | sort | tail -n1 )
+}
+
+function winekill() {
+	pid=`ps aux | awk '/C:/{print $2};'`;
+	kill $pid;
+}
+function vkstart() {
+	wine ~/Downloads/VKSetup.exe 2>/dev/null
+}
+
+function vkkill() {
+	winekill
+}
+
 function gcheck() {
 	if [ $(git branch --show-current | grep "$1" -c) -gt 0 ]; then
 		echo "This branch already selected";
@@ -271,6 +278,30 @@ function gcheck() {
 	else
 		git checkout $(git branch --list | grep "$1")
 	fi
+}
+
+function smpd(){
+	mpd ~/.config/mpd/mpd.conf
+}
+
+function ncmpcpp() {
+	if [ $(ps aux | grep mpd -c) -gt 1]; then
+		command ncmpcpp;
+	else
+		smpd
+		command ncmpcpp;
+	fi
+}
+
+function b (){
+	if [ -e "$1" ]; then
+		busy print 1;
+	fi
+	case "$1" in
+	    e) vim $BUSYFILE;;
+			r) busy resume;;
+			p) busy print;;
+	esac
 }
 
 # function designed for my school C++ data structures class
@@ -315,8 +346,9 @@ alias ebash="vim ~/.bashrc"
 alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
+alias vim="nvim"
 alias r="ranger" 
-alias n="ncmpcpp"
+alias n=ncmpcpp
 alias la="ls --color=no"
 alias rangre="ranger" #just because I always mistype
 alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
@@ -327,15 +359,24 @@ alias cdschool="cd \"$SCHOOLDIR\"";
 alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
 alias getGitToken="xclip -selection c < ~/git.token"
 alias primtoclip="xclip -selection primary -o | xclip -selection clipboard"
+alias javac="javac --release 11"
+alias bc="bc -l"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 
+# ANTRL4 setup 4.13.1
+alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
+alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
+
 export BUSYFILE="/home/daniel/busy.csv"
-export PHASEOUT="https://gist.githubusercontent.com/Godje/e2278ca4816d45e1111e7f9df6ce17ab/raw/1c7a0bfa3f9bfa566e46a0af5f51125423a40a4e/po1.txt";
+export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH";
 export DIARIES_DIRECTORY="/home/daniel/Documents/diaries/";
-export PATH="$PATH:/opt/mssql-tools/bin"
+
+# EXPORTS
+export EDITOR="vim"
+export DOTFILES="$HOME/git/dotfiles"
+export PATH="$PATH:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/git/busy.sh:/home/daniel/.config/composer/vendor/bin:/opt/nvim-linux64/bin:/home/daniel/.cargo/bin"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-

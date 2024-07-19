@@ -1,0 +1,10 @@
+session_name: 'pekabo'
+windows:
+- focus: 'true'
+  layout: even-horizontal
+  options: {}
+  panes:
+  - focus: 'true'
+  - shell_command: make watch
+  start_directory: /home/daniel/git/kanban-tui
+  window_name: main
