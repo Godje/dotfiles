@@ -346,7 +346,6 @@ alias ebash="vim ~/.bashrc"
 alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
-alias vim="nvim"
 alias r="ranger" 
 alias n=ncmpcpp
 alias la="ls --color=no"
@@ -361,6 +360,7 @@ alias getGitToken="xclip -selection c < ~/git.token"
 alias primtoclip="xclip -selection primary -o | xclip -selection clipboard"
 alias javac="javac --release 11"
 alias bc="bc -l"
+alias nvims="vim -S Session.vim"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 

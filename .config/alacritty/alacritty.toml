@@ -1,0 +1,8 @@
+[font]
+size = 16
+
+[font.normal]
+family = "DejaVuSansM Nerd Font"
+
+[env]
+term = "xterm-256color"

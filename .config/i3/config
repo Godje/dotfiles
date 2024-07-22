@@ -155,10 +155,10 @@ for_window [title="dropdown"] floating enable
 for_window [title="dropdown"] resize set 625 400
 for_window [title="dropdown"] move scratchpad
 for_window [title="dropdown"] move position center
-exec --no-startup-id "alacritty -o 'window.title=\"dropdown\"'"
+exec --no-startup-id "alacritty -T dropdown"
 
 # mapping key to toggle it
-bindsym $mod+backslash [title="dropdown"] scratchpad show; [instance="dropdown"] move position center
+bindsym $mod+backslash [title="dropdown"] scratchpad show; [title="dropdown"] move position center
 # bindsym $mod+backslash exec --no-startup-id "open_dropdown" 
 
 ## Screen brightness controls
