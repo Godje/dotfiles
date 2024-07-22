@@ -254,8 +254,13 @@ function restartWorkers() {
 	sudo supervisorctl restart all;
 }
 
-function discordInstall(){
+function discordUpdate(){
+	p=$(pwd)
+	cd ~/Downloads/discord_deb/
+	curl -Ls -o ~/Downloads/discord_deb/latest.deb -w %{url_effective} 'https://discord.com/api/download/stable?platform=linux&format=deb' | xclip -selection discord_url
+	mv latest.deb $(basename $(xclip -selection discord_url -o))
 	sudo apt install $( find ~/Downloads/discord_deb/ | sort | tail -n1 )
+	cd "$p"
 }
 
 function winekill() {
