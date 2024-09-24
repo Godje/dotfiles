@@ -331,6 +331,10 @@ function gppt() {
 	fi
 }
 
+bc-dlp () {
+	yt-dlp --format bestaudio "$1" -o "%(album)s/%(track_number)s. %(title)s [%(id)s].%(ext)s"
+}
+
 # MIT from https://stackoverflow.com/a/58598185/5410502
 # capture the output of a command so it can be retrieved with ret
 cap () { tee /tmp/capture.out; }
@@ -351,6 +355,7 @@ alias ebash="vim ~/.bashrc"
 alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
+alias vimm="nvim"
 alias r="ranger" 
 alias n=ncmpcpp
 alias la="ls --color=no"
@@ -365,7 +370,7 @@ alias getGitToken="xclip -selection c < ~/git.token"
 alias primtoclip="xclip -selection primary -o | xclip -selection clipboard"
 alias javac="javac --release 11"
 alias bc="bc -l"
-alias nvims="vim -S Session.vim"
+alias nvims="nvim -S Session.vim"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 

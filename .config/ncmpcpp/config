@@ -219,7 +219,7 @@ volume_change_step = 2
 ## Note: You can specify third character which will be used to build 'empty'
 ## part of progressbar.
 ##
-progressbar_look = ->
+progressbar_look = =]_
 #
 ## Available values: database, playlist.
 ##

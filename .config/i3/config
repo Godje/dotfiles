@@ -75,6 +75,9 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
+# screenshot
+bindsym $mod+Shift+b exec "flameshot gui"
+
 # focus the child container
 #bindsym $mod+d focus child
 
@@ -259,5 +262,5 @@ exec_always "wal -R"
 # scripts
 exec_always "~/git/dotfiles/scripts/languages"
 exec_always "~/.screenlayout/default.sh"
-exec_always "~/git/dotfiles/scripts/sensitivity"
+exec_always "~/.local/bin/scripts/sensitivity"
 # exec_always "~/Documents/scripts/tablet"
