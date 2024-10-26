@@ -155,7 +155,7 @@ bindsym $mod+Shift+e exec "~/.config/i3/exit.sh"
 ## Dropdown Terminal
 # setting the window instance and executing it
 for_window [title="dropdown"] floating enable
-for_window [title="dropdown"] resize set 625 400
+for_window [title="dropdown"] resize set 900 600
 for_window [title="dropdown"] move scratchpad
 for_window [title="dropdown"] move position center
 exec --no-startup-id "alacritty -T dropdown"

@@ -332,7 +332,14 @@ function gppt() {
 }
 
 bc-dlp () {
-	yt-dlp --format bestaudio "$1" -o "%(album)s/%(track_number)s. %(title)s [%(id)s].%(ext)s"
+	yt-dlp --format bestaudio "$1" -o "%(album)s/%(track_number)s. %(title)s [%(album)s, %(release_year)s][%(id)s].%(ext)s"
+}
+
+mom-dlp () {
+	# Download the video file, save the last downloaded filename into a file
+	yt-dlp "$1" --format bestaudio --print "after_move:%(filepath,_filename|)q" --no-simulate > last_downloaded_file.txt 
+	# Open nautilus with the file highlighted (with ' character trimmed)
+	nautilus --select "$(cat last_downloaded_file.txt | tail -c +2 | head -c -2)"
 }
 
 # MIT from https://stackoverflow.com/a/58598185/5410502
