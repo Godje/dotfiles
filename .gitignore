@@ -37,3 +37,6 @@ tags
 .config/ncmpcpp/error.log
 
 .vim/bundle/vim-fidget/*
+
+.local/bin/*
+!.local/bin/scripts

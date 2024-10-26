@@ -59,7 +59,6 @@ bindsym $mod+Shift+Right move right
 # split modes
 bindsym $mod+s split h
 bindsym $mod+v split v
-bindsym $mod+Shift+s layout stacked
 bindsym $mod+Shift+w layout tabbed
 bindsym $mod+e layout toggle split
 
@@ -130,6 +129,7 @@ assign [class="Firefox"] $ws2
 assign [class="qutebrowser"] $ws2
 assign [class="discord"] $ws3
 assign [class="Krita"] $ws7
+
 # games on 5
 assign [class="cs2"] $ws5
 assign [class="Terraria*"] $ws5
@@ -260,7 +260,7 @@ exec_always "xrdb -merge ~/.Xresources"
 exec_always "wal -R"
 
 # scripts
-exec_always "~/git/dotfiles/scripts/languages"
+exec_always "~/.local/bin/scripts/languages"
 exec_always "~/.screenlayout/default.sh"
 exec_always "~/.local/bin/scripts/sensitivity"
 # exec_always "~/Documents/scripts/tablet"

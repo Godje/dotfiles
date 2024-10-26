@@ -163,7 +163,7 @@ commit(){
 		~/.config/i3/lock.sh
 	fi
 	if [[ "$1" == "lifent" ]]; then
-		sudo shutdown -P now
+		poweroff
 	fi
 	if [[ "$1" == "tensei" ]]; then
 		sudo shutdown -r now
@@ -345,9 +345,6 @@ ret () { cat /tmp/capture.out; }
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
 
-# Sourcing some variables
-source ~/.bashvars
-
 # Aliases (might move to .bash_aliases in the future)
 alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
@@ -390,3 +387,4 @@ export PATH="$PATH:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+. "$HOME/.cargo/env"
