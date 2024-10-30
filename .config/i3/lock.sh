@@ -2,6 +2,7 @@
 sudo tee /etc/sudoers.d/$USER <<END
 END
 
+rm /tmp/screen.png
 scrot /tmp/screen.png
 convert /tmp/screen.png -scale 10% -scale 1000% /tmp/screen.png
 #convert /tmp/screen.png -paint 3 -modulate 80 /tmp/screen.png

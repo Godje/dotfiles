@@ -332,7 +332,7 @@ function gppt() {
 }
 
 bc-dlp () {
-	yt-dlp --format bestaudio "$1" -o "%(album)s/%(track_number)s. %(title)s [%(album)s, %(release_year)s][%(id)s].%(ext)s"
+yt-dlp --format bestaudio "$1" -o "%(artists.0)s/%(album)s/%(track_number)s. %(title)s [%(album)s, %(release_year)s][%(id)s].%(ext)s"
 }
 
 mom-dlp () {
