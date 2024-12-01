@@ -2,6 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+source ~/.bashvars
+
 
 # If not running interactively, don't do anything
 case $- in
@@ -342,6 +344,10 @@ mom-dlp () {
 	nautilus --select "$(cat last_downloaded_file.txt | tail -c +2 | head -c -2)"
 }
 
+primtoclip () {
+	# WIP, this poop doesn't work I think
+	xclip -selection primary -o | xclip -selection clipboard
+}
 # MIT from https://stackoverflow.com/a/58598185/5410502
 # capture the output of a command so it can be retrieved with ret
 cap () { tee /tmp/capture.out; }
@@ -360,6 +366,7 @@ alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias vimm="nvim"
+alias vimnote="vim ~/note.md"
 alias r="ranger" 
 alias n=ncmpcpp
 alias la="ls --color=no"
@@ -371,7 +378,6 @@ alias cddot="cd $DOTFILES";
 alias cdschool="cd \"$SCHOOLDIR\"";
 alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
 alias getGitToken="xclip -selection c < ~/git.token"
-alias primtoclip="xclip -selection primary -o | xclip -selection clipboard"
 alias javac="javac --release 11"
 alias bc="bc -l"
 alias nvims="nvim -S Session.vim"
@@ -382,16 +388,12 @@ alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
 alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
 
-export BUSYFILE="/home/daniel/busy.csv"
 export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH";
-export DIARIES_DIRECTORY="/home/daniel/Documents/diaries/";
 
 # EXPORTS
 export EDITOR="vim"
-export DOTFILES="$HOME/git/dotfiles"
 export PATH="$PATH:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/git/busy.sh:/home/daniel/.config/composer/vendor/bin:/opt/nvim-linux64/bin:/home/daniel/.cargo/bin"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-. "$HOME/.cargo/env"

@@ -16,8 +16,35 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.api.nvim_create_autocmd('Filetype', {
-  pattern = 'c',
+  pattern = { '*.c', '*.cpp', '*.h' },
   command = 'setlocal tabstop=4',
+})
+
+-- Markdown file autocommands
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = { '*.md' },
+  callback = function()
+    vim.opt_local.linebreak = true
+    vim.opt_local.wrap = true
+    -- navigation local noremaps
+    local map = function(mode, lhs, rhs)
+      vim.keymap.set(mode, lhs, rhs, {
+        buffer = 0,
+        silent = true,
+      })
+    end
+
+    map('n', '<Up>', 'gk')
+    map('n', '<Down>', 'gj')
+    map('n', '<Home>', 'g<Home>')
+    map('n', '<End>', 'g<End>')
+    map('n', 'j', 'gj')
+    map('n', 'k', 'gk')
+    map('i', '<Up>', '<C-o>gk')
+    map('i', '<Down>', '<C-o>gj')
+    map('i', '<Home>', '<C-o>g<Home>')
+    map('i', '<End>', '<C-o>g<End>')
+  end,
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]

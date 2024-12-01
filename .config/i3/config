@@ -128,6 +128,7 @@ bindsym $mod+Ctrl+Shift+l move workspace to right
 assign [class="Firefox"] $ws2
 assign [class="qutebrowser"] $ws2
 assign [class="discord"] $ws3
+assign [class="Slack"] $ws3
 assign [class="Krita"] $ws7
 
 # games on 5
@@ -252,6 +253,7 @@ bindsym $sup+Shift+f exec "~/.local/bin/scripts/mpc/add-to-playlist.sh"
 
 # software
 exec --no-startup-id "discord"
+exec --no-startup-id "slack"
 exec --no-startup-id "steam"
 exec --no-startup-id "mpd ~/.config/mpd/mpd.conf"
 
