@@ -1,12 +1,7 @@
 require 'options'
 require 'keymaps'
 
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
 -- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -44,6 +39,11 @@ vim.api.nvim_create_autocmd('BufEnter', {
     map('i', '<Down>', '<C-o>gj')
     map('i', '<Home>', '<C-o>g<Home>')
     map('i', '<End>', '<C-o>g<End>')
+
+    -- bold, italic, and teleports
+    map('i', '\\b', '**** <++><Esc>F*hi')
+    map('i', '\\i', '** <++><Esc>F*i')
+    map('i', '\\<Space>', '<Esc>/<++><CR>v3l"_di')
   end,
 })
 
@@ -60,14 +60,6 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
---
---  To check the current status of your plugins, run
---    :Lazy
---
---  You can press `?` in this menu for help. Use `:q` to close the window
---
---  To update plugins you can run
---    :Lazy update
 require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -96,7 +88,7 @@ require('lazy').setup({
     config = function() -- This is the function that runs, AFTER loading
       require('which-key').setup()
 
-      -- Document existing key chains
+      -- These are hints, they don't map to any particular action
       require('which-key').add {
         { '<leader>c', group = '[C]ode' },
         { '<leader>d', group = '[D]ocument' },
@@ -109,13 +101,6 @@ require('lazy').setup({
     end,
   },
 
-  -- NOTE: Plugins can specify dependencies.
-  --
-  -- The dependencies are proper plugin specifications as well - anything
-  -- you do for a plugin at the top level, you can do for a dependency.
-  --
-  -- Use the `dependencies` key to specify the dependencies of a particular plugin
-
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
@@ -124,50 +109,24 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
       { -- If encountering errors, see telescope-fzf-native README for installation instructions
         'nvim-telescope/telescope-fzf-native.nvim',
-
-        -- `build` is used to run some command when the plugin is installed/updated.
-        -- This is only run then, not every time Neovim starts up.
         build = 'make',
-
-        -- `cond` is a condition used to determine whether this plugin should be
-        -- installed and loaded.
         cond = function()
           return vim.fn.executable 'make' == 1
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-
-      -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- The easiest way to use Telescope, is to start by doing something like:
       --  :Telescope help_tags
       --
-      -- After running this command, a window will open up and you're able to
-      -- type in the prompt window. You'll see a list of `help_tags` options and
-      -- a corresponding preview of the help.
-      --
       -- Two important keymaps to use while in Telescope are:
       --  - Insert mode: <c-/>
       --  - Normal mode: ?
-      --
-      -- This opens a window that shows you all of the keymaps for the current
-      -- Telescope picker. This is really useful to discover what Telescope can
-      -- do as well as how to actually do it!
 
       -- [[ Configure Telescope ]]
-      -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -229,7 +188,6 @@ require('lazy').setup({
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
 
-      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
       { 'folke/neodev.nvim', opts = {} },
     },
@@ -278,8 +236,6 @@ require('lazy').setup({
           --  See `:help K` for why this keymap.
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
 
-          -- WARN: This is not Goto Definition, this is Goto Declaration.
-          --  For example, in C this would take you to the header.
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           -- The following two autocommands are used to highlight references of the
@@ -342,14 +298,22 @@ require('lazy').setup({
             },
           },
         },
+        ts_ls = {
+          on_attach = function(client, bufnr)
+            vim.diagnostic.config {
+              virtual_text = { severity = {
+                vim.diagnostic.severity.WARN,
+                vim.diagnostic.severity.ERROR,
+              } },
+            }
+          end,
+          capabilities = capabilities,
+          filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
+        },
       }
 
       -- Ensure the servers and tools above are installed
-      --  To check the current status of installed tools and/or manually install
-      --  other tools, you can run
       --    :Mason
-      --
-      --  You can press `g?` for help in this menu.
       require('mason').setup()
 
       -- You can add other tools here that you want Mason to install
@@ -529,9 +493,6 @@ require('lazy').setup({
     lazy = false,
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'catppuccin-macchiato'
 
       -- You can configure highlights by doing something like:
@@ -560,6 +521,10 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
+      -- i like these
+      require('mini.sessions').setup()
+      require('mini.starter').setup()
+      --
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
@@ -583,7 +548,22 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'javascript', 'python' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'javascript',
+        'typescript',
+        'python',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {

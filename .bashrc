@@ -366,6 +366,7 @@ alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias vimm="nvim"
+alias vim="nvim"
 alias vimnote="vim ~/note.md"
 alias r="ranger" 
 alias n=ncmpcpp
