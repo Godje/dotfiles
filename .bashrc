@@ -168,7 +168,7 @@ commit(){
 		poweroff
 	fi
 	if [[ "$1" == "tensei" ]]; then
-		sudo shutdown -r now
+		poweroff --reboot
 	fi
 }
 complete -W "sudoku sepuku lifent tensei" commit
@@ -372,13 +372,11 @@ alias r="ranger"
 alias n=ncmpcpp
 alias la="ls --color=no"
 alias rangre="ranger" #just because I always mistype
-alias minecraft="~/Downloads/minecraft-launcher/minecraft-launcher"
 alias ftb="java -jar ~/Downloads/FTB_Launcher.jar";
 alias cdqmk="cd ~/qmk_firmware/keyboards/lily58/keymaps/Godje/";
 alias cddot="cd $DOTFILES";
 alias cdschool="cd \"$SCHOOLDIR\"";
 alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
-alias getGitToken="xclip -selection c < ~/git.token"
 alias javac="javac --release 11"
 alias bc="bc -l"
 alias nvims="nvim -S Session.vim"
@@ -394,6 +392,9 @@ export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH";
 # EXPORTS
 export EDITOR="vim"
 export PATH="$PATH:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/git/busy.sh:/home/daniel/.config/composer/vendor/bin:/opt/nvim-linux64/bin:/home/daniel/.cargo/bin"
+
+GPG_TTY=$(tty)
+export GPG_TTY
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
