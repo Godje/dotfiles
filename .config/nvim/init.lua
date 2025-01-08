@@ -173,6 +173,13 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+      vim.keymap.set('n', '<leader>sd', function()
+        -- to be refined. Not very useful at the moment
+        local dotfiles_directory = vim.fn.expand '$DOTFILES'
+        builtin.find_files {
+          cwd = dotfiles_directory,
+        }
+      end, { desc = '[S]earch [D]otfiles' })
     end,
   },
 
