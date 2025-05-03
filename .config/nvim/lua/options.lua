@@ -14,6 +14,9 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.signcolumn = 'yes'
 
 vim.opt.tabstop = 4
+vim.opt.softtabstop = 0
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = false
 
 vim.o.termguicolors = true
 
@@ -54,3 +57,5 @@ vim.opt.inccommand = 'split'
 --  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
+-- vim.cmd.colorscheme 'kanagawa'

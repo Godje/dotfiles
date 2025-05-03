@@ -3,7 +3,7 @@
 --
 -- makes X the void key (doesn't replace clipboard with deleted material)
 vim.keymap.set('n', 'x', '"_d1l')
-vim.keymap.set('n', 'X', '"_D')
+vim.keymap.set('n', 'X', '0"_D')
 vim.keymap.set('v', 'x', '"_d')
 vim.keymap.set('n', 'S', '<nop>')
 vim.keymap.set('x', 'S', '<nop>')

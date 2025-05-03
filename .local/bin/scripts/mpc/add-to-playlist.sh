@@ -16,16 +16,16 @@
 
 plDirectory=~/Music/playlists
 track="$(mpc current -f %file%)" # full track name
-tname=$( echo $track | sed 's/.*\// /' ) # just the basename
+tname="$( echo $track | sed 's/.*\// /' )" # just the basename
 playlist=$( mpc lsplaylists | dmenu -l 9 -p "Add $tname to playlist:"  ) # getting the name of the playlist
-plexists=$( mpc lsplaylists | grep -F $playlist -c ) # checking if the playlist exists
+plexists=$( mpc lsplaylists | grep -F "$playlist" -c ) # checking if the playlist exists
 
 if [[ $playlist != "" ]] && [[ $plexists > 0 ]]; then
-	pwdpl=$plDirectory/$playlist.m3u
-	isthere=$( grep -F "$track" $pwdpl -c ) # checking to see if the file is already in the playlist.
+	pwdpl="$plDirectory/$playlist.m3u"
+	isthere=$( grep -F "$track" "$pwdpl" -c ) # checking to see if the file is already in the playlist.
 
 	if [[ $isthere == 0 ]]; then
-		echo $track >> $pwdpl
+		echo "$track" >> "$pwdpl"
 		notify-send --urgency=low --expire-time=2350 "Playlist $playlist modified" "$tname appended"
 	else
 		confirm_delete=$( echo -e "yes\nno" | dmenu -p "Delete $tname from the playlist?" )

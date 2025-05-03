@@ -155,14 +155,14 @@ bindsym $mod+Shift+e exec "~/.config/i3/exit.sh"
 
 ## Dropdown Terminal
 # setting the window instance and executing it
-for_window [title="dropdown"] floating enable
-for_window [title="dropdown"] resize set 900 600
-for_window [title="dropdown"] move scratchpad
-for_window [title="dropdown"] move position center
-exec --no-startup-id "alacritty -T dropdown"
+for_window [title="terminaldropdown"] floating enable
+for_window [title="terminaldropdown"] resize set 900 600
+for_window [title="terminaldropdown"] move scratchpad
+for_window [title="terminaldropdown"] move position center
+exec --no-startup-id "alacritty -T terminaldropdown"
 
 # mapping key to toggle it
-bindsym $mod+backslash [title="dropdown"] scratchpad show; [title="dropdown"] move position center
+bindsym $mod+backslash [title="terminaldropdown"] scratchpad show; [title="dropdown"] move position center
 # bindsym $mod+backslash exec --no-startup-id "open_dropdown" 
 
 ## Screen brightness controls
@@ -238,6 +238,7 @@ set_from_resource $bg i3wm.color7
 ## ========
 
 bindsym $mod+Shift+x exec ~/.config/i3/lock.sh
+bindsym $mod+Shift+s exec "scrot -u -d 1 -e 'mv $f ~/Pictures/screenshots/'"
 
 # gaps settings
 gaps inner 20
@@ -252,7 +253,7 @@ bindsym $sup+Shift+f exec "~/.local/bin/scripts/mpc/add-to-playlist.sh"
 ## ========
 
 # software
-exec --no-startup-id "discord"
+exec --no-startup-id "flatpak run com.discordapp.Discord"
 exec --no-startup-id "slack"
 exec --no-startup-id "steam"
 exec --no-startup-id "mpd ~/.config/mpd/mpd.conf"

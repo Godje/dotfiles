@@ -127,6 +127,13 @@ require('lazy').setup({
 
       -- [[ Configure Telescope ]]
       require('telescope').setup {
+        defaults = {
+          file_ignore_patterns = {
+            'node_modules',
+            '.+%.o$', -- C object files
+            '.+%.out$', -- C out files
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -491,21 +498,37 @@ require('lazy').setup({
     end,
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'catppuccin/nvim',
-    lazy = false,
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    init = function()
-      vim.cmd.colorscheme 'catppuccin-macchiato'
-
-      -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=none'
+  {
+    'dfendr/clipboard-image.nvim',
+    event = 'VimEnter',
+    config = function()
+      require('clipboard-image.init').setup()
     end,
   },
+
+  -- Colorschemes:
+  {
+    'ribru17/bamboo.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('bamboo').setup {
+        -- optional configuration here
+      }
+      require('bamboo').load()
+    end,
+  },
+  -- {
+  --   'catppuccin/nvim',
+  --   lazy = false,
+  --   priority = 1000, -- Make sure to load this before all the other start plugins.
+  --   init = function()
+  --     vim.cmd.colorscheme 'catppuccin-macchiato'
+  --
+  --     -- You can configure highlights by doing something like:
+  --     vim.cmd.hi 'Comment gui=none'
+  --   end,
+  -- },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },

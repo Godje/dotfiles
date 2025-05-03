@@ -161,8 +161,8 @@ commit(){
 		logout
 	fi
 	if [[ "$1" == "sudoku" ]]; then
+		## ~/.config/i3/lock.sh
 		sudo systemctl suspend
-		~/.config/i3/lock.sh
 	fi
 	if [[ "$1" == "lifent" ]]; then
 		poweroff
@@ -341,7 +341,7 @@ mom-dlp () {
 	# Download the video file, save the last downloaded filename into a file
 	yt-dlp "$1" --format bestaudio --print "after_move:%(filepath,_filename|)q" --no-simulate > last_downloaded_file.txt 
 	# Open nautilus with the file highlighted (with ' character trimmed)
-	nautilus --select "$(cat last_downloaded_file.txt | tail -c +2 | head -c -2)"
+	nautilus --select "$(cat last_downloaded_file.txt | tail -c +2 | head -c -2)" &
 }
 
 primtoclip () {
@@ -359,7 +359,6 @@ set -o vi
 bind -m vi-insert "\C-l":clear-screen
 
 # Aliases (might move to .bash_aliases in the future)
-alias nf="neofetch --w3m --source wallpaper --size 300"
 alias ecfg="vim ~/.config/i3/config"
 alias ebash="vim ~/.bashrc"
 alias sbash="source ~/.bashrc"
@@ -380,6 +379,7 @@ alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
 alias javac="javac --release 11"
 alias bc="bc -l"
 alias nvims="nvim -S Session.vim"
+alias jellyfin="flatpak run com.github.iwalton3.jellyfin-media-player"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 
@@ -390,7 +390,7 @@ alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPA
 export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH";
 
 # EXPORTS
-export EDITOR="vim"
+export EDITOR="nvim"
 export PATH="$PATH:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/git/busy.sh:/home/daniel/.config/composer/vendor/bin:/opt/nvim-linux64/bin:/home/daniel/.cargo/bin"
 
 GPG_TTY=$(tty)
