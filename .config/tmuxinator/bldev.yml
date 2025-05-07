@@ -1,0 +1,16 @@
+---
+name: bldev
+project_root: "/home/daniel/git/school/bitlearns"
+windows:
+- servers:
+    layout: even-horizontal
+    panes:
+    - cd /home/daniel/git/school/bitlearns/backend && npm run start
+    - cd /home/daniel/git/school/bitlearns/frontend && npm run dev
+- be-edit:
+    focus: true
+    panes:
+    - cd /home/daniel/git/school/bitlearns/backend && nvim
+- fe-edit:
+    panes:
+    - cd /home/daniel/git/school/bitlearns/frontend && nvim

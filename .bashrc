@@ -369,7 +369,9 @@ alias vim="nvim"
 alias vimnote="vim ~/note.md"
 alias r="ranger" 
 alias n=ncmpcpp
+alias cd="z"
 alias la="ls --color=no"
+alias mux="tmuxinator"
 alias rangre="ranger" #just because I always mistype
 alias ftb="java -jar ~/Downloads/FTB_Launcher.jar";
 alias cdqmk="cd ~/qmk_firmware/keyboards/lily58/keymaps/Godje/";
@@ -396,6 +398,10 @@ export PATH="$PATH:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel
 GPG_TTY=$(tty)
 export GPG_TTY
 
+# zoxide
+eval "$(zoxide init bash)"
+
+# nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
