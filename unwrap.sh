@@ -29,7 +29,7 @@ displayOptions(){
 	echo "   2 - install the software"
 	echo "   3 - install i3 and i3-gaps (!INCOMPLETE)"
 	echo "   4 - install a bunch of pip packages (why is this not part of option 2?)"
-	echo "   5 - install Vim Submodules"
+	echo "   5 - install Submodules"
 	echo "   6 - install NVM"
 }
 
@@ -52,7 +52,7 @@ linkFiles(){
 
 	cd $DOTFILES
 	stow --dir="$DOTFILES" --target="$HOME" --stow .
-	if [[ $? -e 0]]; then
+	if [[ "$?" -eq 0 ]]; then
 		echo "stowing complete"
 	else
 		echo "stowing failed"
