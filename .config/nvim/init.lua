@@ -15,6 +15,16 @@ vim.api.nvim_create_autocmd('Filetype', {
   command = 'setlocal tabstop=4',
 })
 
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = { '*.js*', '*.ts*' },
+  callback = function()
+    vim.keymap.set('i', '<C-l>', 'console.log()<Esc>i', {
+      buffer = 0,
+      silent = true,
+    })
+  end,
+})
+
 -- Markdown file autocommands
 vim.api.nvim_create_autocmd('BufEnter', {
   pattern = { '*.md' },

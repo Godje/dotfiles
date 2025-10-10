@@ -25,13 +25,12 @@ displayBanner(){
 
 displayOptions(){
 	echo "Actions"
-	echo "   1 - link the dotfiles (this thing literally never works)"
+	echo "   1 - link the dotfiles"
 	echo "   2 - install the software"
-	echo "   3 - install i3 and i3-gaps"
-	echo "   4 - install python libraries"
-	echo "   5 - install youtube-dl"
-	echo "   6 - install Vim Submodules"
-	echo "   7 - install NVM"
+	echo "   3 - install i3 and i3-gaps (!INCOMPLETE)"
+	echo "   4 - install a bunch of pip packages (why is this not part of option 2?)"
+	echo "   5 - install Submodules"
+	echo "   6 - install NVM"
 }
 
 say(){
@@ -42,34 +41,23 @@ say(){
 # Option Functions
 
 ## Link Files
-## This thing still doesn't work properly. I mean how do you even symlink directories, for some reason it just doesn't work
 linkFiles(){
-	csym(){
-		echo "Linking $1"
-		ln -s -f $1 $2
-		result=$( echo $? )
-		if [[ $result == 0 ]]; then
-			echo "Success"
-		else
-			echo "$result"
-		fi
-	}
+	echo "This feature isn't implemented yet"
+	exit # remove this once done with the script writing
 
-	dotfiledir=$(pwd);
+	if [[ -z "${DOTFILES}" ]]; then
+		echo "DOTFILES is not set. Please set environment variable DOTFILES to the dotfiles directory"
+		exit
+	fi
 
-	csym $dotfiledir/.bashrc ~/.bashrc
-	csym $dotfiledir/.Xresources ~/.Xresources
-	csym $dotfiledir/.vim ~/.vim
-	csym $dotfiledir/.vimrc ~/.vimrc
-	csym $dotfiledir/.comptonstart.sh ~/.comptonstart.sh
-	csym $dotfiledir/scripts ~/Documents/scripts
-	csym $dotfiledir/devscripts ~/Documents/devscripts
-
-	for conf in $repdirectory/.config/*
-	do
-		bname=$( basename $conf )
-		csym "$conf" ~/.config/$bname
-	done
+	cd $DOTFILES
+	stow --dir="$DOTFILES" --target="$HOME" --stow .
+	if [[ "$?" -eq 0 ]]; then
+		echo "stowing complete"
+	else
+		echo "stowing failed"
+	fi
+	cd -
 
 	echo "$PRE Sourcing the .bashrc"
 	source ~/.bashrc
@@ -123,6 +111,8 @@ installSoftware(){
 	rxvtLocation=$(which urxvt);
 	sudo update-alternatives --set x-terminal-emulator $rxvtLocation
 
+	# TODO: Install zoxide, tmuxinator, ruby
+
 	# Removing the "socket taken" issue
 	sudo service mpd stop
 	sudo systemctl disable mpd.service
@@ -132,8 +122,12 @@ installSoftware(){
 
 # Installing i3-gaps manually
 installI3(){
+	echo "$PRE This is a legacy installation script (before i3-gaps was merged into main). Please update to use PPA, or execute this function in unwrap.sh manually. Exiting the script".
+	exit
+
+	# TODO: Rewrite this to use the PPA with the up to date i3-gaps that is already in the main branch
+
 	sudo apt update;
-	
 	sudo apt install -y	\
 		i3	\
 		i3lock	\
@@ -167,16 +161,7 @@ installI3(){
 installPython(){
 	pip3 install pywal
 	pip3 install BeautifulSoup4
-	pip3 install tmuxp
 	pip3 install wpm
-}
-
-installYoutubeDL(){ 
-	# official instructions on the website.
-	sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
-	sudo chmod a+rx /usr/local/bin/youtube-dl
-	# this installs python2 for this thing to work.
-	sudo apt install python
 }
 
 installVimSubmodules(){
@@ -187,8 +172,8 @@ installVimSubmodules(){
 }
 
 installNVM(){
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-	wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/refs/heads/master/install.sh | bash
+	wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/refs/heads/master/install.sh | bash
 }
 
 # Displaying the options and executing the right function
@@ -205,10 +190,8 @@ case $selected in
 		;;
 	4) installPython
 		;;
-	5) installYoutubeDL
+	5) installVimSubmodules
 		;;
-	6) installVimSubmodules
-		;;
-	7) installNVM
+	6) installNVM
 		;;
 esac
