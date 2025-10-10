@@ -206,6 +206,12 @@ require('lazy').setup({
       { 'folke/neodev.nvim', opts = {} },
     },
     config = function()
+      vim.filetype.add {
+        extension = {
+          njk = 'html.jinja',
+        },
+      }
+
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -323,6 +329,17 @@ require('lazy').setup({
           end,
           capabilities = capabilities,
           filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
+        },
+        jinja_lsp = {
+          capabilities = capabilities,
+          filetypes = { "nunjucks", "njk", "jinja", "html.jinja" },
+          root_markers = { "package.json", ".git" },
+          settings = {
+            template_extensions = { "njk", "html.jinja" },
+            templates = './src/pages',
+            backend = { './src' },
+            lang = "python"
+          }
         },
       }
 
@@ -601,7 +618,7 @@ require('lazy').setup({
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
+        additional_vim_regex_highlighting = { 'ruby', 'nunjucks', 'njk', 'html.jinja', 'jinja' },
       },
       indent = { enable = true, disable = { 'ruby' } },
     },

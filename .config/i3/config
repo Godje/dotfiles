@@ -254,7 +254,6 @@ bindsym $sup+Shift+f exec "~/.local/bin/scripts/mpc/add-to-playlist.sh"
 
 # software
 exec --no-startup-id "flatpak run com.discordapp.Discord"
-exec --no-startup-id "slack"
 exec --no-startup-id "steam"
 exec --no-startup-id "mpd ~/.config/mpd/mpd.conf"
 
