@@ -6,17 +6,10 @@
 #  \__,_||_| |_| \_/\_/  |_|   \__,_|| .__/(_)|___/|_| |_|
 #                                    |_|
 #
-# This is basically an improvement over the dookie script I had before. Here you can just one thing or another and
-# there is less manual work. Hopefully.
+
+## TODO: Maybe there is some minimal fzf alternative that would replace this mess of "select" actions
 
 PRE=">"
-
-# Choices:
-# 1 - link the dotfiles
-# 2 - install the software
-# 3 - install i3 and i3-gaps
-# 4 - install python libraries
-
 
 displayBanner(){
 	echo "Godje's Dotfile unwrapping script";
@@ -34,6 +27,7 @@ displayOptions(){
 	echo "   s - install Steam"
 	echo "   r - install Rustup"
 	echo "   n - install neovim"
+	echo "   v - install VSCode"
 	#echo "   R - install Rust software packages"
 }
 
@@ -46,20 +40,17 @@ say(){
 
 ## Link Files
 linkFiles(){
-	echo "This feature isn't implemented yet"
-	exit # remove this once done with the script writing
-
 	if [[ -z "${DOTFILES}" ]]; then
-		echo "DOTFILES is not set. Please set environment variable DOTFILES to the dotfiles directory"
+		echo "$PRE DOTFILES is not set. Please set environment variable DOTFILES to the dotfiles directory"
 		exit
 	fi
 
 	cd $DOTFILES
 	stow --dir="$DOTFILES" --target="$HOME" --stow .
 	if [[ "$?" -eq 0 ]]; then
-		echo "stowing complete"
+		echo "$PRE stowing complete"
 	else
-		echo "stowing failed"
+		echo "$PRE stowing failed"
 	fi
 	cd -
 
@@ -100,8 +91,9 @@ installRepoSoftware(){
 		dunst	\
 		net-tools	\
 		deluge \
-		xclip	\
+		xclip \
 		thunar \
+		dolphin \
 		sxiv
 
 	# TODO: Install zoxide, tmuxinator, ruby, alacritty, nvim
@@ -136,10 +128,13 @@ installRust(){
 }
 
 installNeovim(){
+	# installation from source according to neovim's BUILD.md
+
 	tempfolder=$(mktemp -d)
 	localfolder=$(pwd)
 
 	cd $tempfolder
+
 	sudo apt install ninja-build gettext cmake curl build-essential git
 	git clone https://github.com/neovim/neovim
 	cd neovim
@@ -170,7 +165,19 @@ installI3(){
 }
 
 
-installPython(){
+installVSCode(){
+	tempfolder=$(mktemp -d)
+	localfolder=$(pwd)
+
+	cd $tempfolder
+
+	wget --content-disposition "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+	sudo apt install ./code*.deb
+
+	cd $localfolder
+}
+
+installPipPackages(){
 	pipx install pywal --force
 	pipx install wpm --force
 	pipx install ranger-fm --force
@@ -184,7 +191,6 @@ installVimSubmodules(){
 }
 
 installNVM(){
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/refs/heads/master/install.sh | bash
 	wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/refs/heads/master/install.sh | bash
 }
 
@@ -200,7 +206,7 @@ case $selected in
 		;;
 	3) installI3
 		;;
-	4) installPython
+	4) installPipPackages
 		;;
 	5) installVimSubmodules
 		;;
@@ -211,5 +217,7 @@ case $selected in
 	r) installRust
 		;;
 	n) installNeovim
+		;;
+	v) installVSCode
 		;;
 esac
