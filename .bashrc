@@ -200,11 +200,6 @@ f() {
 	cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
 }
 
-site(){
-	cd ~/Code/Sites/"$1"*
-}
-complete -W $(ls ~/Code/Sites | tr "$IFS" ' ') site
-
 function ccheck(){
 	if [[ $PWD == *"rust-projects"* ]]; then
 		cargo check;
@@ -365,7 +360,9 @@ alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias vimm="nvim"
-alias vim="nvim"
+
+which nvim >/dev/null && alias vim="nvim"
+
 alias vimnote="vim ~/note.md"
 alias r="ranger" 
 alias n=ncmpcpp
@@ -401,7 +398,11 @@ export GPG_TTY
 # zoxide
 eval "$(zoxide init bash)"
 
+# cmake
+export CMAKE_ROOT="~/Downloads/deb/cmake-4.1.1-linux-x86_64"
+
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+. "$HOME/.cargo/env"
