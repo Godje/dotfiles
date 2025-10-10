@@ -26,11 +26,15 @@ displayBanner(){
 displayOptions(){
 	echo "Actions"
 	echo "   1 - link the dotfiles"
-	echo "   2 - install the software"
-	echo "   3 - install i3 and i3-gaps (!INCOMPLETE)"
-	echo "   4 - install a bunch of pip packages (why is this not part of option 2?)"
-	echo "   5 - install Submodules"
+	echo "   2 - install software (that is available in Ubuntu repo)"
+	echo "   3 - install i3 and i3-gaps (Ubuntu ppa)"
+	echo "   4 - install a bunch of pip packages"
+	echo "   5 - install dotfile submodules"
 	echo "   6 - install NVM"
+	echo "   s - install Steam"
+	echo "   r - install Rustup"
+	echo "   n - install neovim"
+	#echo "   R - install Rust software packages"
 }
 
 say(){
@@ -66,102 +70,110 @@ linkFiles(){
 }
 
 ## Installing software from repos
-installSoftware(){
+installRepoSoftware(){
 	sudo apt update && sudo apt upgrade -y
 
-	sudo apt install -y	\
+	sudo apt install \
 		vim	\
-		ranger	\
 		imagemagick	\
-		vim-gtk	\
 		python3	\
 		python3-pip	\
-		tmux	\
-		screen	\
-		compton	\
-		dmenu	\
-		rxvt-unicode	\
-		rxvt-unicode-256color	\
-		curl	\
+		tmux \
+		suckless-tools	\
+		curl \
 		firefox	\
-		steam	\
-		arandr	\
+		i3blocks \
+		wget \
+		arandr \
 		feh	\
 		neofetch	\
-		gdebi	\
 		gparted	\
 		krita	\
 		qutebrowser	\
 		scrot	\
 		ncmpcpp	\
-		mpd	\
 		mpc	\
-		openjdk-8-jre	\
+		mpd	\
+		mpv \
 		vlc	\
 		mupdf	\
 		dunst	\
 		net-tools	\
-		deluge	\
+		deluge \
 		xclip	\
 		thunar \
-		mpv \
 		sxiv
 
-	# Switching default terminal to URxvt
-	rxvtLocation=$(which urxvt);
-	sudo update-alternatives --set x-terminal-emulator $rxvtLocation
-
-	# TODO: Install zoxide, tmuxinator, ruby
+	# TODO: Install zoxide, tmuxinator, ruby, alacritty, nvim
 
 	# Removing the "socket taken" issue
-	sudo service mpd stop
-	sudo systemctl disable mpd.service
-	sudo systemctl disable mpd.socket
-	sudo systemctl stop mpd.socket
+	# sudo service mpd stop
+	# sudo systemctl disable mpd.service
+	# sudo systemctl disable mpd.socket
+	# sudo systemctl stop mpd.socket
+}
+
+installSteam(){
+	tempfolder=$(mktemp -d)
+	localfolder=$(pwd)
+
+	cd $tempfolder
+	wget https://cdn.fastly.steamstatic.com/client/installer/steam.deb
+	sudo apt install ./steam.deb
+
+	cd $localfolder
+}
+
+installRust(){
+	tempfolder=$(mktemp -d)
+	localfolder=$(pwd)
+
+	cd $tempfolder
+
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+	cd $localfolder
+}
+
+installNeovim(){
+	tempfolder=$(mktemp -d)
+	localfolder=$(pwd)
+
+	cd $tempfolder
+	sudo apt install ninja-build gettext cmake curl build-essential git
+	git clone https://github.com/neovim/neovim
+	cd neovim
+	git checkout stable
+	cmake -S cmake.deps -B .deps -G Ninja -D CMAKE_BUILD_TYPE=Release
+	cmake --build .deps
+	make CMAKE_BUILD_TYPE=Release
+	sudo make install
+
+	cd $localfolder
 }
 
 # Installing i3-gaps manually
 installI3(){
-	echo "$PRE This is a legacy installation script (before i3-gaps was merged into main). Please update to use PPA, or execute this function in unwrap.sh manually. Exiting the script".
-	exit
-
-	# TODO: Rewrite this to use the PPA with the up to date i3-gaps that is already in the main branch
-
-	sudo apt update;
-	sudo apt install -y	\
-		i3	\
-		i3lock	\
-		i3blocks	\
-		libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev \
-		libxcb-util0-dev libxcb-icccm4-dev libyajl-dev \
-		libstartup-notification0-dev libxcb-randr0-dev \
-		libev-dev libxcb-cursor-dev libxcb-xinerama0-dev \
-		libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev \
-		autoconf libxcb-xrm0 libxcb-xrm-dev automake libxcb-shape0-dev \
-		meson ninja-build
-
 	tempfolder=$(mktemp -d)
 	localfolder=$(pwd)
 
-	# Regular build from source installation of i3-gaps
 	cd $tempfolder
 
-	git clone https://www.github.com/Airblader/i3 i3-gaps
-	cd i3-gaps
+	/usr/lib/apt/apt-helper download-file https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2025.03.09_all.deb keyring.deb SHA256:2c2601e6053d5c68c2c60bcd088fa9797acec5f285151d46de9c830aaba6173c
+	sudo apt install ./keyring.deb
+	echo "deb [signed-by=/usr/share/keyrings/sur5r-keyring.gpg] http://debian.sur5r.net/i3/ $(grep '^VERSION_CODENAME=' /etc/os-release | cut -f2 -d=) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list
 
-	mkdir -p build && cd build
-	meson ..
-	ninja
-	sudo meson install
+	sudo apt update
+	sudo apt install i3
 
 	cd $localfolder
 }
 
 
 installPython(){
-	pip3 install pywal
-	pip3 install BeautifulSoup4
-	pip3 install wpm
+	pipx install pywal --force
+	pipx install wpm --force
+	pipx install ranger-fm --force
 }
 
 installVimSubmodules(){
@@ -184,7 +196,7 @@ read -p "Select one option: " selected
 case $selected in
 	1) linkFiles
 		;;
-	2) installSoftware
+	2) installRepoSoftware
 		;;
 	3) installI3
 		;;
@@ -193,5 +205,11 @@ case $selected in
 	5) installVimSubmodules
 		;;
 	6) installNVM
+		;;
+	s) installSteam
+		;;
+	r) installRust
+		;;
+	n) installNeovim
 		;;
 esac
