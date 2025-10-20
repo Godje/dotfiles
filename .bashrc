@@ -256,7 +256,10 @@ function discordUpdate(){
 	cd ~/Downloads/discord_deb/
 	curl -Ls -o ~/Downloads/discord_deb/latest.deb -w %{url_effective} 'https://discord.com/api/download/stable?platform=linux&format=deb' | xclip -selection discord_url
 	mv latest.deb $(basename $(xclip -selection discord_url -o))
-	sudo apt install $( find ~/Downloads/discord_deb/ | sort | tail -n1 )
+
+	toInstall=$( find ~/Downloads/discord_deb/ -type f -exec stat -c '%Y %n' "{}" \; | sort -n | tail -n1 | cut -d ' ' -f2)
+	sudo apt install "$toInstall"
+
 	cd "$p"
 }
 
