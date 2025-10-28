@@ -4,7 +4,6 @@
 
 source ~/.bashvars
 
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -20,7 +19,7 @@ shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
-HISTFILESIZE=2000
+HISTFILESIZE=56000 # about 1 megabyte
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -290,7 +289,7 @@ function smpd(){
 }
 
 function ncmpcpp() {
-	if [ $(ps aux | grep mpd -c) -gt 1]; then
+	if [ $(ps aux | grep mpd -c) -gt 1 ]; then
 		command ncmpcpp;
 	else
 		smpd
@@ -376,9 +375,6 @@ alias rangre="ranger" #just because I always mistype
 alias ftb="java -jar ~/Downloads/FTB_Launcher.jar";
 alias cdqmk="cd ~/qmk_firmware/keyboards/lily58/keymaps/Godje/";
 alias cddot="cd $DOTFILES";
-alias cdschool="cd \"$SCHOOLDIR\"";
-alias lilfl="$DOTFILES/lily58_godje/scripts/flash-layout.sh";
-alias javac="javac --release 11"
 alias bc="bc -l"
 alias nvims="nvim -S Session.vim"
 alias jellyfin="flatpak run com.github.iwalton3.jellyfin-media-player"
