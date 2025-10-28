@@ -342,14 +342,14 @@ require('lazy').setup({
         },
         jinja_lsp = {
           capabilities = capabilities,
-          filetypes = { "nunjucks", "njk", "jinja", "html.jinja" },
-          root_markers = { "package.json", ".git" },
+          filetypes = { 'nunjucks', 'njk', 'jinja', 'html.jinja' },
+          root_markers = { 'package.json', '.git' },
           settings = {
-            template_extensions = { "njk", "html.jinja" },
+            template_extensions = { 'njk', 'html.jinja' },
             templates = './src/pages',
             backend = { './src' },
-            lang = "python"
-          }
+            lang = 'python',
+          },
         },
       }
 
@@ -529,7 +529,19 @@ require('lazy').setup({
     'dfendr/clipboard-image.nvim',
     event = 'VimEnter',
     config = function()
-      require('clipboard-image.init').setup()
+      require('clipboard-image.init').setup {
+        default = {
+          img_dir = function()
+            return (vim.fn.expand '%:p:h') .. '/' .. (vim.fn.expand '%:t:r') .. '_imgs'
+          end,
+          img_dir_txt = function()
+            return (vim.fn.expand '%:t:r') .. '_imgs'
+          end,
+          img_name = function()
+            return (os.date '%Y-%m-%d-%H-%M-%S') .. '_pasted'
+          end,
+        },
+      }
     end,
   },
 
