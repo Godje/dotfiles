@@ -31,6 +31,7 @@ signal=10
 
 #battery
 [battery]
+command=acpi | cut -d' ' -f 4 | cut -d',' -f 1 | grep '..%'
 label=BAT
 interval=30
 
