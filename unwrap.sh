@@ -67,7 +67,8 @@ installRepoSoftware(){
 	sudo apt install \
 		vim	\
 		imagemagick	\
-		python3	\
+		python3 \
+		ripgrep \
 		python3-pip	\
 		tmux \
 		suckless-tools	\
@@ -75,6 +76,7 @@ installRepoSoftware(){
 		firefox	\
 		i3blocks \
 		wget \
+		pandoc \
 		arandr \
 		feh	\
 		neofetch	\
