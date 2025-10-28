@@ -25,6 +25,10 @@ vim.api.nvim_create_autocmd('BufEnter', {
   end,
 })
 
+-- to be able to read .nvim.lua project root configs
+vim.o.exrc = true
+vim.o.secure = true
+
 -- Markdown file autocommands
 vim.api.nvim_create_autocmd('BufEnter', {
   pattern = { '*.md' },
@@ -342,14 +346,14 @@ require('lazy').setup({
         },
         jinja_lsp = {
           capabilities = capabilities,
-          filetypes = { "nunjucks", "njk", "jinja", "html.jinja" },
-          root_markers = { "package.json", ".git" },
+          filetypes = { 'nunjucks', 'njk', 'jinja', 'html.jinja' },
+          root_markers = { 'package.json', '.git' },
           settings = {
-            template_extensions = { "njk", "html.jinja" },
+            template_extensions = { 'njk', 'html.jinja' },
             templates = './src/pages',
             backend = { './src' },
-            lang = "python"
-          }
+            lang = 'python',
+          },
         },
       }
 
@@ -578,10 +582,6 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
-      -- i like these
-      require('mini.sessions').setup()
-      require('mini.starter').setup()
-      --
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
