@@ -351,6 +351,14 @@ cap () { tee /tmp/capture.out; }
 # return the output of the most recent command that was captured by cap
 ret () { cat /tmp/capture.out; }
 
+nvim () {
+	if [ -e Session.vim ]; then
+		command nvim -S Session.vim
+	else
+		command nvim
+	fi
+}
+
 # VI keymap
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
