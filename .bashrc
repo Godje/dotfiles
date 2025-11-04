@@ -352,10 +352,14 @@ cap () { tee /tmp/capture.out; }
 ret () { cat /tmp/capture.out; }
 
 nvim () {
-	if [ -e Session.vim ]; then
-		command nvim -S Session.vim
+	if [ -z "$1" ]; then
+		if [ -e Session.vim ]; then
+			command nvim -S Session.vim
+		else
+			command nvim
+		fi
 	else
-		command nvim
+		command nvim "$@"
 	fi
 }
 
