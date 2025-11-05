@@ -20,6 +20,10 @@ vim.opt.expandtab = false
 
 vim.o.termguicolors = true
 
+-- to be able to read .nvim.lua project root configs
+vim.o.exrc = true
+vim.o.secure = true
+
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
