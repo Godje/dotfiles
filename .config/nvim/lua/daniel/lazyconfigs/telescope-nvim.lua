@@ -25,6 +25,11 @@ return {
 
     -- [[ Configure Telescope ]]
     require('telescope').setup {
+      pickers = {
+        find_files = {
+          push_tagstack_on_edit = true,
+        },
+      },
       defaults = {
         file_ignore_patterns = {
           'node_modules',
