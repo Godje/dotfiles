@@ -363,6 +363,36 @@ nvim () {
 	fi
 }
 
+declankify(){
+	# Read stdin into a temporary file
+	tmpfile=$(mktemp)
+	cat > "$tmpfile"
+
+	# remove clanker signs
+	sed -i "s/’/\'/g" "$tmpfile"
+	sed -i "s/—/ - /g" "$tmpfile"
+
+	# Output to clipboard (works on different platforms)
+	if command -v xclip &>/dev/null; then
+		xclip -sel clipboard < "$tmpfile"
+	elif command -v pbcopy &>/dev/null; then
+		pbcopy < "$tmpfile"
+	elif command -v wl-copy &>/dev/null; then
+		wl-copy < "$tmpfile"
+	else
+		echo "No clipboard tool found" >&2
+	fi
+
+	# Optionally print the result for confirmation
+	cat "$tmpfile"
+
+	rm "$tmpfile"
+}
+
+yq() {
+	docker run --rm -i -v "${PWD}":/workdir mikefarah/yq "$@"
+}
+
 # VI keymap
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
@@ -402,6 +432,14 @@ export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH";
 # EXPORTS
 export EDITOR="nvim"
 export PATH="$PATH:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/git/busy.sh:/home/daniel/.config/composer/vendor/bin:/opt/nvim-linux64/bin:/home/daniel/.cargo/bin"
+
+# MCPELauncher crap
+export PATH="$PATH:/home/daniel/git/others/mcpelauncher/build/mcpelauncher-client"
+# MSA for MCPELauncher
+export PATH="$PATH:/home/daniel/git/others/msa/build/msa-daemon"
+# MCPELauncher UI QT 
+export PATH="$PATH:/home/daniel/git/others/mcpelauncher-ui/build/mcpelauncher-ui-qt"
+
 
 GPG_TTY=$(tty)
 export GPG_TTY
