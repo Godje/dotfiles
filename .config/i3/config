@@ -16,7 +16,8 @@ set $TERMINAL x-terminal-emulator
 set $sup Mod4
 set $mod Mod1
 
-font pango:monospace 9
+font pango:DejaVuSansM Nerd Font 12
+# font pango:monospace 9
 
 floating_modifier $mod
 
@@ -176,6 +177,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20;
 ## ========
 
 bindsym $mod+g mode "gaps_fix"
+bindsym $mod+Shift+g gaps outer current toggle 20
 bindsym $mod+r mode "resize"
 bindsym $mod+m mode "music"
 
@@ -220,7 +222,7 @@ mode "music" {
 
 bar {
 	position top
-	font pango:monospace 8
+	font pango:DejaVuSansM Nerd Font 12
 	status_command i3blocks
 }
 
@@ -241,8 +243,9 @@ bindsym $mod+Shift+x exec ~/.config/i3/lock.sh
 bindsym $mod+Shift+s exec "scrot -u -d 1 -e 'mv $f ~/Pictures/screenshots/'"
 
 # gaps settings
-gaps inner 20
-gaps outer 10
+gaps inner 0
+gaps outer 20
+smart_gaps inverse_outer
 
 # MPC controls
 bindsym $sup+Shift+p exec "~/.local/bin/scripts/mpc/play-playlist.sh"
