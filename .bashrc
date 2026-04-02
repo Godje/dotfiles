@@ -164,7 +164,21 @@ commit(){
 		sudo systemctl suspend
 	fi
 	if [[ "$1" == "lifent" ]]; then
-		poweroff
+		# if y passed in, or y answered, shut down, otherwise cancel shutdown
+		if [[ "$2" =~ y.* ]]; then
+			echo "shutting down"
+			busy end
+			poweroff
+		else
+			read -p "Check the busy. If done input 'y' for shutdown: " inputResult
+			if [[ "$inputResult" =~ y.* ]]; then
+				echo "shutting down"
+				busy end
+				poweroff
+			else
+				echo "Not shutting down."
+			fi
+		fi
 	fi
 	if [[ "$1" == "tensei" ]]; then
 		poweroff --reboot
@@ -393,6 +407,29 @@ yq() {
 	docker run --rm -i -v "${PWD}":/workdir mikefarah/yq "$@"
 }
 
+# Stolen here: https://www.stefaanlippens.net/pretty-csv.html
+function pretty_csv {
+	column -t -s, -n "$@" | less -F -S -X -K
+}
+
+function bulkrename {
+	lsTemp=$(mktemp)
+	resultCommand=$(mktemp)
+	ls -d "$PWD"/* > "$lsTemp"
+	vim "$lsTemp"
+	while IFS= read -r pre && IFS= read -r post <&3; do
+		printf 'mv "%s" "%s"\n' "$pre" "$post" >> "$resultCommand"
+	done < <(ls) 3< "$lsTemp"
+
+	cat "$resultCommand"
+	read -p "Do you want to execute those mv commands? [y/N] " inputResult
+	if [[ "$inputResult" =~ y.* ]]; then
+		sh "$resultCommand"
+	else
+		echo "Action cancelled"
+	fi
+}
+
 # VI keymap
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
@@ -420,6 +457,7 @@ alias cddot="cd $DOTFILES";
 alias bc="bc -l"
 alias nvims="nvim -S Session.vim"
 alias jellyfin="flatpak run com.github.iwalton3.jellyfin-media-player"
+alias yta="yt-dlp --format bestaudio"
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 
