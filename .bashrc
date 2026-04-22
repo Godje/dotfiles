@@ -99,7 +99,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -428,6 +427,22 @@ function bulkrename {
 	else
 		echo "Action cancelled"
 	fi
+}
+
+function slave(){
+	pushd "/tmp/"
+	copilot --model gpt-4.1
+	popd
+}
+
+function clave(){
+	pushd "/tmp/"
+	claude
+	popd
+}
+
+function note(){
+	nvim ~/note.md
 }
 
 # VI keymap

@@ -31,7 +31,8 @@ tags
 .config/ranger/history
 .config/ranger/tagged
 
-.config/tmuxinator/
+# All configs are usually local
+.config/tmuxinator
 
 # mpd not config files (playlists and so on)
 .config/mpd/*
