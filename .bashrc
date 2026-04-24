@@ -120,10 +120,10 @@ fi
 (cat ~/.cache/wal/sequences &)
 
 # Alternative (blocks terminal for 0-3ms)
-cat ~/.cache/wal/sequences
+# cat ~/.cache/wal/sequences
 
 # To add support for TTYs this line can be optionally added.
-source ~/.cache/wal/colors-tty.sh
+# source ~/.cache/wal/colors-tty.sh
 
 mp3towav(){
 	[[ $# -eq 0 ]] && { echo "mp3wav mp3file"; exit 1; }
@@ -137,16 +137,6 @@ mp3towav(){
 
 
 
-# TMUX shortcuts
-tattach(){
-	tmux attach -t $1
-}
-tlist(){
-	tmux list-sessions
-}
-tnew(){
-	tmux new-session -t $1
-}
 
 # Converting videos for DaVinci Resolve
 videodnxhd(){
@@ -415,7 +405,7 @@ function bulkrename {
 	lsTemp=$(mktemp)
 	resultCommand=$(mktemp)
 	ls -d "$PWD"/* > "$lsTemp"
-	vim "$lsTemp"
+	$EDITOR "$lsTemp"
 	while IFS= read -r pre && IFS= read -r post <&3; do
 		printf 'mv "%s" "%s"\n' "$pre" "$post" >> "$resultCommand"
 	done < <(ls) 3< "$lsTemp"
@@ -473,6 +463,14 @@ alias bc="bc -l"
 alias nvims="nvim -S Session.vim"
 alias jellyfin="flatpak run com.github.iwalton3.jellyfin-media-player"
 alias yta="yt-dlp --format bestaudio"
+
+# TMUX shortcuts
+alias tlist="tmux list-sessions"
+alias tattach="tmux attach -t"
+alias tach="tmux attach -t"
+alias tnew="tmux new-session -t"
+alias bamboo="wal -f $DOTFILES/bamboo-wal.json"
+alias walpal="wal -i \"$WALLPAPER\""
 
 alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
 
