@@ -472,8 +472,6 @@ alias tnew="tmux new-session -t"
 alias bamboo="wal -f $DOTFILES/bamboo-wal.json"
 alias walpal="wal -i \"$WALLPAPER\""
 
-alias screenkey="/media/daniel/therest/linux/builds/screenkey/screenkey"
-
 # ANTRL4 setup 4.13.1
 alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
 alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
@@ -482,24 +480,8 @@ export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH";
 
 # EXPORTS
 export EDITOR="nvim"
-export PATH="$PATH:/home/daniel/.nimble/bin:/home/daniel/.local/bin:/home/daniel/.local/bin/scripts:/home/daniel/git/busy.sh:/home/daniel/.config/composer/vendor/bin:/opt/nvim-linux64/bin:/home/daniel/.cargo/bin"
-
-# MCPELauncher crap
-export PATH="$PATH:/home/daniel/git/others/mcpelauncher/build/mcpelauncher-client"
-# MSA for MCPELauncher
-export PATH="$PATH:/home/daniel/git/others/msa/build/msa-daemon"
-# MCPELauncher UI QT 
-export PATH="$PATH:/home/daniel/git/others/mcpelauncher-ui/build/mcpelauncher-ui-qt"
-
-
-GPG_TTY=$(tty)
-export GPG_TTY
-
-# zoxide
-eval "$(zoxide init bash)"
-
-# cmake
-export CMAKE_ROOT="~/Downloads/deb/cmake-4.1.1-linux-x86_64"
+# PATH
+[ -f "$HOME/.config/shell/path.sh" ] && . "$HOME/.config/shell/path.sh"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
@@ -509,4 +491,13 @@ export NVM_DIR="$HOME/.nvm"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+path_prepend "$BUN_INSTALL/bin:$PATH"
+
+GPG_TTY=$(tty)
+export GPG_TTY
+
+# zoxide
+eval "$(zoxide init bash)"
+
+# cmake
+export CMAKE_ROOT="~/Downloads/deb/cmake-4.1.1-linux-x86_64"
