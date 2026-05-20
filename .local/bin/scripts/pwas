@@ -1,0 +1,6 @@
+#!/bin/sh
+# A script to list and launch the installed chromium PWAs through dmenu
+pwaCount=`ls ~/.local/share/applications/brave-* | wc -l`
+pwaToLaunch=`ls ~/.local/share/applications/brave-*  | dmenu -l $pwaCount`
+
+grep Exec= $pwaToLaunch | cut -d= -f2- | sh
