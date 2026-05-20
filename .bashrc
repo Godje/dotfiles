@@ -95,14 +95,6 @@ alias l='ls -CF'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -134,9 +126,6 @@ mp3towav(){
 		[[ -f "$i" ]] && { echo -n "Processing ${i}..."; mpg123 -w "${out}" "$i" &>/dev/null  && echo "done." || echo "failed."; }
 	done	
 }
-
-
-
 
 # Converting videos for DaVinci Resolve
 videodnxhd(){
@@ -368,7 +357,7 @@ nvim () {
 
 declankify(){
 	# Read stdin into a temporary file
-	tmpfile=$(mktemp)
+	local tmpfile=$(mktemp)
 	cat > "$tmpfile"
 
 	# remove clanker signs
@@ -431,15 +420,11 @@ function clave(){
 	popd
 }
 
-function note(){
-	nvim ~/note.md
-}
-
 # VI keymap
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
 
-# Aliases (might move to .bash_aliases in the future)
+# Aliases
 alias ecfg="vim ~/.config/i3/config"
 alias ebash="vim ~/.bashrc"
 alias sbash="source ~/.bashrc"
@@ -449,7 +434,7 @@ alias vimm="nvim"
 
 which nvim >/dev/null && alias vim="nvim"
 
-alias vimnote="vim ~/note.md"
+alias note="vim ~/note.md"
 alias r="ranger" 
 alias n=ncmpcpp
 alias cd="z"
