@@ -143,6 +143,7 @@ assign [class="Minecraft*"] $ws5
 for_window [class="^.*"] border pixel 2
 for_window [class="cs2"] border pixel 0
 for_window [class="Minecraft*"] border pixel 0
+for_window [class="steam*"] border pixel 0
 
 for_window [class="code"] fullscreen toggle
 
@@ -157,7 +158,7 @@ bindsym $mod+Shift+e exec "~/.config/i3/exit.sh"
 ## Dropdown Terminal
 # setting the window instance and executing it
 for_window [title="terminaldropdown"] floating enable
-for_window [title="terminaldropdown"] resize set 900 600
+for_window [title="terminaldropdown"] resize set 1400 800
 for_window [title="terminaldropdown"] move scratchpad
 for_window [title="terminaldropdown"] move position center
 exec --no-startup-id "alacritty -T terminaldropdown"
@@ -186,6 +187,8 @@ gaps inner 0
 gaps outer 20
 smart_gaps inverse_outer
 workspace $ws1 gaps outer 0
+workspace $ws6 gaps outer 0
+workspace $ws5 gaps outer 0
 
 mode "gaps_fix" {
 	bindsym Left gaps inner current minus 1
