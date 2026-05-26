@@ -18,8 +18,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=56000 # about 1 megabyte
+HISTSIZE=10000
+HISTFILESIZE=560000 # about 10 megabytes
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -125,11 +125,6 @@ mp3towav(){
 		local out="${i%/*}.wav"
 		[[ -f "$i" ]] && { echo -n "Processing ${i}..."; mpg123 -w "${out}" "$i" &>/dev/null  && echo "done." || echo "failed."; }
 	done	
-}
-
-# Converting videos for DaVinci Resolve
-videodnxhd(){
-	ffmpeg -i $1 -c:v dnxhd -vf "scale=1920:1080,fps=25/1,format=yuv422p10" -b:v $2 -c:a pcm_s16le $3
 }
 
 # a meme
