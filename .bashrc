@@ -323,14 +323,14 @@ function gppt() {
 }
 
 bc-dlp () {
-yt-dlp --format bestaudio "$1" -o "%(artists.0)s/%(album)s/%(track_number)s. %(title)s [%(album)s, %(release_year)s][%(id)s].%(ext)s"
+	yt-dlp --format bestaudio "$1" -o "%(artists.0)s/%(album)s/%(track_number)s. %(title)s [%(album)s, %(release_year)s][%(id)s].%(ext)s"
 }
 
 mom-dlp () {
 	# Download the video file, save the last downloaded filename into a file
-	yt-dlp "$1" --format bestaudio --print "after_move:%(filepath,_filename|)q" --no-simulate > last_downloaded_file.txt 
+	yt-dlp "$1" --js-runtimes bun --format bestaudio --print "after_move:%(filepath,_filename|)q" --no-simulate > last_downloaded_file.txt 
 	# Open nautilus with the file highlighted (with ' character trimmed)
-	nautilus --select "$(cat last_downloaded_file.txt | tail -c +2 | head -c -2)" &
+	[ $? -eq 0 ] && nautilus --select "$(cat last_downloaded_file.txt | tail -c +2 | head -c -2)" &
 }
 
 primtoclip () {
@@ -420,6 +420,27 @@ function clave(){
 	popd
 }
 
+function note(){
+	nvim ~/note.md
+}
+
+claude-sync(){
+	local parent="$HOME/.claude/"
+	local dirs=(
+		"projects/"
+		"plans/"
+	)
+	for dir in "${dirs[@]}"
+	do
+		case "$1" in
+			push) rsync -avh --info=progress2 "$parent$dir" claude-sync-peer:$dir ;;
+			pull) rsync -avh --info=progress2 claude-sync-peer:$dir "$parent$dir";;
+			dry) rsync -avhn "$parent$dir" claude-sync-peer:$dir ;;
+			*) echo "usage: claude-sync {push|pull|dry}"; return 1 ;;
+		esac
+	done
+}
+
 # VI keymap
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
@@ -431,6 +452,7 @@ alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias vimm="nvim"
+alias killsteam="ps aux | grep steam | sed 's/\( \)\{1,\}/ /g' | cut -d' ' -f2 | xargs kill"
 
 which nvim >/dev/null && alias vim="nvim"
 
@@ -461,6 +483,8 @@ alias walpal="wal -i \"$WALLPAPER\""
 alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
 alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
 
+alias late="ssh -o ForwardAgent=no -o IdentitiesOnly=yes -i ~/.ssh/late_throwaway late.sh"
+
 export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH";
 
 # EXPORTS
@@ -476,7 +500,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
-path_prepend "$BUN_INSTALL/bin:$PATH"
+path_prepend "$BUN_INSTALL/bin"
 
 GPG_TTY=$(tty)
 export GPG_TTY
