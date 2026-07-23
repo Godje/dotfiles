@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# A launcher for things that aren't in the launcher by default (flatpak stuff, .AppImage stuff, other crap)
+# Requires: fzf
+
+query="$1"
+in_term (){
+	[[ -t 0 ]]
+}
+
+map_string="discord,flatpak run com.discordapp.Discord
+localsend,flatpak run org.localsend.localsend_app
+telegram,~/Apps/Telegram/Telegram
+polymc,~/Apps/PolyMC-Linux-5.1-x86_64.AppImage
+webdiscord,brave-browser \"https://discord.com/channels/@me\"
+"
+
+function launch(){
+	local name="$1"
+	local cmd=$(echo "$map_string" | grep "$name" | cut -d, -f2);
+	# check for existing session
+	tmux list-sessions -F "#{session_name}" | grep -q "$name" && exit
+
+	# tmux new-session -d -s "<session name>" -c "<folder>" "<command>"
+	tmux new-session -d -s "${name}_spl" -c "$HOME" "$cmd"
+}
+
+if [[ -z "$query" ]]; then
+	if in_term; then
+		# use fzf
+		result=$(echo "$map_string" | cut -d, -f1 | fzf )
+		launch "$result"
+	else
+		# use dmenu
+		result=$(echo "$map_string" | cut -d, -f1 | dmenu -i)
+		launch "$result"
+	fi
+else
+	result=$(echo "$map_string" | cut -d, -f1 | grep --max-count 1 "$query" )
+	launch "$result"
+fi
+
