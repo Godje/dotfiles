@@ -20,6 +20,10 @@ shopt -s histappend
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
 HISTFILESIZE=560000 # about 10 megabytes
+HISTTIMEFORMAT='%F %T  '
+
+PROMPT_COMMAND='history -a;'
+alias himport="history -n;"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -261,14 +265,46 @@ function vkkill() {
 	winekill
 }
 
-function gcheck() {
-	if [ $(git branch --show-current | grep "$1" -c) -gt 0 ]; then
-		echo "This branch already selected";
-	elif [ $(git branch --list | grep "$1" -c) -eq 0 ]; then
-		echo "The branch doesn't exist";
+# Optional query fzf
+#
+# usage:
+# opt_picker <list command string> <fzf additional args> <query>
+# third argument can usually be "$*" to forward user input
+#
+# example:
+# opt_picker \
+#	"echo -e '1 first\n2 second'"
+#	"--with-nth 2" \
+#	"$*"
+function opt_picker(){
+	local list=$(eval "$1")
+	local query="${@:3}"
+	local fzf_args="$2"
+	local selected;
+	local rc;
+	if [[ -z "$query" ]]; then
+		selected=$(echo "$list" | fzf $fzf_args)
+		rc=$?
 	else
-		git checkout $(git branch --list | grep "$1")
+		selected=$(echo "$list" | fzf --query "$query" $fzf_args --cycle --select-1 --exit-0)
+		rc=$?
 	fi
+	echo "$selected"
+	return $rc;
+}
+
+function gtc(){
+	: "@help cd's into worktree directory based on branch name."
+	popd >/dev/null
+	local selected=$(opt_picker "git worktree list | tr -d '[]'" "--with-nth 3" "$*")
+	local path=$(echo $selected | awk '{print $1}')
+	pushd "$path" # popd will return back to home
+}
+
+# git checkout branch
+function gcheck() {
+	local selected=$(opt_picker "git branch --list -a | cut -c3- | grep -v detached | awk '{print \$1}'")
+	git checkout "$selected"
 }
 
 function smpd(){
@@ -285,13 +321,16 @@ function ncmpcpp() {
 }
 
 function b (){
-	if [ -e "$1" ]; then
-		busy print 1;
-	fi
+	local second;
+	[[ -z "${@:2}" ]] && second="placeholder" || second="${@:2}"
 	case "$1" in
-	    e) vim $BUSYFILE;;
-			r) busy resume;;
-			p) busy print;;
+		pdf) busy create "Code" "PDF Redactor" "${second}" ;;
+		rest) busy create "Rest" "Rest" "Rest" ;;
+		restr*) busy create Restroom Restroom Restroom ;;
+		mom) busy create "Mom" "Mom" "shenanigans" ;;
+		e) vim $BUSYFILE;;
+		r) busy resume;;
+		p) busy print;;
 	esac
 }
 
@@ -403,15 +442,17 @@ function bulkrename {
 	fi
 }
 
-function slave(){
-	pushd "/tmp/"
-	copilot --model gpt-4.1
-	popd
-}
+export CLAUDE_AFK_TIMEOUT_MS=86400000
 
 function clave(){
 	pushd "/tmp/"
 	claude
+	popd
+}
+
+function qlave(){
+	pushd "/tmp/"
+	claude --model haiku
 	popd
 }
 
@@ -436,6 +477,13 @@ claude-sync(){
 	done
 }
 
+function gs(){
+	git -c color.ui=always status
+}
+function wgs(){
+	watch git -c color.ui=always status
+}
+
 # VI keymap
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
@@ -447,7 +495,10 @@ alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias vimm="nvim"
+alias glog="git log --oneline -n 20"
 alias killsteam="ps aux | grep steam | sed 's/\( \)\{1,\}/ /g' | cut -d' ' -f2 | xargs kill"
+alias gs="git -c color.ui=always status"
+alias wgs="watch git -c color.ui=always status"
 
 which nvim >/dev/null && alias vim="nvim"
 
@@ -465,14 +516,16 @@ alias bc="bc -l"
 alias nvims="nvim -S Session.vim"
 alias jellyfin="flatpak run com.github.iwalton3.jellyfin-media-player"
 alias yta="yt-dlp --format bestaudio"
+alias bamboo="wal -f $DOTFILES/bamboo-wal.json"
+alias walpal="wal -i \"$WALLPAPER\""
+alias ubuntu_codename="lsb_release -cs 2>/dev/null"
+alias pdf="tmuxinator start pdf"
 
 # TMUX shortcuts
 alias tlist="tmux list-sessions"
 alias tattach="tmux attach -t"
 alias tach="tmux attach -t"
 alias tnew="tmux new-session -t"
-alias bamboo="wal -f $DOTFILES/bamboo-wal.json"
-alias walpal="wal -i \"$WALLPAPER\""
 
 # ANTRL4 setup 4.13.1
 alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
@@ -502,6 +555,9 @@ export GPG_TTY
 
 # zoxide
 eval "$(zoxide init bash)"
+
+# direnv
+eval "$(direnv hook bash)"
 
 # cmake
 export CMAKE_ROOT="~/Downloads/deb/cmake-4.1.1-linux-x86_64"
