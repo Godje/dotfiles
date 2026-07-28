@@ -328,6 +328,7 @@ function b (){
 		rest) busy create "Rest" "Rest" "Rest" ;;
 		restr*) busy create Restroom Restroom Restroom ;;
 		mom) busy create "Mom" "Mom" "shenanigans" ;;
+		end) busy end ;;
 		e) vim $BUSYFILE;;
 		r) busy resume;;
 		p) busy print;;
@@ -443,6 +444,7 @@ function bulkrename {
 }
 
 export CLAUDE_AFK_TIMEOUT_MS=86400000
+export CAVEMAN_DEFAULT_MODE="off"
 
 function clave(){
 	pushd "/tmp/"
@@ -465,6 +467,7 @@ claude-sync(){
 	local dirs=(
 		"projects/"
 		"plans/"
+		"agents/"
 	)
 	for dir in "${dirs[@]}"
 	do

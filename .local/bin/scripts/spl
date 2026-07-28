@@ -12,12 +12,13 @@ map_string="discord,flatpak run com.discordapp.Discord
 localsend,flatpak run org.localsend.localsend_app
 telegram,~/Apps/Telegram/Telegram
 polymc,~/Apps/PolyMC-Linux-5.1-x86_64.AppImage
-webdiscord,brave-browser \"https://discord.com/channels/@me\"
+webdiscord,brave-browser --new-window \"https://discord.com/channels/@me\"
+jellyfin,flatpak run org.jellyfin.JellyfinDesktop 
 "
 
 function launch(){
 	local name="$1"
-	local cmd=$(echo "$map_string" | grep "$name" | cut -d, -f2);
+	local cmd=$(echo "$map_string" | grep --max-count 1 "$name" | cut -d, -f2);
 	# check for existing session
 	tmux list-sessions -F "#{session_name}" | grep -q "$name" && exit
 
