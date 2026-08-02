@@ -295,10 +295,12 @@ function opt_picker(){
 
 function gtc(){
 	: "@help cd's into worktree directory based on branch name."
-	popd >/dev/null
+	popd 2>/dev/null
 	local selected=$(opt_picker "git worktree list | tr -d '[]'" "--with-nth 3" "$*")
-	local path=$(echo $selected | awk '{print $1}')
-	pushd "$path" # popd will return back to home
+	if [[ $? -eq 0 ]]; then
+		local path=$(echo $selected | awk '{print $1}')
+		pushd "$path" # popd will return back to home
+	fi
 }
 
 # git checkout branch
@@ -327,6 +329,8 @@ function b (){
 		pdf) busy create "Code" "PDF Redactor" "${second}" ;;
 		rest) busy create "Rest" "Rest" "Rest" ;;
 		restr*) busy create Restroom Restroom Restroom ;;
+		food) busy create Food Food "${second}" ;;
+		misc) busy create Misc Misc Misc ;;
 		mom) busy create "Mom" "Mom" "shenanigans" ;;
 		end) busy end ;;
 		e) vim $BUSYFILE;;
@@ -443,8 +447,10 @@ function bulkrename {
 	fi
 }
 
+# claude env variables
 export CLAUDE_AFK_TIMEOUT_MS=86400000
 export CAVEMAN_DEFAULT_MODE="off"
+export CAVEMAN_STATUSLINE_SAVINGS=0
 
 function clave(){
 	pushd "/tmp/"
@@ -487,6 +493,68 @@ function wgs(){
 	watch git -c color.ui=always status
 }
 
+function bamboo(){
+	local temp=$(mktemp)
+	cat "$DOTFILES/bamboo-wal.json" | sed "1a\"wallpaper\":\"$WALLPAPER\"," > $temp
+	wal -f "$temp"
+}
+
+# mc: my cache
+# user is expected to provide "$1". These functions don't check for empty's
+export MC_CACHE_FOLDER="$HOME/.cache/my_bash_cache"
+function _mc_ensure_cache_folder_exists(){
+	[[ -d "$MC_CACHE_FOLDER" ]] || mkdir -p "$MC_CACHE_FOLDER"
+}
+# returns path to cache folder. Creates a cache folder if doesn't exist.
+function _mc_getfolder(){
+	_mc_ensure_cache_folder_exists
+	local folder_name="$1"
+	[[ -z "$folder_name" ]] && return 1;
+	local cache_path="$MC_CACHE_FOLDER/$folder_name"
+	mkdir -p "$cache_path"
+	echo "$(cd "$cache_path" && pwd)"
+}
+# returns path for cache file. Creates a cache file if file doesn't exist.
+function _mc_getfile(){
+	_mc_ensure_cache_folder_exists
+	local file_name="$1"
+	[[ -z "$file_name" ]] && return 1;
+	local cache_path="$MC_CACHE_FOLDER/$file_name"
+	[[ -e "$cache_path" ]] || touch "$cache_path";
+	[[ $? -eq 0 ]] && echo "$cache_path" || return 1;
+}
+# appends to cache file
+function _mc_append(){
+	local cache_file="$(_mc_getfile "$1")"
+	local cache_input="${@:2}"
+	# deduping
+	local linenum=$(grep -Fnx "$cache_input" "$cache_file" | cut -d: -f1);
+	if [[ -n "$linenum" ]]; then sed -i "${linenum}d" "$cache_file"; fi
+	echo -e "$cache_input" >> "$cache_file"
+}
+# opt_picker reads from cache file
+function _mc_opt_picker(){
+	local cache_file="$(_mc_getfile "$1" || return)"
+	local result=$(opt_picker "cat ${cache_file} | grep -v '^$'" "" "")
+	case $? in
+		0) echo "$result" ;;
+		1|2|130) return 1 ;;
+	esac
+}
+function mc_clear_cache(){
+	local cache_file="$(_mc_getfile "mds_cache")"
+	echo "" > $cache_file
+}
+
+# markdown show.
+# example of _mc cache usage
+# uses glow, fzf
+function mds(){
+	local file="${1:-$(_mc_opt_picker "mds_cache" || echo "")}"
+	[[ -n "$file" ]] && glow -p -w $(( $COLUMNS - 5 )) "$file"
+	[[ $? -eq 0 && -n "$1" ]] && _mc_append "mds_cache" "$(realpath "$1")"
+}
+
 # VI keymap
 set -o vi
 bind -m vi-insert "\C-l":clear-screen
@@ -519,7 +587,6 @@ alias bc="bc -l"
 alias nvims="nvim -S Session.vim"
 alias jellyfin="flatpak run com.github.iwalton3.jellyfin-media-player"
 alias yta="yt-dlp --format bestaudio"
-alias bamboo="wal -f $DOTFILES/bamboo-wal.json"
 alias walpal="wal -i \"$WALLPAPER\""
 alias ubuntu_codename="lsb_release -cs 2>/dev/null"
 alias pdf="tmuxinator start pdf"
@@ -527,8 +594,15 @@ alias pdf="tmuxinator start pdf"
 # TMUX shortcuts
 alias tlist="tmux list-sessions"
 alias tattach="tmux attach -t"
-alias tach="tmux attach -t"
 alias tnew="tmux new-session -t"
+function tach(){
+	if [[ -z "$1" ]]; then
+		echo "usage: tach <session-name>. available sessions:"
+		tmux list-sessions
+	else
+		tmux attach -t "$*"
+	fi
+}
 
 # ANTRL4 setup 4.13.1
 alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
