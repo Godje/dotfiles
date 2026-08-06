@@ -1,43 +1,136 @@
 #!/bin/bash
+# A launcher for things that aren't in the launcher by default (flatpak stuff, .AppImage stuff, browser bookmarks, etc.)
+# if you will use pickers: depends on fzf, dmenu
+# the script can run just fine no pickers installed if you only use grep matching
 
-# A launcher for things that aren't in the launcher by default (flatpak stuff, .AppImage stuff, other crap)
-# Requires: fzf
+SPL_BIN="${SPL_BIN:-$HOME/.local/share/spl}"
+SPL_WM_PICKER="${SPL_WM_PICKER:-dmenu -i}"
+TAB=$(printf '\t')
 
-query="$1"
-in_term (){
+function print_usage(){
+	echo "usage:"
+	echo "    spl                          -- launches an interactive picker for existing shortcuts"
+	echo "    spl <shortcut...>            -- launches a shortcut (not interactive)"
+	echo "    spl add <shortcut> <command> -- adds a new shortcut"
+	echo "    spl remove <shortcut>        -- removes a shortcut"
+	echo "    spl list                     -- lists existing shortcuts"
+	echo "    spl help                     -- shows this text"
+	echo ""
+	echo "shortcut must be alphanumeric /([a-zA-Z0-9])+/"
+	echo "shortcut must not be /list|add|remove/"
+	echo ""
+	echo "EXAMPLES:"
+	echo "    spl add jellyfin \"flatpak run org.jellyfin.JellyfinDesktop\""
+	echo "    spl remove jellyfin"
+	echo "    spl jellyfin"
+	echo "    spl jelly     # -- first /^query/ match runs"
+	echo ""
+	echo "DEPENDENCIES:"
+	echo "none if interactive picker never used"
+	echo "fzf for terminal, \$SPL_WM_PICKER (default: dmenu -i) for desktop"
+}
+
+function in_term (){
 	[[ -t 0 ]]
 }
 
-map_string="discord,flatpak run com.discordapp.Discord
-localsend,flatpak run org.localsend.localsend_app
-telegram,~/Apps/Telegram/Telegram
-polymc,~/Apps/PolyMC-Linux-5.1-x86_64.AppImage
-webdiscord,brave-browser --new-window \"https://discord.com/channels/@me\"
-jellyfin,flatpak run org.jellyfin.JellyfinDesktop 
-"
+function no_fzf (){
+	! command -v fzf &> /dev/null
+}
 
+function no_wm_picker(){
+	! command -v $SPL_WM_PICKER &> /dev/null
+}
+
+function picker(){
+	local query="$1"
+	local format="%f$TAB%p\n"
+	if [[ -z "$query" ]]; then
+		local find_result=$(find "$SPL_BIN" -type f -perm /a+x -printf "$format" )
+		if in_term; then
+			# use fzf
+			if no_fzf; then echo "no fzf installed"; exit 1; fi
+			local result=$(echo "$find_result" | fzf -d "$TAB" --with-nth 1 )
+			launch "$result"
+		else
+			# use window manager launcher
+			if no_wm_picker; then echo "no GUI picker installed"; exit 1; fi
+			local picker=$(echo "$find_result" | cut -d "$TAB" -f1 | $SPL_WM_PICKER)
+			local result=$(echo "$find_result" | grep "^$picker$TAB" | cut -d "$TAB" -f2)
+			launch "$result"
+		fi
+	else
+		local result=$(find "$SPL_BIN" -type f -perm /a+x | grep --max-count 1 "$query" )
+		launch "$result"
+	fi
+}
+
+# executes it in tmux
 function launch(){
 	local name="$1"
-	local cmd=$(echo "$map_string" | grep --max-count 1 "$name" | cut -d, -f2);
+
 	# check for existing session
 	tmux list-sessions -F "#{session_name}" | grep -q "$name" && exit
 
 	# tmux new-session -d -s "<session name>" -c "<folder>" "<command>"
-	tmux new-session -d -s "${name}_spl" -c "$HOME" "$cmd"
+	tmux new-session -d -s "${name}_spl" -c "$HOME" "$(find "$SPL_BIN" -type f -perm /a+x -wholename "$name")"
 }
 
-if [[ -z "$query" ]]; then
-	if in_term; then
-		# use fzf
-		result=$(echo "$map_string" | cut -d, -f1 | fzf )
-		launch "$result"
-	else
-		# use dmenu
-		result=$(echo "$map_string" | cut -d, -f1 | dmenu -i)
-		launch "$result"
-	fi
-else
-	result=$(echo "$map_string" | cut -d, -f1 | grep --max-count 1 "$query" )
-	launch "$result"
-fi
+# input must be non-empty
+input_is_alphanumeric(){
+	echo "$1" | grep -q "^[a-zA-Z0-9]\+$"
+}
+shortcut_is_illegal(){
+	echo "$1" | grep -q "^\(add\|remove\|list\|help)$"
+}
+ensure_spl_bin_folder_exists(){
+	[ -d "$SPL_BIN" ] || mkdir -p "$SPL_BIN"
+}
 
+function add(){
+	local shortcut="$1"
+	local command="$2"
+	if [ -z "$shortcut" -o -z "$command" ]; then print_usage; exit 1; fi
+	if ! input_is_alphanumeric "$shortcut"; then print_usage; exit 1; fi
+	if shortcut_is_illegal "$shortcut"; then print_usage; exit 1; fi
+
+	ensure_spl_bin_folder_exists
+	local dest_file="$SPL_BIN/$shortcut"
+	echo "$command" > $dest_file
+	chmod +x "$dest_file"
+}
+
+function remove(){
+	local shortcut="$1"
+	if [ -z "$shortcut" ]; then print_usage; exit 1; fi
+	if [ ! -f "$SPL_BIN/$shortcut" ]; then echo "shortcut does not exist"; exit 1; fi
+
+	ensure_spl_bin_folder_exists
+	rm -i "$SPL_BIN/$shortcut"
+}
+
+function list(){
+	ensure_spl_bin_folder_exists
+	find "$SPL_BIN" -type f -printf '%f	' -exec head -n1 '{}' \; | column -t -s "$TAB" -o "$TAB→ "
+}
+
+function no_shortcuts (){
+	[ -z "$(find "$SPL_BIN" -maxdepth 1 -type f)" ]
+}
+
+function print_full_help(){
+	echo "spl - \"special\" launcher"
+	echo "Launcher/manager of custom aliases for both terminal and window manager"
+	echo ""
+	print_usage;
+}
+
+cmd="$1"
+case "$cmd" in
+	add) shift; add "$@" ;;
+	remove) shift; remove "$@" ;;
+	list) shift; list ;;
+	help) print_full_help ;;
+	"") no_shortcuts && print_full_help || picker "$@"; ! in_term && no_shortcuts && notify-send "spl: no shortcuts were added";;
+	*) picker "$@" ;;
+esac
