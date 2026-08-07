@@ -43,7 +43,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+    xterm-color|*-256color|alacritty) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -451,6 +451,24 @@ function bulkrename {
 export CLAUDE_AFK_TIMEOUT_MS=86400000
 export CAVEMAN_DEFAULT_MODE="off"
 export CAVEMAN_STATUSLINE_SAVINGS=0
+
+function inside_tmux(){
+	! [ -z $TMUX_PANE ]
+}
+
+function claude(){
+	if inside_tmux; then
+		command claude $*;
+	else
+		tmux list-sessions -F '#{session_name}' | grep -q "^ai$"
+		local session_exists=$?
+		if [ $session_exists -eq 0 ]; then
+			tmux attach-session -d -t "ai" \; new-window -b -c "$(pwd)" "claude $*" \; attach
+		else
+			tmux new-session -d -s "ai" -c "$(pwd)" "claude $*"
+		fi
+	fi
+}
 
 function clave(){
 	pushd "/tmp/"
