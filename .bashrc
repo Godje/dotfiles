@@ -460,25 +460,22 @@ function claude(){
 	if inside_tmux; then
 		command claude $*;
 	else
-		tmux list-sessions -F '#{session_name}' | grep -q "^ai$"
-		local session_exists=$?
-		if [ $session_exists -eq 0 ]; then
-			tmux attach-session -d -t "ai" \; new-window -b -c "$(pwd)" "claude $*" \; attach
-		else
-			tmux new-session -d -s "ai" -c "$(pwd)" "claude $*"
-		fi
+		local session_count=$(tmux list-sessions -F '#{session_name}' | grep '^ai_' -c)
+		local suffix=${CLAUDE_SESSION_SUFFIX:-''}
+		local session_name="ai_""$suffix""_""$session_count"
+		tmux new-session -s "$session_name" -c "$(pwd)" "claude $*" \; attach
 	fi
 }
 
 function clave(){
 	pushd "/tmp/"
-	claude
+	CLAUDE_SESSION_SUFFIX=clave claude
 	popd
 }
 
 function qlave(){
 	pushd "/tmp/"
-	claude --model haiku
+	CLAUDE_SESSION_SUFFIX=qlave claude --model haiku
 	popd
 }
 
