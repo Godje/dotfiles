@@ -162,9 +162,17 @@ for_window [title="terminaldropdown"] resize set 1400 800
 for_window [title="terminaldropdown"] move scratchpad
 for_window [title="terminaldropdown"] move position center
 exec --no-startup-id "alacritty -T terminaldropdown"
-
-# mapping key to toggle it
 bindsym $mod+backslash [title="terminaldropdown"] scratchpad show; [title="dropdown"] move position center
+
+## Dropdown browser
+for_window [class="^alt-brave$"] floating enable
+for_window [class="^alt-brave$"] resize set 1400 800
+for_window [class="^alt-brave$"] move scratchpad
+for_window [class="^alt-brave$"] move position center
+exec --no-startup-id "alt-brave"
+bindsym $mod+semicolon [class="^alt-brave$"] scratchpad show; [class="^alt-brave$"] move position mouse
+
+
 # bindsym $mod+backslash exec --no-startup-id "open_dropdown" 
 
 ## Screen brightness controls

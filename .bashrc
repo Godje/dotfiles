@@ -293,6 +293,36 @@ function opt_picker(){
 	return $rc;
 }
 
+function gd(){
+	git diff "$1"
+}
+function _gd_complete(){
+	# the whole lowering thing is to for it to match case insensitive.
+	# Doing the `set nocaseglob` doesn't work, so string replacement with
+	# COMPREPLY being done without compgen was the only way to go
+	COMPREPLY=()
+	local cur="${COMP_WORDS[COMP_CWORD]}"
+	local candidates=$(git status -s | cut -b4-)
+
+	if [[ "$cur" == *[*?[]* ]]; then
+		# match against glob
+		for file in $candidates; do
+			if [[ "$file" == $cur ]]; then
+				COMPREPLY+=("$file")
+			fi
+		done
+	else
+		# match against prefix (case insensitive)
+		while read -r file; do
+			local cur_lower=$(echo "$cur" | tr '[:upper:]' '[:lower:]')
+			if [[ $(echo "$file" | tr '[:upper:]' '[:lower:]') == "$cur_lower"* ]]; then
+				COMPREPLY+=("$file")
+			fi
+		done <<< "$candidates"
+	fi
+}
+complete -F _gd_complete gd
+
 function gtc(){
 	: "@help cd's into worktree directory based on branch name."
 	popd 2>/dev/null
@@ -305,7 +335,7 @@ function gtc(){
 
 # git checkout branch
 function gcheck() {
-	local selected=$(opt_picker "git branch --list -a | cut -c3- | grep -v detached | awk '{print \$1}'")
+	local selected=$(opt_picker "git branch --list -a | cut -c3- | grep -v detached | awk '{print \$1}'" "" "$*")
 	git checkout "$selected"
 }
 
@@ -322,21 +352,22 @@ function ncmpcpp() {
 	fi
 }
 
-function b (){
+function b(){
 	local second;
 	[[ -z "${@:2}" ]] && second="placeholder" || second="${@:2}"
 	case "$1" in
+		a) busy create "${second}" "${second}" "${second}" ;;
 		pdf) busy create "Code" "PDF Redactor" "${second}" ;;
 		rest) busy create "Rest" "Rest" "Rest" ;;
 		restr*) busy create Restroom Restroom Restroom ;;
 		food) busy create Food Food "${second}" ;;
-		misc) busy create Misc Misc Misc ;;
-		mom) busy create "Mom" "Mom" "shenanigans" ;;
-		end) busy end ;;
-		e) vim $BUSYFILE;;
-		r) busy resume;;
-		p) busy print;;
-	esac
+		misc) busy create Misc Misc "${second}" ;;
+		mom) busy create "Mom" "Mom" "${second}" ;;
+	end) busy end ;;
+	e) vim $BUSYFILE;;
+	r) busy resume;;
+	p) busy print;;
+esac
 }
 
 # function designed for my school C++ data structures class
