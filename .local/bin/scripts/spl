@@ -81,7 +81,7 @@ input_is_alphanumeric(){
 	echo "$1" | grep -q "^[a-zA-Z0-9]\+$"
 }
 shortcut_is_illegal(){
-	echo "$1" | grep -q "^\(add\|remove\|list\|help)$"
+	echo "$1" | grep -q "^\(add\|remove\|list\|help\)$"
 }
 ensure_spl_bin_folder_exists(){
 	[ -d "$SPL_BIN" ] || mkdir -p "$SPL_BIN"
