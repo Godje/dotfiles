@@ -332,6 +332,10 @@ function gtc(){
 		pushd "$path" # popd will return back to home
 	fi
 }
+function glog(){
+	local count="${1:-15}";
+	git log --oneline -n $count
+}
 
 # git checkout branch
 function gcheck() {
@@ -488,6 +492,7 @@ function inside_tmux(){
 }
 
 function claude(){
+	if [ -n "$NOCAVE" ]; then export CAVEMAN_DEFAULT_MODE="off"; fi
 	if inside_tmux; then
 		command claude $*;
 	else
@@ -498,9 +503,14 @@ function claude(){
 	fi
 }
 
+function slave(){
+	pushd "/tmp"
+	CLAUDE_SESSION_SUFFIX=slave claude --model sonnet
+	popd
+}
 function clave(){
 	pushd "/tmp/"
-	CLAUDE_SESSION_SUFFIX=clave claude
+	CLAUDE_SESSION_SUFFIX=clave claude --model opus
 	popd
 }
 
@@ -612,7 +622,6 @@ alias sbash="source ~/.bashrc"
 alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias vimm="nvim"
-alias glog="git log --oneline -n 20"
 alias killsteam="ps aux | grep steam | sed 's/\( \)\{1,\}/ /g' | cut -d' ' -f2 | xargs kill"
 alias gs="git -c color.ui=always status"
 alias wgs="watch git -c color.ui=always status"
