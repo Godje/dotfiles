@@ -88,11 +88,11 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+    export LESS="-R -F -X"
 fi
 
 # some more ls aliases
 alias ll='ls -alF'
-alias la='ls -A'
 alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
@@ -182,12 +182,6 @@ mdpdf (){
 	echo "$importstring" >> $targetfile;
 
 	md-to-pdf --stylesheet $targetfile $1
-}
-
-# fff cd on exit
-f() {
-	fff "$@"
-	cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
 }
 
 function ccheck(){
@@ -325,11 +319,10 @@ complete -F _gd_complete gd
 
 function gtc(){
 	: "@help cd's into worktree directory based on branch name."
-	popd 2>/dev/null
 	local selected=$(opt_picker "git worktree list | tr -d '[]'" "--with-nth 3" "$*")
 	if [[ $? -eq 0 ]]; then
 		local path=$(echo $selected | awk '{print $1}')
-		pushd "$path" # popd will return back to home
+		cd "$path"
 	fi
 }
 function glog(){
@@ -476,7 +469,7 @@ function bulkrename {
 	cat "$resultCommand"
 	read -p "Do you want to execute those mv commands? [y/N] " inputResult
 	if [[ "$inputResult" =~ y.* ]]; then
-		sh "$resultCommand"
+		sh "$resultCommand" 2> >(grep -v "^mv.*are the same.*">&2)
 	else
 		echo "Action cancelled"
 	fi
@@ -631,7 +624,22 @@ which nvim >/dev/null && alias vim="nvim"
 alias note="vim ~/note.md"
 alias r="ranger" 
 alias n=ncmpcpp
-alias cd="z"
+alias cd="pwd >> /tmp/cd_history_$$ && z"
+alias cds="tail /tmp/cd_history_$$"
+function ucd(){
+	local theStack="/tmp/cd_history_$$";
+	[ -f "$theStack" ] || return;
+	local cdTo=$(tail "$theStack" -n 1)
+	# cd below gets replaced with the aliased "pwd >> ..."
+	cd "$cdTo"
+	# so the last 2 lines have to be popped, not one
+	[ $? -eq 0 ] && sed -i '$d' "$theStack" && sed -i '$d' "$theStack"
+}
+function _ucd_cleanup(){
+	rm "/tmp/cd_history_$$"
+}
+trap "_ucd_cleanup" EXIT
+
 alias la="ls --color=no"
 alias mux="tmuxinator"
 alias rangre="ranger" #just because I always mistype
@@ -645,6 +653,7 @@ alias yta="yt-dlp --format bestaudio"
 alias walpal="wal -i \"$WALLPAPER\""
 alias ubuntu_codename="lsb_release -cs 2>/dev/null"
 alias pdf="tmuxinator start pdf"
+alias rg="rg --color=always"
 
 # TMUX shortcuts
 alias tlist="tmux list-sessions"
