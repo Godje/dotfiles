@@ -288,7 +288,7 @@ function opt_picker(){
 }
 
 function gd(){
-	git diff "$1"
+	[ -z "$1" ] && git diff || git diff "$1"
 }
 function _gd_complete(){
 	# the whole lowering thing is to for it to match case insensitive.
@@ -625,15 +625,35 @@ alias note="vim ~/note.md"
 alias r="ranger" 
 alias n=ncmpcpp
 alias cd="pwd >> /tmp/cd_history_$$ && z"
-alias cds="tail /tmp/cd_history_$$"
+alias cds="tail /tmp/cd_history_$$ | tac | cat -n | tac"
 function ucd(){
-	local theStack="/tmp/cd_history_$$";
-	[ -f "$theStack" ] || return;
-	local cdTo=$(tail "$theStack" -n 1)
-	# cd below gets replaced with the aliased "pwd >> ..."
-	cd "$cdTo"
-	# so the last 2 lines have to be popped, not one
-	[ $? -eq 0 ] && sed -i '$d' "$theStack" && sed -i '$d' "$theStack"
+	local input="$1"
+	local stack_file="/tmp/cd_history_$$";
+	local stack_size=$(wc -l "$stack_file" | cut -d' ' -f1)
+	local num_stack=$(tac "/tmp/cd_history_$$" | cat -n | sed 's/^[[:space:]]*//')
+	local steps;
+	if [ -z "$input" ]; then
+		steps=1
+	elif (( input < stack_size )); then
+		steps=$input
+	else
+		steps=$stack_size
+	fi
+
+	[ -f "$stack_file" ] || return;
+	local cd_target=$(echo "$num_stack" | grep "^\<$steps\>" | cut -f2)
+	local cd_success="";
+	if [ -n "$cd_target" ]; then
+		# cd below gets replaced with the aliased "pwd >> stack_file" -----.
+		cd "$cd_target" && cd_success=true                                 #
+	else return; fi                                                            #
+                                                                                   #
+	if [ $cd_success ]; then                                                   #
+		sed -i '$d' "$stack_file" # ... so the *just* added line needs  <--·
+		                          # to be removed, not just the cd target 
+		local temp=$(mktemp)
+		tac "$stack_file" | sed "1,${steps}d" | tac > $temp && mv $temp "/tmp/cd_history_$$"
+	fi
 }
 function _ucd_cleanup(){
 	rm "/tmp/cd_history_$$"
