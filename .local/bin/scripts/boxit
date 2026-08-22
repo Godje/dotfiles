@@ -1,0 +1,46 @@
+#!/bin/bash
+
+function clean_empty(){
+	: "removes empty lines from stdin"
+	: "usage: cat text | clean_empty"
+	sed '/^[[:space:]]*$/d'
+}
+
+function boxit(){
+	: "takes stdin and boxes it in a \u2588 character with padding"
+	: "usage: toilet text | boxit"
+	: "       toilet text | boxit 2"
+	local input_drain_file="$(mktemp /tmp/boxit_XXX.out)"
+	cat | clean_empty | tee $input_drain_file >/dev/null;
+	local block=$(printf '\u2588');
+	local pad_y=${1:-1};
+	local pad_x=$(awk -v a=$pad_y -v b=1.9 "BEGIN {printf \"%.0f\n\", a * b}");
+	local max=0;
+
+	while IFS= read -r line; do
+		# stripping color sequences
+		local clean=$(echo "$line" | sed 's/\x1b\[[0-9;]*m//g')
+		local width=${#clean};
+		if (( width > max )); then max=$width; fi
+	done < $input_drain_file
+
+	local box_width=$((max + pad_x*2 + 2))
+
+	function pad(){ printf "%-${2}s" "${1}"; }
+	function horizontal_border(){ printf "%-${box_width}s\n" " " | sed "s/ /$block/g"; }
+	function horizontal_padding() {
+		for ((i=0; i<pad_y; i++)){
+			printf "%s%s%s\n" "$block" "$(pad " " $((box_width - 2)))" "$block";
+		}
+}
+	horizontal_border;
+	horizontal_padding;
+	while IFS= read -r line; do
+		printf "%s%-${pad_x}s%s%-${pad_x}s%s\n" $block " " "$(pad "$line" $max)" " " $block
+	done < $input_drain_file
+	horizontal_padding;
+	horizontal_border;
+	rm $input_drain_file;
+}
+
+boxit "$*"

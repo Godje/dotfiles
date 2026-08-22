@@ -1,8 +1,7 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+## Daniel's wonderful .bashrc
 
-source ~/.bashvars
+## INITIAL SETUP
+source ~/.bashvars # variables I don't want to commit to git
 
 # If not running interactively, don't do anything
 case $- in
@@ -10,10 +9,16 @@ case $- in
       *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# VI keymap
+set -o vi
+bind -m vi-insert "\C-l":clear-screen
+
+shopt -s checkwinsize
+
+## HISTORY ##
 # append to the history file, don't overwrite it
 shopt -s histappend
 
@@ -21,87 +26,31 @@ shopt -s histappend
 HISTSIZE=10000
 HISTFILESIZE=560000 # about 10 megabytes
 HISTTIMEFORMAT='%F %T  '
+HISTCONTROL=ignoreboth # don't put duplicate lines or lines starting with space in the history.
 
 PROMPT_COMMAND='history -a;'
 alias himport="history -n;"
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
+# set variable identifying the chroot you work in (used in the PS1)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color|alacritty) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\]\n\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
 esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
     export LESS="-R -F -X"
 fi
 
-# some more ls aliases
-alias ll='ls -alF'
-alias l='ls -CF'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+# enable programmable completion features
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -113,23 +62,135 @@ fi
 # Import colorscheme from 'wal' asynchronously
 # &   # Run the process in the background.
 # ( ) # Hide shell job control messages.
-(cat ~/.cache/wal/sequences &)
+[[ -t 1 ]] && (cat ~/.cache/wal/sequences &) >/dev/null
 
-# Alternative (blocks terminal for 0-3ms)
-# cat ~/.cache/wal/sequences
+## UTILS ##
+
+# Optional query fzf
+#
+# usage:
+# opt_picker <list command string> <fzf additional args> <query>
+# third argument can usually be "$*" to forward user input
+#
+# example:
+# opt_picker \
+#	"echo -e '1 first\n2 second'"
+#	"--with-nth 2" \
+#	"$*"
+function opt_picker(){
+	local list=$(eval "$1")
+	local query="${@:3}"
+	local fzf_args="$2"
+	local selected;
+	local rc;
+	if [[ -z "$query" ]]; then
+		selected=$(echo "$list" | fzf $fzf_args)
+		rc=$?
+	else
+		selected=$(echo "$list" | fzf --query "$query" $fzf_args --cycle --select-1 --exit-0)
+		rc=$?
+	fi
+	echo "$selected"
+	return $rc;
+}
+
+function is_number(){
+	echo "$1" | grep -q "^[0-9]\+$"
+}
+
+# mc: my cache
+# user is expected to provide "$1". These functions don't check for empty's
+export MC_CACHE_FOLDER="$HOME/.cache/my_bash_cache"
+function _mc_ensure_cache_folder_exists(){
+	[[ -d "$MC_CACHE_FOLDER" ]] || mkdir -p "$MC_CACHE_FOLDER"
+}
+# returns path to cache folder. Creates a cache folder if doesn't exist.
+function _mc_getfolder(){
+	_mc_ensure_cache_folder_exists
+	local folder_name="$1"
+	[[ -z "$folder_name" ]] && return 1;
+	local cache_path="$MC_CACHE_FOLDER/$folder_name"
+	mkdir -p "$cache_path"
+	echo "$(cd "$cache_path" && pwd)"
+}
+# returns path for cache file. Creates a cache file if file doesn't exist.
+function _mc_getfile(){
+	_mc_ensure_cache_folder_exists
+	local file_name="$1"
+	[[ -z "$file_name" ]] && return 1;
+	local cache_path="$MC_CACHE_FOLDER/$file_name"
+	[[ -e "$cache_path" ]] || touch "$cache_path";
+	[[ $? -eq 0 ]] && echo "$cache_path" || return 1;
+}
+# appends to cache file
+function _mc_append(){
+	local cache_file="$(_mc_getfile "$1")"
+	local cache_input="${@:2}"
+	# deduping
+	local linenum=$(grep -Fnx "$cache_input" "$cache_file" | cut -d: -f1);
+	if [[ -n "$linenum" ]]; then sed -i "${linenum}d" "$cache_file"; fi
+	echo -e "$cache_input" >> "$cache_file"
+}
+# opt_picker reads from cache file
+function _mc_opt_picker(){
+	local cache_file="$(_mc_getfile "$1" || return)"
+	local result=$(opt_picker "cat ${cache_file} | grep -v '^$'" "" "")
+	case $? in
+		0) echo "$result" ;;
+		1|2|130) return 1 ;;
+	esac
+}
+function mc_clear_cache(){
+	local cache_file="$(_mc_getfile "mds_cache")"
+	echo "" > $cache_file
+}
+
+# MIT from https://stackoverflow.com/a/58598185/5410502
+# capture the output of a command so it can be retrieved with ret
+cap () { tee /tmp/capture.out; }
+# return the output of the most recent command that was captured by cap
+ret () { cat /tmp/capture.out; }
+
+function inside_tmux(){
+	! [ -z $TMUX_PANE ]
+}
+
+function get_ps1(){
+	# -- PS1 --
+	# - nesting indicator
+	if [ -n "$TMUX" ]; then _nest_base=2; else _nest_base=1; fi
+	NEST_DEPTH=$(( SHLVL - _nest_base ))
+	[ "$NEST_DEPTH" -lt 0 ] && NEST_DEPTH=0
+	_np=$'\001'
+	_npx=$'\002'
+	_e=$'\033'
+	[ -n "$RANGER_LEVEL" ] && ranger_nest_text="${_np}${_e}[38;5;5m${_npx}R${RANGER_LEVEL} "
+	[ $NEST_DEPTH -gt 0 ] && bash_nest_text="${_np}${_e}[38;5;3m${_npx}B${NEST_DEPTH} "
+	
+	# - color check
+	if [ "$color_prompt" = yes ]; then
+		PS1='${debian_chroot:+($debian_chroot)}${ranger_nest_text}${bash_nest_text}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\]\n\$ '
+	else
+		PS1='${debian_chroot:+($debian_chroot)}${ranger_nest_text}${bash_nest_text}\u@\h:\w\$ '
+	fi
+	unset color_prompt force_color_prompt _np _npx _e _nest_base
+	echo "$PS1"
+	# --
+}
+PS1=$(get_ps1)
+
+function phelp(){
+	type "$1" | grep '^\W*:'
+}
+
+function clean_empty(){
+	: "removes empty lines from stdin"
+	: "usage: cat text | clean_empty"
+	sed '/^[[:space:]]*$/d'
+}
 
 # To add support for TTYs this line can be optionally added.
 # source ~/.cache/wal/colors-tty.sh
-
-mp3towav(){
-	[[ $# -eq 0 ]] && { echo "mp3wav mp3file"; exit 1; }
-	for i in "$@"
-	do
-		# create .wav file name
-		local out="${i%/*}.wav"
-		[[ -f "$i" ]] && { echo -n "Processing ${i}..."; mpg123 -w "${out}" "$i" &>/dev/null  && echo "done." || echo "failed."; }
-	done	
-}
 
 # a meme
 commit(){
@@ -163,15 +224,6 @@ commit(){
 }
 complete -W "sudoku sepuku lifent tensei" commit
 
-# editing encrypted gpg file
-encryptedit(){
-	filename=$(basename $1 .gpg)
-	gpg -d --quiet $1 | cat >> $filename 
-	vim $filename 
-	gpg -c $filename 
-	rm $filename
-}
-
 # Other
 mdpdf (){
 	targetfile="/tmp/mdcss.css";
@@ -184,26 +236,9 @@ mdpdf (){
 	md-to-pdf --stylesheet $targetfile $1
 }
 
-function ccheck(){
-	if [[ $PWD == *"rust-projects"* ]]; then
-		cargo check;
-		return;
-	fi
-	command ccheck;
-}
-
-function crun(){
-	if [[ $PWD == *"rust-projects"* ]]; then
-		cargo run;
-		return;
-	fi
-	command crun;
-}
-
 function ffind(){
 	find / -name "$1" 2>/dev/null
 }
-
 
 function buildCRBN(){
 	WEST_LOCATION="/home/daniel/git/others/zmk/app"
@@ -259,34 +294,6 @@ function vkkill() {
 	winekill
 }
 
-# Optional query fzf
-#
-# usage:
-# opt_picker <list command string> <fzf additional args> <query>
-# third argument can usually be "$*" to forward user input
-#
-# example:
-# opt_picker \
-#	"echo -e '1 first\n2 second'"
-#	"--with-nth 2" \
-#	"$*"
-function opt_picker(){
-	local list=$(eval "$1")
-	local query="${@:3}"
-	local fzf_args="$2"
-	local selected;
-	local rc;
-	if [[ -z "$query" ]]; then
-		selected=$(echo "$list" | fzf $fzf_args)
-		rc=$?
-	else
-		selected=$(echo "$list" | fzf --query "$query" $fzf_args --cycle --select-1 --exit-0)
-		rc=$?
-	fi
-	echo "$selected"
-	return $rc;
-}
-
 function gd(){
 	[ -z "$1" ] && git diff || git diff "$1"
 }
@@ -317,8 +324,9 @@ function _gd_complete(){
 }
 complete -F _gd_complete gd
 
+## GIT FUNCTIONS ##
 function gtc(){
-	: "@help cd's into worktree directory based on branch name."
+	: "cd's into worktree directory based on branch name."
 	local selected=$(opt_picker "git worktree list | tr -d '[]'" "--with-nth 3" "$*")
 	if [[ $? -eq 0 ]]; then
 		local path=$(echo $selected | awk '{print $1}')
@@ -326,11 +334,21 @@ function gtc(){
 	fi
 }
 function glog(){
-	local count="${1:-15}";
-	git log --oneline -n $count
+	: "usage: glog"
+	: "       glog 1"
+	: "       glog branch_name"
+	: "       glog 1 branch_name"
+	local count;
+	local branch;
+	if is_number "$1"; then
+		count="${1:-15}";
+		branch="${2:-HEAD}"
+	else
+		count=15;
+		branch=$1;
+	fi
+	git log --oneline -n $count $branch
 }
-
-# git checkout branch
 function gcheck() {
 	local selected=$(opt_picker "git branch --list -a | cut -c3- | grep -v detached | awk '{print \$1}'" "" "$*")
 	git checkout "$selected"
@@ -361,32 +379,10 @@ function b(){
 		misc) busy create Misc Misc "${second}" ;;
 		mom) busy create "Mom" "Mom" "${second}" ;;
 	end) busy end ;;
-	e) vim $BUSYFILE;;
+	e) nvim $BUSYFILE;;
 	r) busy resume;;
 	p) busy print;;
 esac
-}
-
-# function designed for my school C++ data structures class
-function gppt() {
-	if [ $# -eq 0 ]; then
-		clear && figlet "output" && g++ -std=c++14 *.cpp -o a.out;
-		./a.out 1> result.txt 2> /dev/null;
-		figlet "result" && ./a.out
-		return;
-	fi
-
-	clear && figlet "output" && g++ -std=c++14 "$1" -o a.out
-
-	if [ $? -gt 0 ]; then
-		e_filename="error_output.txt"
-		figlet "error";
-		g++ test.cpp -o a.out 2> $e_filename
-		echo "Error length:" $(wc -l $e_filename);
-		rm $e_filename;
-	else
-		./a.out
-	fi
 }
 
 bc-dlp () {
@@ -404,11 +400,6 @@ primtoclip () {
 	# WIP, this poop doesn't work I think
 	xclip -selection primary -o | xclip -selection clipboard
 }
-# MIT from https://stackoverflow.com/a/58598185/5410502
-# capture the output of a command so it can be retrieved with ret
-cap () { tee /tmp/capture.out; }
-# return the output of the most recent command that was captured by cap
-ret () { cat /tmp/capture.out; }
 
 nvim () {
 	if [ -z "$1" ]; then
@@ -480,9 +471,6 @@ export CLAUDE_AFK_TIMEOUT_MS=86400000
 export CAVEMAN_DEFAULT_MODE="off"
 export CAVEMAN_STATUSLINE_SAVINGS=0
 
-function inside_tmux(){
-	! [ -z $TMUX_PANE ]
-}
 
 function claude(){
 	if [ -n "$NOCAVE" ]; then export CAVEMAN_DEFAULT_MODE="off"; fi
@@ -513,10 +501,6 @@ function qlave(){
 	popd
 }
 
-function note(){
-	nvim ~/note.md
-}
-
 claude-sync(){
 	local parent="$HOME/.claude/"
 	local dirs=(
@@ -535,64 +519,10 @@ claude-sync(){
 	done
 }
 
-function gs(){
-	git -c color.ui=always status
-}
-function wgs(){
-	watch git -c color.ui=always status
-}
-
 function bamboo(){
 	local temp=$(mktemp)
 	cat "$DOTFILES/bamboo-wal.json" | sed "1a\"wallpaper\":\"$WALLPAPER\"," > $temp
 	wal -f "$temp"
-}
-
-# mc: my cache
-# user is expected to provide "$1". These functions don't check for empty's
-export MC_CACHE_FOLDER="$HOME/.cache/my_bash_cache"
-function _mc_ensure_cache_folder_exists(){
-	[[ -d "$MC_CACHE_FOLDER" ]] || mkdir -p "$MC_CACHE_FOLDER"
-}
-# returns path to cache folder. Creates a cache folder if doesn't exist.
-function _mc_getfolder(){
-	_mc_ensure_cache_folder_exists
-	local folder_name="$1"
-	[[ -z "$folder_name" ]] && return 1;
-	local cache_path="$MC_CACHE_FOLDER/$folder_name"
-	mkdir -p "$cache_path"
-	echo "$(cd "$cache_path" && pwd)"
-}
-# returns path for cache file. Creates a cache file if file doesn't exist.
-function _mc_getfile(){
-	_mc_ensure_cache_folder_exists
-	local file_name="$1"
-	[[ -z "$file_name" ]] && return 1;
-	local cache_path="$MC_CACHE_FOLDER/$file_name"
-	[[ -e "$cache_path" ]] || touch "$cache_path";
-	[[ $? -eq 0 ]] && echo "$cache_path" || return 1;
-}
-# appends to cache file
-function _mc_append(){
-	local cache_file="$(_mc_getfile "$1")"
-	local cache_input="${@:2}"
-	# deduping
-	local linenum=$(grep -Fnx "$cache_input" "$cache_file" | cut -d: -f1);
-	if [[ -n "$linenum" ]]; then sed -i "${linenum}d" "$cache_file"; fi
-	echo -e "$cache_input" >> "$cache_file"
-}
-# opt_picker reads from cache file
-function _mc_opt_picker(){
-	local cache_file="$(_mc_getfile "$1" || return)"
-	local result=$(opt_picker "cat ${cache_file} | grep -v '^$'" "" "")
-	case $? in
-		0) echo "$result" ;;
-		1|2|130) return 1 ;;
-	esac
-}
-function mc_clear_cache(){
-	local cache_file="$(_mc_getfile "mds_cache")"
-	echo "" > $cache_file
 }
 
 # markdown show.
@@ -604,29 +534,14 @@ function mds(){
 	[[ $? -eq 0 && -n "$1" ]] && _mc_append "mds_cache" "$(realpath "$1")"
 }
 
-# VI keymap
-set -o vi
-bind -m vi-insert "\C-l":clear-screen
-
-# Aliases
-alias ecfg="vim ~/.config/i3/config"
-alias ebash="vim ~/.bashrc"
-alias sbash="source ~/.bashrc"
-alias evrc="vim ~/.vimrc"
-alias vims="vim -S vimsession.vim"
-alias vimm="nvim"
-alias killsteam="ps aux | grep steam | sed 's/\( \)\{1,\}/ /g' | cut -d' ' -f2 | xargs kill"
-alias gs="git -c color.ui=always status"
-alias wgs="watch git -c color.ui=always status"
-
-which nvim >/dev/null && alias vim="nvim"
-
-alias note="vim ~/note.md"
-alias r="ranger" 
-alias n=ncmpcpp
-alias cd="pwd >> /tmp/cd_history_$$ && z"
+# CD modifications
 alias cds="tail /tmp/cd_history_$$ | tac | cat -n | tac"
+function cd(){
+	local p="$(pwd)"
+	z "$@" && echo "$p" >> /tmp/cd_history_$$;
+}
 function ucd(){
+	# TODO: no consecutive duplicates allowed
 	local input="$1"
 	local stack_file="/tmp/cd_history_$$";
 	local stack_size=$(wc -l "$stack_file" | cut -d' ' -f1)
@@ -654,26 +569,63 @@ function ucd(){
 		local temp=$(mktemp)
 		tac "$stack_file" | sed "1,${steps}d" | tac > $temp && mv $temp "/tmp/cd_history_$$"
 	fi
+
+}
+function _ucd_update_prompt(){
+	local _np=$'\001'
+	local _npx=$'\002'
+	local _e=$'\033'
+	local prefix="";
+	local number=$(test -n "$TMUX" && wc -l /tmp/cd_history_$$ 2>/dev/null | cut -d' ' -f1)
+	[ -n "$number" ] && [ $number -gt 0 ] && prefix="${_np}${_e}[38;5;8m${_npx}${number} "
+	PS1="${prefix}$(get_ps1)"
 }
 function _ucd_cleanup(){
-	rm "/tmp/cd_history_$$"
+	rm "/tmp/cd_history_$$" 2>/dev/null
 }
+PROMPT_COMMAND="_ucd_update_prompt;${PROMPT_COMMAND}"
 trap "_ucd_cleanup" EXIT
 
-alias la="ls --color=no"
-alias mux="tmuxinator"
+## ALIASES AND SHORTCUTS
+# ALIAS FUNCTIONS
+function toilet (){
+	command toilet -w "$COLUMNS" -d "$HOME/.config/toilet" -f "miniwi" "$@"
+}
+
+# ALIAS ALIAS
+alias n=ncmpcpp
+alias r="ranger" 
+alias l='ls -CF'
 alias rangre="ranger" #just because I always mistype
+alias rg="rg --color=always"
+alias bc="bc -l"
+alias mux="tmuxinator"
+alias sbash="source ~/.bashrc"
+alias gs="git -c color.ui=always status"
+alias wgs="watch git -c color.ui=always status"
+alias la="ls --color=no"
 alias ftb="java -jar ~/Downloads/FTB_Launcher.jar";
 alias cdqmk="cd ~/qmk_firmware/keyboards/lily58/keymaps/Godje/";
 alias cddot="cd $DOTFILES";
-alias bc="bc -l"
-alias nvims="nvim -S Session.vim"
 alias jellyfin="flatpak run com.github.iwalton3.jellyfin-media-player"
 alias yta="yt-dlp --format bestaudio"
 alias walpal="wal -i \"$WALLPAPER\""
 alias ubuntu_codename="lsb_release -cs 2>/dev/null"
 alias pdf="tmuxinator start pdf"
-alias rg="rg --color=always"
+alias bclock="watch -t -n1 -p ""'""toilet -f future \$(date) -w \$COLUMNS | boxit | centerit -q""'"
+alias killsteam="ps aux | grep steam | sed 's/\( \)\{1,\}/ /g' | cut -d' ' -f2 | xargs kill"
+# usage: sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Edit alias
+alias ecfg="vim ~/.config/i3/config"
+alias ebash="vim ~/.bashrc"
+alias evrc="vim ~/.vimrc"
+alias vims="vim -S vimsession.vim"
+alias vimm="nvim"
+which nvim >/dev/null && alias vim="nvim"
+alias note="vim ~/note.md"
+alias nvims="nvim -S Session.vim"
 
 # TMUX shortcuts
 alias tlist="tmux list-sessions"
@@ -688,16 +640,12 @@ function tach(){
 	fi
 }
 
-# ANTRL4 setup 4.13.1
-alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
-alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
-
 alias late="ssh -o ForwardAgent=no -o IdentitiesOnly=yes -i ~/.ssh/late_throwaway late.sh"
-
-export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH";
+## END ALIASES ##
 
 # EXPORTS
 export EDITOR="nvim"
+
 # PATH
 [ -f "$HOME/.config/shell/path.sh" ] && . "$HOME/.config/shell/path.sh"
 
@@ -719,6 +667,3 @@ eval "$(zoxide init bash)"
 
 # direnv
 eval "$(direnv hook bash)"
-
-# cmake
-export CMAKE_ROOT="~/Downloads/deb/cmake-4.1.1-linux-x86_64"

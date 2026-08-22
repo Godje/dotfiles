@@ -1,0 +1,61 @@
+#!/bin/bash
+
+function centerit(){
+	: "takes stdin and centers it"
+	: "usage: toilet text | centerit"
+	: "       toilet text | centerit -l"
+	: "       toilet text | centerit -r"
+	: "       toilet text | centerit -x"
+	: "       toilet text | centerit -q"
+	local input_drain_file="$(mktemp boxit_XXX.out)"
+	cat | tee $input_drain_file >/dev/null;
+	local W="$((COLUMNS - 1))"
+	local H="$LINES"
+	local flag_quick;
+	local flag_left;
+	local flag_right;
+	local flag_x_only;
+
+	while [[ $# -gt 0 ]]; do
+		case "$1" in
+			-l) flag_left=1; shift ;;
+			-r) flag_right=1; shift ;;
+			-x) flag_x_only=1; shift ;;
+			-q) flag_quick=1; shift ;;
+			*) shift ;;
+		esac
+	done
+
+	local in_width=0;
+	local in_height=$(wc -l $input_drain_file | cut -d' ' -f1)
+	function pad(){ printf "%-${2}s" "${1}"; }
+
+	# get the in_width
+	while IFS= read -r line; do
+		# stripping color sequences
+		local clean=$(echo "$line" | sed 's/\x1b\[[0-9;]*m//g')
+		local width=${#clean};
+		if (( width > in_width )); then in_width=$width; fi
+	done < $input_drain_file
+
+	local y_pad=$(( (H / 2) - (in_height / 2) ));
+	local x_pad=$(( (W / 2) - (in_width / 2) ));
+	local left_pad=$x_pad;
+	local right_pad=$x_pad;
+	[ -n "$flag_x_only" ] && y_pad=0;
+	[ -n "$flag_right" ] && left_pad=$((x_pad*2)) && right_pad=0;
+	[ -n "$flag_left" ] && right_pad=$((x_pad*2)) && left_pad=0;
+	function y_pad_lines(){
+		local empty_line=$([ -n "$flag_quick" ] && echo "" || printf "%-${W}s" " ");
+		for ((i=0; i<y_pad;i++)); do
+			printf "$empty_line\n";
+		done
+	}
+	y_pad_lines;
+	while IFS= read -r line; do
+		printf "%-${left_pad}s%s%-${right_pad}s%s\n" "" "$(pad "$line" $in_width)" ""
+	done < $input_drain_file
+	y_pad_lines;
+}
+
+centerit "$@"
