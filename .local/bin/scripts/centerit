@@ -7,7 +7,7 @@ function centerit(){
 	: "       toilet text | centerit -r"
 	: "       toilet text | centerit -x"
 	: "       toilet text | centerit -q"
-	local input_drain_file="$(mktemp boxit_XXX.out)"
+	local input_drain_file="$(mktemp /tmp/centerit_XXX.out)"
 	cat | tee $input_drain_file >/dev/null;
 	local W="$((COLUMNS - 1))"
 	local H="$LINES"
@@ -56,6 +56,8 @@ function centerit(){
 		printf "%-${left_pad}s%s%-${right_pad}s%s\n" "" "$(pad "$line" $in_width)" ""
 	done < $input_drain_file
 	y_pad_lines;
+
+	rm $input_drain_file
 }
 
 centerit "$@"
