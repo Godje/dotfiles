@@ -3,4 +3,6 @@
 pwaCount=`ls ~/.local/share/applications/brave-* | wc -l`
 pwaToLaunch=`ls ~/.local/share/applications/brave-*  | dmenu -l $pwaCount`
 
-grep Exec= $pwaToLaunch | cut -d= -f2- | sh
+the_command=$(grep Exec= $pwaToLaunch | cut -d= -f2-)
+
+echo "$the_command --new-window" | sh

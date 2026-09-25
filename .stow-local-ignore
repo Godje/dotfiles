@@ -1,5 +1,9 @@
 \.git*
-autoexec\.cfg
+.gitignore
+.gitmodules
+*exec\.cfg
 .*jpg
 unwrap\.sh
 other
+README.md
+bamboo-wal\.json

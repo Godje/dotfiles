@@ -350,7 +350,7 @@ function glog(){
 	git log --oneline -n $count $branch
 }
 function gcheck() {
-	local selected=$(opt_picker "git branch --list -a | cut -c3- | grep -v detached | awk '{print \$1}'" "" "$*")
+	local selected=$(opt_picker "git branch --list -a | cut -c3- | grep -v detached | awk '{print \$1}'" "--height=~100%" "$*")
 	git checkout "$selected"
 }
 
@@ -372,12 +372,12 @@ function b(){
 	[[ -z "${@:2}" ]] && second="placeholder" || second="${@:2}"
 	case "$1" in
 		a) busy create "${second}" "${second}" "${second}" ;;
-		pdf) busy create "Code" "PDF Redactor" "${second}" ;;
+		pdf) busy create "Ship" "PDF Redactor" "${second}" ;;
 		rest) busy create "Rest" "Rest" "Rest" ;;
 		restr*) busy create Restroom Restroom Restroom ;;
 		food) busy create Food Food "${second}" ;;
 		misc) busy create Misc Misc "${second}" ;;
-		mom) busy create "Mom" "Mom" "${second}" ;;
+		mom) busy create Mom Mom "${second}" ;;
 	end) busy end ;;
 	e) nvim $BUSYFILE;;
 	r) busy resume;;
@@ -473,9 +473,14 @@ export CAVEMAN_STATUSLINE_SAVINGS=0
 
 
 function claude(){
+	if [ $# -gt 2 ]; then
+		command claude "$@";
+		return;
+	fi
 	if [ -n "$NOCAVE" ]; then export CAVEMAN_DEFAULT_MODE="off"; fi
+	if [ -n "$CAVE" ]; then export CAVEMAN_DEFAULT_MODE="lite"; fi
 	if inside_tmux; then
-		command claude $*;
+		command claude "$@";
 	else
 		local session_count=$(tmux list-sessions -F '#{session_name}' | grep '^ai_' -c)
 		local suffix=${CLAUDE_SESSION_SUFFIX:-''}
@@ -486,18 +491,18 @@ function claude(){
 
 function slave(){
 	pushd "/tmp"
-	CLAUDE_SESSION_SUFFIX=slave claude --model sonnet
+	CLAUDE_SESSION_SUFFIX=slave claude --model sonnet "$@";
 	popd
 }
 function clave(){
 	pushd "/tmp/"
-	CLAUDE_SESSION_SUFFIX=clave claude --model opus
+	CLAUDE_SESSION_SUFFIX=clave claude --model opus "$@";
 	popd
 }
 
 function qlave(){
 	pushd "/tmp/"
-	CLAUDE_SESSION_SUFFIX=qlave claude --model haiku
+	CLAUDE_SESSION_SUFFIX=qlave claude --model haiku "$@";
 	popd
 }
 
@@ -592,16 +597,60 @@ function toilet (){
 	command toilet -w "$COLUMNS" -d "$HOME/.config/toilet" -f "miniwi" "$@"
 }
 
+NOTES_DIR="$HOME/Documents/Notes"
+mkdir -p "$NOTES_DIR"
+function note(){
+	# ensure notes location exists
+	# sanitized
+	if [ -z "$1" ]; then
+		$EDITOR "$NOTES_DIR/note.md"
+		return
+	else
+		# has .md ending
+		[ "$(echo "$1" | grep -o '...$')" == '.md' ] && target="${NOTES_DIR}/$1" || target="${NOTES_DIR}/$1.md"
+		$EDITOR "$target"
+		return
+	fi
+}
+function notes(){
+	$EDITOR "$(ls $NOTES_DIR | fzf --height=10)"
+}
+function _note_complete(){
+	COMPREPLY=()
+	local cur="${COMP_WORDS[COMP_CWORD]}"
+	local candidates=$(ls "$NOTES_DIR")
+
+	if [[ "$cur" == *[*?[]* ]]; then
+		# match against glob
+		for file in $candidates; do
+			if [[ "$file" == $cur ]]; then
+				COMPREPLY+=("$file")
+			fi
+		done
+	else
+		# match against prefix (case insensitive)
+		while read -r file; do
+			local cur_lower=$(echo "$cur" | tr '[:upper:]' '[:lower:]')
+			if [[ $(echo "$file" | tr '[:upper:]' '[:lower:]') == "$cur_lower"* ]]; then
+				COMPREPLY+=("$file")
+			fi
+		done <<< "$candidates"
+	fi
+}
+complete -F _note_complete note
+
 # ALIAS ALIAS
 alias n=ncmpcpp
 alias r="ranger" 
 alias l='ls -CF'
+alias t="toilet"
 alias rangre="ranger" #just because I always mistype
 alias rg="rg --color=always"
 alias bc="bc -l"
 alias mux="tmuxinator"
 alias sbash="source ~/.bashrc"
 alias gs="git -c color.ui=always status"
+alias gss="git -c color.ui=always diff --shortstat"
 alias wgs="watch git -c color.ui=always status"
 alias la="ls --color=no"
 alias ftb="java -jar ~/Downloads/FTB_Launcher.jar";
@@ -624,13 +673,12 @@ alias evrc="vim ~/.vimrc"
 alias vims="vim -S vimsession.vim"
 alias vimm="nvim"
 which nvim >/dev/null && alias vim="nvim"
-alias note="vim ~/note.md"
 alias nvims="nvim -S Session.vim"
 
 # TMUX shortcuts
 alias tlist="tmux list-sessions"
 alias tattach="tmux attach -t"
-alias tnew="tmux new-session -t"
+alias tnew="tmux new-session -t "'$(basename "$PWD"'" | cut -d' ' -f1)"
 function tach(){
 	if [[ -z "$1" ]]; then
 		echo "usage: tach <session-name>. available sessions:"

@@ -3,6 +3,8 @@
 # if you will use pickers: depends on fzf, dmenu
 # the script can run just fine no pickers installed if you only use grep matching
 
+set -x
+
 SPL_BIN="${SPL_BIN:-$HOME/.local/share/spl}"
 SPL_WM_PICKER="${SPL_WM_PICKER:-dmenu -i}"
 TAB=$(printf '\t')
@@ -44,9 +46,9 @@ function no_wm_picker(){
 
 function picker(){
 	local query="$1"
-	local format="%f$TAB%p\n"
+	local format="%f\n"
 	if [[ -z "$query" ]]; then
-		local find_result=$(find "$SPL_BIN" -type f -perm /a+x -printf "$format" )
+		local find_result=$(find "$SPL_BIN" -type f -printf "${format}" -perm /a+x )
 		if in_term; then
 			# use fzf
 			if no_fzf; then echo "no fzf installed"; exit 1; fi
@@ -60,7 +62,7 @@ function picker(){
 			launch "$result"
 		fi
 	else
-		local result=$(find "$SPL_BIN" -type f -perm /a+x | grep --max-count 1 "$query" )
+		local result=$(find "$SPL_BIN" -type f -perm /a+x -printf "${format}" | grep --max-count 1 "$query" )
 		launch "$result"
 	fi
 }
@@ -73,7 +75,7 @@ function launch(){
 	tmux list-sessions -F "#{session_name}" | grep -q "$name" && exit
 
 	# tmux new-session -d -s "<session name>" -c "<folder>" "<command>"
-	tmux new-session -d -s "${name}_spl" -c "$HOME" "$(find "$SPL_BIN" -type f -perm /a+x -wholename "$name")"
+	tmux new-session -d -s "${name}_spl" -c "$HOME" "$(find "$SPL_BIN" -type f -perm /a+x -path "$SPL_BIN/$name")"
 }
 
 # input must be non-empty
