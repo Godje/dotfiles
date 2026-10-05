@@ -3,8 +3,6 @@
 # if you will use pickers: depends on fzf, dmenu
 # the script can run just fine no pickers installed if you only use grep matching
 
-set -x
-
 SPL_BIN="${SPL_BIN:-$HOME/.local/share/spl}"
 SPL_WM_PICKER="${SPL_WM_PICKER:-dmenu -i}"
 TAB=$(printf '\t')
